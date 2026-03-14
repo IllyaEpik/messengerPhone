@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ExpoRoot } from "expo-router";
 export default function App() {
   const ctx = (require as any).context("./src/app", true);
-
+  console.log(ctx)
   return <ExpoRoot context={ctx} />;
 }
 
