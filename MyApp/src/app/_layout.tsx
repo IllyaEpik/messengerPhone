@@ -1,13 +1,21 @@
-import { Stack } from "expo-router";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { View } from "react-native";
+import { Slot } from "expo-router";
 
-export default function RootLayout() {
+import Header from "@/shared/ui/header/header";
+import Footer from "@/shared/ui/footer/footer";
+
+export default function Layout() {
   return (
-    <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="(auth)" />
-      </Stack>
-    </SafeAreaProvider>
+    <View style={{ flex: 1 }}>
+
+      <Header />
+
+      <View style={{ flex: 1 }}>
+        <Slot />
+      </View>
+
+      <Footer />
+
+    </View>
   );
 }
