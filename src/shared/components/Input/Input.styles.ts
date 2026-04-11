@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 14,
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 3,
     backgroundColor: "#FAFAFA",
   },
 
@@ -18,4 +18,9 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "#000",
   },
+  error: {
+    color: "red",
+    fontSize: 12,
+    marginBottom: 10
+  }
 });

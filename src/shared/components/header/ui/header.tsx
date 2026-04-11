@@ -30,8 +30,7 @@ export default function Header() {
       >
           <IconButton onPress={() => router.push("/chats")}><ICONS.PlusIcon/></IconButton>
           <IconButton onPress={() => router.push("/settings")}><ICONS.SettingsIcon/></IconButton>
-          <IconButton onPress={() => router.push("/logout")}><ICONS.LogoutIcon/></IconButton>
-
+          <IconButton onPress={() => router.push("/(auth)")}><ICONS.LogoutIcon/></IconButton>
       </View>
     </View>
   );

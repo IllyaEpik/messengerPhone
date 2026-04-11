@@ -10,6 +10,9 @@ import { ChatIcon } from "@/shared/static/icons/_icons/chat";
 import { PeopleIcon } from "@/shared/static/icons/_icons/people";
 import { PublicIcon } from "@/shared/static/icons/_icons/publics";
 import FooterTab from "@/shared/components/footer/ui/footerTab";
+import { Provider } from "react-redux";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { baseApi } from "@/shared/api/baseApi";
 //   const Tab = createBottomTabNavigator()
 export default function Layout() {
 
@@ -17,6 +20,7 @@ export default function Layout() {
   
     <SafeAreaProvider  style={{ flex: 1 }}> 
       <SafeAreaView  style={{ flex: 1 }}>
+        <ApiProvider api={baseApi}>
 		<Tabs screenOptions={{ 
 			tabBarActiveTintColor: '#070A1C',
 			headerShown:true,
@@ -49,15 +53,21 @@ export default function Layout() {
         ),
         }}/> 
 		
-		<Tabs.Screen name="publics" 
-        options={{
-          title: "publics",
-          tabBarIcon: ({ focused }) => (
-          <FooterTab selected={focused} icon={<PublicIcon/>}/>
-        ),
+        <Tabs.Screen name="publics" 
+            options={{
+              title: "publics",
+              tabBarIcon: ({ focused }) => (
+              <FooterTab selected={focused} icon={<PublicIcon/>}/>
+            ),
         }}/>
-
+    <Tabs.Screen 
+      name="(auth)" 
+      options={{
+        href: null
+      }} 
+    />
 		</Tabs>
+    </ApiProvider>
       </SafeAreaView>
     </SafeAreaProvider>
   );

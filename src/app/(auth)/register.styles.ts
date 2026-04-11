@@ -3,13 +3,13 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "#E9E5EE",
     justifyContent: "center",
     padding: 16,
   },
 
   card: {
-    backgroundColor: "#F4F4F4",
+    backgroundColor: "#FFFFFF",
     borderRadius: 20,
     padding: 20,
   },
@@ -27,4 +27,7 @@ export const styles = StyleSheet.create({
     marginBottom: 16,
     color: "#000",
   },
+  button: {
+    width: "100%",
+  }
 });

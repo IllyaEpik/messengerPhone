@@ -23,7 +23,6 @@ export const IconButton = ({ children, onPress, variant = "outline" }: Props) =>
 
 const styles = StyleSheet.create({
   button: {
-  
     width: 40,
     height: 40,
     borderRadius: 20, 

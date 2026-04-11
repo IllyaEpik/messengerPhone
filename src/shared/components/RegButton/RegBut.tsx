@@ -5,11 +5,12 @@ import { styles } from "./RegBut.styles";
 interface Props {
   title: string;
   onPress: () => void;
+  Buttonstyle?: object;
 }
 
-export const RegButton = ({ title, onPress }: Props) => {
+export const RegButton = ({ title, onPress, Buttonstyle }: Props) => {
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable style={[styles.button, Buttonstyle ?? {}]} onPress={onPress}>
       <Text style={styles.text}>{title}</Text>
     </Pressable>
   );
