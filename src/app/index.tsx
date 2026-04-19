@@ -1,12 +1,10 @@
-import { ChatIcon } from "@/shared/static/icons/_icons/chat";
-import { View, Text } from "react-native";
+import { useAuthContext } from "@/modules/auth/context/authContext";
+import { Redirect } from "expo-router";
 
-
-export default function Main() {
-    return (
-          <View>
-            <Text>eerwerw</Text>
-            <ChatIcon/>
-          </View>
-    )
+export default function Home() {
+    const {user} = useAuthContext()
+    if (!user){    
+      return <Redirect href="/(auth)" />;
+    }
+    return <Redirect href="/(tabs)" />;
 }

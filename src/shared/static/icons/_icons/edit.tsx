@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { Path, SvgProps } from "react-native-svg"
 
-function Edit(props:SvgProps) {
+export function Edit(props:SvgProps) {
   return (
     <Svg
       width={20}
@@ -18,5 +18,3 @@ function Edit(props:SvgProps) {
     </Svg>
   )
 }
-
-export default Edit

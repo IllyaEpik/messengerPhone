@@ -2,14 +2,26 @@ export interface ILogin{
     email: string,
     password: string
 }
-
+export interface IProfile{
+    id: number,
+    nickname: string,
+    username: string,
+    userId: number,
+    firstName: string | null,
+    lastName: string | null
+    avatar: IAvatar[] | null
+}
+export interface IAvatar {
+    avatar: string
+    crackedAvatar: string
+}
 export interface IUser{
     email: string
-    password: string
-    username: string
-    name: string;
-    surname: string;
-    avatar: string;
+    avatar?: string;
     id: number;
-    lastSeenAt: Date;
+    // lastSeenAt: Date;
+    dateOfBirth?: Date;
+    addedAt: Date
+    confirmedUser: false
+    profile?:IProfile
 }

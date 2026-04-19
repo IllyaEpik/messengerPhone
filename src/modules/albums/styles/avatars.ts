@@ -3,7 +3,6 @@ export const styles = StyleSheet.create({
     icon: {
         width: 96,
         height: 96,
-        borderRadius:50
     },
     card: {
         backgroundColor: "#FFFFFF",
@@ -12,27 +11,26 @@ export const styles = StyleSheet.create({
         gap: 10,
         flexDirection: "column",
         alignItems: "center",
+        marginTop:25
     },
     header: {
         flexDirection: "row",
-        gap: 200,
+        gap: 180,
         justifyContent: "space-between",
-            
     },
-    editButton:{
-        padding: 7,
-        backgroundColor: "#FFFFFF",
+
+    publicButton:{
+        flexDirection: "row",
         borderRadius: 100,
         borderColor: "#543C52",
         borderWidth: 1,
         borderStyle: "solid",
-        flexDirection: "row"
+        padding: 10
+
     },
-    activatedEditButton:{
-        backgroundColor:"#E9E5EE"
-    },
-    inputs:{
-        flexDirection:"row",
-        gap:10
+    avatars:{
+        flexDirection: "row",
+        justifyContent:"flex-start",
+        gap: 25
     }
 })

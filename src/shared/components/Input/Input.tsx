@@ -35,6 +35,7 @@ export const Input = (props: Props) => {
           onChangeText={onChangeText}
           secureTextEntry={hidden}
           style={styles.input}
+          
           {...other}
           
         />
@@ -44,7 +45,7 @@ export const Input = (props: Props) => {
           </TouchableOpacity>
         )}
       </View>
-      <Text style={styles.error}>{error}</Text>
+      {error && <Text style={styles.error}>{error}</Text>}
     </>
   );
 };

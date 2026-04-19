@@ -1,22 +1,28 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
-    icon: {
-        width: 96,
-        height: 96,
-        borderRadius:50
-    },
     card: {
         backgroundColor: "#FFFFFF",
         borderRadius: 20,
         padding: 20,
         gap: 10,
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
+        marginTop: 50
     },
-    header: {
+    headerWithMargin: {
         flexDirection: "row",
         gap: 200,
         justifyContent: "space-between",
+        marginTop: 50
+            
+    },
+    header: {
+        flexDirection: "row",
+        // gap: 200,
+        justifyContent: "space-between",
+        flex:1,
+        alignItems: "center"
+        // height:30
             
     },
     editButton:{
@@ -28,11 +34,12 @@ export const styles = StyleSheet.create({
         borderStyle: "solid",
         flexDirection: "row"
     },
-    activatedEditButton:{
+    activatedEditButton: {
         backgroundColor:"#E9E5EE"
     },
-    inputs:{
-        flexDirection:"row",
-        gap:10
+    errorText: {
+        color: "#D32F2F",
+        marginTop: 10,
+        fontSize: 14,
     }
 })

@@ -1,5 +1,4 @@
 import { Text } from "react-native";
-import { useState } from "react";
 import { Input } from "@/shared/components/Input/Input";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import { styles } from "../styles/auth";
@@ -8,16 +7,12 @@ import { useLoginMutation,useRegistrationMutation } from "../api/userApi";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegistrationForm, LoginForm } from "../models/types/auth";
 import { registrationValidator,loginValidator } from "../models/lib/auth";
-import { Controller, useForm, FormProvider, Form } from "react-hook-form";
-import { ICONS } from "@/shared/static/icons";
-import { useLocalSearchParams } from "expo-router";
+import { Controller, useForm, FormProvider } from "react-hook-form";
+import { router } from "expo-router";
 
 export function AuthOption(props: AuthProps) {
 	const { authType } = props
 
-	// const [email, setEmail] = useState("");
-	// const [password, setPassword] = useState("");
-	// const [confirm, setConfirm] = useState("");
 	const [ login ]    = useLoginMutation();
 	const [ register ] = useRegistrationMutation();
 	type formType = RegistrationForm | LoginForm;
@@ -26,33 +21,22 @@ export function AuthOption(props: AuthProps) {
 	})
 	
 	const { control, handleSubmit } = methods;
-register
     async function onSubmit(data: formType){
-		console.log(312123322323);
 		if (authType === "login") {
-
-			console.log("login");
 			const result = await login({...data});
-			console.log(result);
+			router.push({pathname: "/(tabs)"});
 			return;
 		}else{
 			const result = await register({...data});
-			console.log(result);
+			router.push({pathname: "/(auth)/writeCode"});
 
 		}
     }
 	return (
 		<FormProvider {...methods}>
-		{/* <Form> */}
 			<Text style={styles.subtitle}>
 				Приєднуйся до World IT
 			</Text>
-			{/* <Input
-				placeholder="you@example.com"
-				value={email}
-				label="Електронна пошта"
-				onChangeText={setEmail}
-			/> */}
 			<Controller
                     name="email"
                     control={control}
@@ -102,23 +86,6 @@ register
                     )}
                 />
             )}
-			{/* <Input
-				placeholder="Введи пароль"
-				value={password}
-				label="Пароль"
-				onChangeText={setPassword}
-				secure
-			/>
-			{
-			authType === "register" && (
-				<Input
-					placeholder="Повтори пароль"
-					value={confirm}
-					label="Підтверди пароль"
-					onChangeText={setConfirm}
-					secure
-				/>
-			)} */}
 			
     
 			<RegButton 
@@ -126,7 +93,6 @@ register
 				onPress={handleSubmit(onSubmit)}  
 				Buttonstyle={styles.button}
 			/>
-		{/* </Form> */}
 		</FormProvider>
 	);
 }

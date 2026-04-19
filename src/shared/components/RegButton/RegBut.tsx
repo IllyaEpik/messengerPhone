@@ -1,17 +1,24 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { Pressable, PressableProps, StyleProp, Text, TextProps, TextStyle, ViewStyle } from "react-native";
 import { styles } from "./RegBut.styles";
 
 interface Props {
   title: string;
   onPress: () => void;
-  Buttonstyle?: object;
+  Buttonstyle?: StyleProp<ViewStyle>;
+  TextStyle?: StyleProp<TextStyle>;
 }
 
-export const RegButton = ({ title, onPress, Buttonstyle }: Props) => {
+export const RegButton = (props: Props) => {
+  const {
+    title,
+    onPress,
+    Buttonstyle,
+    TextStyle
+  } = props
   return (
     <Pressable style={[styles.button, Buttonstyle ?? {}]} onPress={onPress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, TextStyle ?? {}]}>{title}</Text>
     </Pressable>
   );
 };

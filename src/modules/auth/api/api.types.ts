@@ -9,3 +9,10 @@ export interface IRegister{
     email: string
     password: string
 }
+
+
+export interface IProfile{
+    nickname: string
+    username: string
+    token:string
+}

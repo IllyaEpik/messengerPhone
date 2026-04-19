@@ -1,10 +1,15 @@
 import { View, Text } from "react-native";
 import { ICONS } from "../../../static/icons";
 import { IconButton } from "../../IconButton/IconButton";
-import { router, useNavigation } from "expo-router";
+import { router, usePathname } from "expo-router";
+import { useAuthContext } from "@/modules/auth/context/authContext";
 
 export default function Header() {
-  const navigation = useNavigation()
+  const path = usePathname()
+  const {logout} = useAuthContext()
+  // function logout() {
+    
+  // }
   return (
     <View
       style={{
@@ -29,8 +34,10 @@ export default function Header() {
       }}
       >
           <IconButton onPress={() => router.push("/chats")}><ICONS.PlusIcon/></IconButton>
-          <IconButton onPress={() => router.push("/settings")}><ICONS.SettingsIcon/></IconButton>
-          <IconButton onPress={() => router.push("/(auth)")}><ICONS.LogoutIcon/></IconButton>
+          <IconButton onPress={() => router.push("/profile")} variant={path === "/profile" ? "filled" : undefined}>
+            <ICONS.SettingsIcon/>
+          </IconButton>
+          <IconButton onPress={() => {logout();router.push("/(auth)")}}><ICONS.LogoutIcon/></IconButton>
       </View>
     </View>
   );

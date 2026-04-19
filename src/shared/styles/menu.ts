@@ -11,23 +11,9 @@ export const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
-    padding: 20,
-  },
-
-  title: {
-    fontSize: 18,
-    fontWeight: "700",
-    marginBottom: 4,
-    color: "#000",
-  },
-
-  subtitle: {
-    fontSize: 14,
-    textAlign: "center",
-    marginBottom: 16,
-    color: "#000",
-  },
-  button: {
-    width: "100%",
+    margin: 40,
+    padding: 10,
+    alignSelf: "center", 
+    marginTop: 60
   }
 });
