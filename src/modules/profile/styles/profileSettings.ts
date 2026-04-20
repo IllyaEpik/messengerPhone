@@ -3,29 +3,21 @@ export const styles = StyleSheet.create({
     card: {
         backgroundColor: "#FFFFFF",
         borderRadius: 20,
-        padding: 20,
+        padding: 15,
         gap: 10,
         flexDirection: "column",
-        // alignItems: "center",
-        marginTop: 50
-    },
-    headerWithMargin: {
-        flexDirection: "row",
-        gap: 200,
-        justifyContent: "space-between",
-        marginTop: 50
-            
+        marginTop: 10
     },
     header: {
+
         flexDirection: "row",
-        // gap: 200,
         justifyContent: "space-between",
-        flex:1,
-        alignItems: "center"
-        // height:30
+        width:"100%",
+        alignItems:"center"
             
     },
     editButton:{
+        
         padding: 7,
         backgroundColor: "#FFFFFF",
         borderRadius: 100,
@@ -38,8 +30,17 @@ export const styles = StyleSheet.create({
         backgroundColor:"#E9E5EE"
     },
     errorText: {
+        fontFamily: "GTRegular",
         color: "#D32F2F",
         marginTop: 10,
         fontSize: 14,
+    },
+    boldText: {
+        fontFamily:"GTMedium",
+        fontWeight:500,
+        color:"#070A1C"
+    },
+    input:{
+        width:"80%"
     }
 })

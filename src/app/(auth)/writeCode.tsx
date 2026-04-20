@@ -7,6 +7,12 @@ import { WriteCode } from "@/modules/auth/components/writeCode";
 export default function RegisterScreen() {
 
   return (
-    <WriteCode/>
+    <View style={{
+		flex:1,
+		alignItems:"center",
+		justifyContent:"center"
+	}}>
+      	<WriteCode/>
+    </View>
   );
 }

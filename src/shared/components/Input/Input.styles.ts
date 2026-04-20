@@ -10,17 +10,30 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 3,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#FFFFFF"
   },
 
   input: {
     flex: 1,
-    fontSize: 14,
-    color: "#000",
+    fontSize: 16,
+    color: "#070A1C",
+    fontFamily:"GTRegular",
+    lineHeight:22
   },
   error: {
-    color: "red",
-    fontSize: 12,
-    marginBottom: 10
+    color: "#FF4C4C",
+      fontFamily:"GTRegular",
+    fontSize: 13,
+    marginTop:-10
+  },
+  label:{
+      fontFamily:"GTRegular",
+      fontSize:16
+  },
+  containerWithError: {
+    borderColor:"#FF4C4C",
+	borderWidth:1,
+	borderStyle:"solid"
   }
+
 });

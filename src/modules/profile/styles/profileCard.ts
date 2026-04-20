@@ -8,15 +8,18 @@ export const styles = StyleSheet.create({
     card: {
         backgroundColor: "#FFFFFF",
         borderRadius: 20,
-        padding: 20,
+        padding: 15,
+        margin: 0,
         gap: 10,
         flexDirection: "column",
         alignItems: "center",
+        width:"100%"
     },
     header: {
         flexDirection: "row",
-        gap: 200,
         justifyContent: "space-between",
+        width:"100%",
+        alignItems:"center"
             
     },
     editButton:{
@@ -34,5 +37,21 @@ export const styles = StyleSheet.create({
     inputs:{
         flexDirection:"row",
         gap:10
+    },
+    cardProf : {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        color:"#070A1C"
+    },
+    nickname: {
+        fontFamily: "GTBold",
+        fontSize: 24,
+        color:"#070A1C"
+    },
+    username: {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        color:"#070A1C"
+        
     }
 })

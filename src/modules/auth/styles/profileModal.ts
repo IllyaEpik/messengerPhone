@@ -21,7 +21,8 @@ export const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf:"center",
         margin:30,
-        padding:20
+        paddingHorizontal:16,
+        paddingVertical:44
     },
     background:{
         backgroundColor: "rgba(0, 0, 0, 0.272)",
@@ -34,12 +35,37 @@ export const styles = StyleSheet.create({
         bottom:0,
     },
     greenText:{
-        color:"#22C55E"
+        color:"#22C55E",
+        fontFamily:"GTRegular",
+        letterSpacing:-0.1
     },
     buttonContainer: {
         alignItems:"flex-end",
         justifyContent:"flex-end",
         flexDirection:"row",
-        width:"100%"
+        width:"100%",
+        height:40
+    },
+    title:{
+        color:"#070A1C",
+        fontFamily:"GTMedium",
+        fontSize:24
+    },
+    button:{
+        paddingHorizontal:16,
+        paddingVertical:10,
+        height:45
+        // width:120
+    },
+    text:{
+        color:"#070A1C",
+        fontFamily:"GTRegular"
+    },
+    main:{
+        paddingVertical:24,
+        gap:16
+    },
+    inputWithText:{
+        gap:8
     }
 });

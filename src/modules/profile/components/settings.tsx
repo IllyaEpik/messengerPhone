@@ -67,63 +67,67 @@ export function ProfileSettings() {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <Text>Personal information</Text>
+        <Text style={styles.boldText}>Особиста інформація</Text>
         <Pressable
           style={[styles.editButton, edit && styles.activatedEditButton]}
           onPress={submit}
           disabled={isLoading}
         >
           <ICONS.Edit />
-          {edit && <Text>Save</Text> }
+          {edit && <Text>Зберегти</Text> }
         </Pressable>
       </View>
-
+    
       <Input
         value={form.firstName || ""}
-        placeholder="Name"
-        label="Name"
+        placeholder="Ім'я"
+        label="Ім'я"
         onChangeText={(value) => handleChange("firstName", value)}
         error={undefined}
         editable={edit}
+        containerInputStyles={styles.input}
       />
 
       <Input
         value={form.lastName || ""}
-        placeholder="Surname"
-        label="Surname"
+        placeholder="Прізвище"
+        label="Прізвище"
         onChangeText={(value) => handleChange("lastName", value)}
         error={undefined}
         editable={edit}
+        containerInputStyles={styles.input}
       />
 
       <Input
         value={form.birthday || ""}
-        placeholder="Date of birth"
-        label="Date of birth"
+        placeholder="15.04.2001"
+        label="Дата народження"
         onChangeText={(value) => handleChange("birthday", value)}
         error={undefined}
         editable={false}
+        containerInputStyles={styles.input}
       />
 
       <Input
         value={form.email || ""}
-        placeholder="Email"
-        label="Email"
+        placeholder="you@example.com"
+        label="Електронна адреса"
         onChangeText={(value) => handleChange("email", value)}
         error={undefined}
         editable={false}
+        containerInputStyles={styles.input}
       />
 
       <View style={styles.header}>
-        <Text>Password</Text>
+        <Text style={styles.boldText}>Пароль</Text>
         <View style={styles.editButton}>
           <ICONS.Edit />
         </View>
       </View>
       <Input
         value="********"
-        placeholder="Password"
-        label="Password"
+        placeholder="********"
+        label="Пароль"
         onChangeText={() => {}}
         error={""}
         editable={false}

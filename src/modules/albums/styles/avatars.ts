@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         gap: 10,
         flexDirection: "column",
         alignItems: "center",
-        marginTop:25
+        // marginTop:25
     },
     header: {
         flexDirection: "row",
@@ -32,5 +32,20 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent:"flex-start",
         gap: 25
+    },
+    photo : {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        
+    },
+    add : {
+        fontFamily: "GTMedium",
+        fontSize: 14,
+        
+    },
+    noOne: {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+       
     }
 })

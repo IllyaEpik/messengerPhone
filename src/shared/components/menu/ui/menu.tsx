@@ -4,13 +4,14 @@ import { MenuProps } from "../types/menu.types";
 import { styles } from "../styles/menu.styles";
 
 export function Menu(props:MenuProps) {
-    const [IschosenFirst, setChosen] = useState<boolean>(false)
+    const [IschosenFirst, setChosen] = useState<boolean>(true)
     const {firstOption,
         secondOption,
         firstText,
         secondText,
         menuStyles,
-        containerStyles
+        containerStyles,
+        textStyles
     } = props
     return (
         <View style={containerStyles || { flex: 1 }}>
@@ -19,13 +20,13 @@ export function Menu(props:MenuProps) {
                     onPress={() => setChosen(true)}
                 >
                     <Text 
-                    style={IschosenFirst ? styles.active : styles.deactive}>{firstText}</Text>
+                    style={[styles.text,IschosenFirst ? styles.active : styles.deactive, textStyles]}>{firstText}</Text>
                 </Pressable>
                 <Pressable 
                     onPress={() => setChosen(false)}
                 >
                     <Text 
-                    style={IschosenFirst ? styles.deactive : styles.active}>{secondText}</Text></Pressable>
+                    style={[styles.text,IschosenFirst ? styles.deactive : styles.active, textStyles]}>{secondText}</Text></Pressable>
 
             </View>
             {IschosenFirst ? firstOption : secondOption}

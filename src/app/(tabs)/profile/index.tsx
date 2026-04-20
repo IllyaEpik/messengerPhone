@@ -5,21 +5,24 @@ import { Profile } from "@/modules/profile/components/profile";
 import { Albums } from "@/modules/albums/components/albums";
 
 export default function ProfileScreen() {
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [confirm, setConfirm] = useState("");
 
   return (
     <View style={styles.screen}>
-          {/* <View style={styles.card}> */}
             <Menu 
               firstOption= {<Profile />}
               secondOption= {<Albums />}
-              firstText="Personal information"
-              secondText="Albums"
-              menuStyles={{justifyContent:"flex-start"}}
+              firstText="Особиста інформація"
+              secondText="Альбоми"
+              menuStyles={{
+                justifyContent:"flex-start", 
+                marginLeft:20,
+                paddingVertical:20,
+                gap:16
+              }}
+              textStyles={{
+                fontSize:17
+              }}
             />
-          {/* </View> */}
         </View>
   );
 }

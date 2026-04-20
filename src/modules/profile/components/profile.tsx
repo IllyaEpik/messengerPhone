@@ -7,8 +7,8 @@ import { ProfileBottom } from "./bottom";
 export function Profile(){
   return (
     // <View>
-        <ScrollView>
-            <ProfileCard></ProfileCard>
+        <ScrollView style={{ paddingHorizontal: 0 }}>
+            <ProfileCard/>
             <ProfileSettings/>
             <ProfileBottom/>
         </ScrollView>

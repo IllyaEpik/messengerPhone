@@ -14,41 +14,38 @@ export function CreateProfileModal(){
     const {token} = useAuthContext()
     const [nickname, setNickname] = useState("")
     const [username, setUsername] = useState("")
-    // const [deleted, setDeleted] = useState<boolean>(false)
     const [ createProfile ] = useProfileMutation()
-    // if (deleted){
-    //     return <Redirect href="/(tabs)" />;
-    // }
     function submitButton() {
         createProfile({nickname,username, token});
-        // setDeleted(true)
-        // router.push({pathname: "/(tabs)"});
     }
     return (
         <>
             <View style={styles.container}>
                 <View style={styles.modal}>
-                    <Text>Add details about yourself</Text>
-                    <View>
+                    <Text style={styles.title}>Додай деталі про себе</Text>
+                    <View style={styles.main}>
                         <Input
-                            label="Author's pseudonym"
-                            placeholder="Write Author's pseudonym"
+                            label="Псевдонім автора "
+                            placeholder="Введіть Псевдонім автора "
                             onChangeText={setNickname}
                             value={nickname}
                             error=""
                         />
-                        <Input
-                            label="User name"
-                            placeholder="@"
-                            onChangeText={setUsername}
-                            value={username}
-                            error=""
-                        />
-                        <Text>Or choose: <Text style={styles.greenText}>(Suggested options according to First and Last Name)</Text></Text>
+
+                        <View style={styles.inputWithText}> 
+                            <Input
+                                label="Ім’я користувача"
+                                placeholder="@"
+                                onChangeText={setUsername}
+                                value={username}
+                                error=""
+                            />
+                        <Text style={styles.text}>Або оберіть: <Text style={styles.greenText}>(Запропоновані варіанти відповідно до Ім’я та Прізвища)</Text></Text>
+                        </View>
 
                     </View>
                     <View style={styles.buttonContainer}>
-                        <RegButton title="continue" onPress={() => submitButton()}></RegButton>
+                        <RegButton title="Продовжити" onPress={() => submitButton()} Buttonstyle={styles.button}></RegButton>
                     </View>
                 </View>
             </View>

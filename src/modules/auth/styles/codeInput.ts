@@ -3,26 +3,30 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     boxesContainer: {
         flexDirection:"row",
-        justifyContent:"space-around",
-        width:"100%"
+        // justifyContent:"flex-start",
+        width:"100%",
+        gap:8,
+        marginLeft:-10
     },
     otpBox: {
-        borderRadius:20,
+        borderRadius:10,
         backgroundColor:"white",
         borderWidth:1,
         borderColor: "#CDCED2",
         borderStyle:"solid",
-        width:60,
-        height:60,
+        width:40,
+        height:40,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        padding:10
     },
     otpBoxActive: {
         borderWidth: 3,
         borderColor: "#543C52"
     },
     otpText: {
-        fontSize:30
+        fontSize:16,
+        color:"#81818D"
     },
     hiddenInput: {
         position: 'absolute',
@@ -30,5 +34,8 @@ export const styles = StyleSheet.create({
         height: 1,
         opacity: 0
         
+    },
+    withGap:{
+        marginLeft:10
     }
 });

@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E9E5EE",
     justifyContent: "center",
-    padding: 16,
+    // padding: 16,
   },
 
   card: {
@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
     margin: 40,
     padding: 10,
     alignSelf: "center", 
-    marginTop: 60
+    paddingVertical: 40,
+    // fontWeight: " "
   }
 });

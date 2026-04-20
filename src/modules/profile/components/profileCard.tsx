@@ -41,19 +41,18 @@ export function ProfileCard(){
 	return (
 		<View style= {styles.card}>
 			<View style={styles.header}>
-				<Text>Profile card</Text>
+				<Text style= {styles.cardProf}>Картка профілю</Text>
 				
 				<Pressable
 					style={[styles.editButton, edit && styles.activatedEditButton]}
 					onPress={submit}
 				>
 					<ICONS.Edit />
-					{edit && <Text>Save</Text> }
+					{edit && <Text>Зберегти</Text> }
 				</Pressable>
 			</View>
 			
-			{edit && <Text>Select or download profile photo</Text>}
-			{/* <Image source={{ uri: `${BACKEND_BASE_URL}${avatar.avatar}` }} /> */}
+			{edit && <Text>Оберіть або завантажте фото профілю</Text>}
 			<Image
 				style={styles.icon}
 				source={
@@ -64,13 +63,13 @@ export function ProfileCard(){
 				resizeMode="contain"
 			/>
 			{edit && <View style={styles.inputs}>
-				<ImageInput icon={<ICONS.PlusIcon/>} text="Add a photo" onChange={setUrl}/>
-				<ImageInput icon={<ICONS.PublicIcon/>} text="select a photo" onChange={setUrl}/>
+				<ImageInput icon={<ICONS.PlusIcon/>} text="Додайте фото" onChange={setUrl}/>
+				<ImageInput icon={<ICONS.PublicIcon/>} text="Оберіть фото" onChange={setUrl}/>
 			</View> }
-			<Text>{user.profile?.nickname}</Text>
-			{!edit ? <Text>@{user.profile?.username}</Text> :
+			<Text style={styles.nickname}>{user.profile?.nickname}</Text>
+			{!edit ? <Text style={styles.username}>@{user.profile?.username}</Text> :
 			<Input
-				label = "Username"
+				label = "Ім’я користувача"
 				value = {"@" + username}
 				placeholder = {user.profile?.username || "@"}
 				error=""

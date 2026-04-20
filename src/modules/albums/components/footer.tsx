@@ -6,7 +6,7 @@ export function Footer(){
   return (
     <View style= {styles.card}>
         <View style={styles.header}>
-            <Text>There is no one photo</Text>
+            <Text style = {styles.noOne}>Немає ще жодного альбому</Text>
             <View style={styles.publicButton}>
                 <ICONS.PlusIcon/>
             </View>

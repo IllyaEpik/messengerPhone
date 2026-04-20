@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { Input } from "@/shared/components/Input/Input";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import { styles } from "../styles/auth";
@@ -23,11 +23,11 @@ export function AuthOption(props: AuthProps) {
 	const { control, handleSubmit } = methods;
     async function onSubmit(data: formType){
 		if (authType === "login") {
-			const result = await login({...data});
+			await login({...data});
 			router.push({pathname: "/(tabs)"});
 			return;
 		}else{
-			const result = await register({...data});
+			await register({...data});
 			router.push({pathname: "/(auth)/writeCode"});
 
 		}
@@ -35,15 +35,16 @@ export function AuthOption(props: AuthProps) {
 	return (
 		<FormProvider {...methods}>
 			<Text style={styles.subtitle}>
-				Приєднуйся до World IT
+				{authType==="register" ? "Приєднуйся до World IT" : "Раді тебе знову бачити!"}
 			</Text>
+            <View style={styles.inputs}>
+                
 			<Controller
                     name="email"
                     control={control}
                     render={({ field, fieldState }) => {
                         return (
                             <Input
-                                // inputContainerStyle={styles.inputContainer}
                                 label="Електронна пошта"
                                 placeholder="you@example.com"
                                 onChangeText={field.onChange}
@@ -69,7 +70,6 @@ export function AuthOption(props: AuthProps) {
                 )}
             />
 
-            {/* Confirm Password (Registration Only) */}
             {authType === "register" && (
                 <Controller
                     name="confirm"
@@ -86,12 +86,14 @@ export function AuthOption(props: AuthProps) {
                     )}
                 />
             )}
+            </View>
 			
     
 			<RegButton 
 				title={authType === "register" ? "Створити акаунт" : "Увійти"} 
 				onPress={handleSubmit(onSubmit)}  
 				Buttonstyle={styles.button}
+                TextStyle={styles.buttonText}
 			/>
 		</FormProvider>
 	);

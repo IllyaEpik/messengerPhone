@@ -7,17 +7,23 @@ export const styles = StyleSheet.create({
     gap: 10,
     width: "100%",
     justifyContent: "space-evenly",
-    marginBottom: 35,
-    marginTop: 20
+    alignItems:"center"
+    // marginBottom: 10,
+    // marginTop: 10
   },
   active:{
     color:"#070A1C",
-    borderBottomWidth: 1,
+    borderBottomWidth: 2,
     borderBottomColor:"#543C52",
-    fontSize: 20
+    fontWeight:700
   },
   deactive:{
-    color:"#81818D",
-    fontSize: 20
+    color:"#81818D"
+  },
+  text:{
+    fontFamily:"GTRegular",
+    fontWeight:500,
+    fontSize: 25,
+    textAlignVertical:"center"
   }
 });

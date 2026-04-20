@@ -23,7 +23,11 @@ export function CodeInput(props: codeInputProps){
                         return (
                             <View 
                             key={index} 
-                            style={[styles.otpBox, isFocused && styles.otpBoxActive]}
+                            style={[
+                                styles.otpBox, 
+                                isFocused && styles.otpBoxActive, 
+                                index % 2 === 0 && styles.withGap
+                            ]}
                             >
                             <Text style={styles.otpText}>{char || "___"}</Text>
                             </View>
@@ -34,12 +38,10 @@ export function CodeInput(props: codeInputProps){
                  value={code} 
                 keyboardType="number-pad"
                 onChangeText={(text) => {
-                    console.log(text)
                     const cleaned = text.replace(/[^0-9]/g, "");
-                    console.log(cleaned,code)
                     if (cleaned.length <= 6) {
                         setCode(cleaned)
-                    }codeArray.join("")
+                    }
                 }}
                 style={styles.hiddenInput}
                 maxLength={6}

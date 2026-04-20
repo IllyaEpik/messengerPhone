@@ -1,4 +1,5 @@
 import { useAuthContext } from "@/modules/auth/context/authContext";
+import Header from "@/shared/components/header/ui/header";
 import { Redirect, router, Stack } from "expo-router";
 
 
@@ -12,7 +13,8 @@ export default function Layout() {
 	return (
 	
 		<Stack screenOptions={{
-			headerShown:false,
+			headerShown:true,
+			header: () => <Header auth={true}/>,
 			}}>
 				
 			<Stack.Screen name='index'></Stack.Screen>

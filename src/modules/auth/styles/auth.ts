@@ -7,16 +7,28 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 4,
     color: "#000",
+    fontFamily:"GTRegular"
   },
 
   subtitle: {
-    fontSize: 20,
+    fontSize: 24,
     textAlign: "center",
-    marginBottom: 16,
-    color: "#000"
-  
+    // marginBottom: 5,
+    color: "#070A1C",
+    fontFamily:"GTMedium",
+    fontStyle: "normal",
+    lineHeight: 100,
+    letterSpacing: -1,
+    marginTop:-15
+
   },
   button: {
     width: "100%"
+  },
+  inputs:{
+    gap:10
+  },
+  buttonText:{
+    fontSize:16
   }
 });

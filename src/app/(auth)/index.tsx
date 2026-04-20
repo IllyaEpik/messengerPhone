@@ -13,7 +13,7 @@ export default function RegisterScreen() {
           secondOption= {<AuthOption authType="login" />}
           firstText="Реєстрація"
           secondText="Авторизація"
-          containerStyles={{flex:0}}
+          containerStyles={{}}
         />
       </View> 
     </View>

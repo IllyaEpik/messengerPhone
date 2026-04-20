@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, StyleProp, ViewStyle } from "react-native";
 
 import { styles } from "./Input.styles";
 
@@ -10,6 +10,7 @@ interface Props extends React.ComponentProps<typeof TextInput> {
   secure?: boolean;
   label: string,
   error:string | undefined
+  containerInputStyles?:StyleProp<ViewStyle>
 }
 
 export const Input = (props: Props) => {
@@ -20,21 +21,23 @@ export const Input = (props: Props) => {
     secure = false,
     label,
     error,
+    style,
+    containerInputStyles,
     ...other
   } = props;
   const [hidden, setHidden] = useState(secure);
 
   return (
     <>
-      <Text>{label}</Text>
-      <View style={styles.container}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={[styles.container, error ? styles.containerWithError : {}, containerInputStyles]}>
         <TextInput
           placeholder={placeholder}
-          placeholderTextColor="#A0A0A0"
+          // placeholderTextColor="#A0A0A0"
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={hidden}
-          style={styles.input}
+          style={[styles.input, style]}
           
           {...other}
           

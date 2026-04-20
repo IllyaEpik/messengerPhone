@@ -6,18 +6,18 @@ export const styles = StyleSheet.create({
         padding: 20,
         gap: 10,
         flexDirection: "column",
-        // alignItems: "center",
-        marginTop: 50
+        marginTop: 10
     },
     header: {
         flexDirection: "row",
-        gap: 200,
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        width:"100%"
     },
     textWithCheckBox: {
         flexDirection: "row",
-        gap:10,
-        marginTop: 50
+        gap:20,
+        // marginTop: 50,
+        color:"#070A1C"
 
     },
     editButton:{
@@ -30,5 +30,30 @@ export const styles = StyleSheet.create({
     },
     empty:{
         height:100
+    },
+    variant: {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        color:"#070A1C"
+        
+    },
+    psev : {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        color:"#070A1C"
+        
+    },
+    name: {
+        fontFamily: "GTRegular",
+        fontSize: 16,
+        color:"#070A1C"
+    },
+    elec: {
+        fontFamily: "GTMedium",
+        fontSize: 16,
+        color:"#070A1C"
+    },
+    element: {
+        gap:24
     }
 })

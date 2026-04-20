@@ -6,10 +6,10 @@ export function Avatars(){
   return (
     <View style= {styles.card}>
         <View style={styles.header}>
-            <Text>My photos</Text>
+            <Text style= {styles.photo}>Мої фото</Text>
             <View style={styles.publicButton}>
                 <ICONS.PublicIcon/>
-                <Text> Add a photo</Text>
+                <Text style= {styles.add}>Додати фото</Text>
             </View>
         </View>
         <View style={styles.avatars}>

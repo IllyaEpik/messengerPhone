@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
 export interface MenuProps{
     firstOption:ReactNode
@@ -8,4 +8,5 @@ export interface MenuProps{
     secondText:string
     menuStyles?:StyleProp<ViewStyle>
     containerStyles?:StyleProp<ViewStyle>
+    textStyles?:StyleProp<TextStyle>
 }

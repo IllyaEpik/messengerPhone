@@ -17,16 +17,19 @@ export function WriteCode(){
     }
     return (
         <View style={styles.container}>
-            <Text>email confirmation</Text>
-            <Text>We've sent a 6-digit code to your email (you@example.com). Enter it below to verify your account.</Text>
-            <View>
-                <Text>Confirmation code</Text>
+            <Text style= {styles.title}>Підтвердження пошти</Text>
+            <Text style= {styles.check}>Ми надіслали 6-значний код на вашу пошту (you@example.com). Введіть його нижче, щоб підтвердити акаунт</Text>
+            <View style={styles.codeContainer}>
+                <Text style={styles.code}>Код підтвердження</Text>
+                <CodeInput code={code} setCode={setCode}></CodeInput>
             </View>
-            <CodeInput code={code} setCode={setCode}></CodeInput>
-            <View>
-                <RegButton title="Підтвердити" onPress={() => submitButton(Number(code))}></RegButton>
-                <RegButton title="Назад" onPress={router.back}></RegButton>
+            <View style={styles.button}>
+                <RegButton 
+                    title="Підтвердити" onPress={() => submitButton(Number(code))} Buttonstyle={styles.button}/>
 
+                
+                <RegButton 
+                    title="Назад" onPress={router.back} invisible={true} Buttonstyle={styles.button}/>
             </View>
         </View>
     );

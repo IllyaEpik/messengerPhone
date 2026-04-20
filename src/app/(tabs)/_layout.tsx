@@ -25,7 +25,7 @@ export default function Layout() {
         
         <Tabs.Screen name="index" 
         options={{
-          title: "Home",
+          title: "Головна",
           tabBarIcon: ({ focused }) => (
           <FooterTab selected={focused} icon={<HouseIcon/>}/>
         ),
@@ -33,7 +33,7 @@ export default function Layout() {
         
         <Tabs.Screen name="chat" 
         options={{
-          title: "Chat",
+          title: "Чати",
           tabBarIcon: ({ focused }) => (
           <FooterTab selected={focused} icon={<ChatIcon/>}/>
         ),
@@ -41,7 +41,7 @@ export default function Layout() {
 
         <Tabs.Screen name="friends" 
         options={{
-          title: "friends",
+          title: "Друзі",
           tabBarIcon: ({ focused }) => (
           <FooterTab selected={focused} icon={<PeopleIcon/>}/>
         ),
@@ -49,7 +49,7 @@ export default function Layout() {
         
         <Tabs.Screen name="publics" 
             options={{
-              title: "publics",
+              title: "Мої публікації",
               tabBarIcon: ({ focused }) => (
               <FooterTab selected={focused} icon={<PublicIcon/>}/>
             ),
