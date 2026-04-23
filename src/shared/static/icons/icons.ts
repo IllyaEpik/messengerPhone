@@ -1,7 +1,9 @@
 import { ChatIcon } from "./_icons/chat";
+import { closedIcon } from "./_icons/closedIcon";
 import { Edit } from "./_icons/edit";
 import { HouseIcon } from "./_icons/house";
 import { LogoutIcon } from "./_icons/logout";
+import { openIcon } from "./_icons/openIcon";
 import { PeopleIcon } from "./_icons/people";
 import { PlusIcon } from "./_icons/plus";
 import { PublicIcon } from "./_icons/publics";
@@ -18,5 +20,7 @@ export const ICONS = {
 	LogoutIcon,
 	HouseIcon,
 	PeopleIcon,
-	Edit
+	Edit,
+	closedIcon,
+	openIcon
 };

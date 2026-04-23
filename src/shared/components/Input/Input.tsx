@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, TouchableOpacity, Text, StyleProp, ViewStyle } from "react-native";
 
 import { styles } from "./Input.styles";
+import { ICONS } from "@/shared/static/icons";
 
 interface Props extends React.ComponentProps<typeof TextInput> {
   placeholder: string;
@@ -18,7 +19,7 @@ export const Input = (props: Props) => {
     placeholder,
     value,
     onChangeText,
-    secure = false,
+    secure,
     label,
     error,
     style,
@@ -45,6 +46,9 @@ export const Input = (props: Props) => {
 
         {secure && (
           <TouchableOpacity onPress={() => setHidden(!hidden)}>
+            {
+              hidden ? <ICONS.closedIcon/> : <ICONS.openIcon/>
+            }
           </TouchableOpacity>
         )}
       </View>

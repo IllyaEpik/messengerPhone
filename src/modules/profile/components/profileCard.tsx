@@ -9,18 +9,17 @@ import { useUpdateProfileMutation } from "../api/profileApi";
 
 export function ProfileCard(){
 
+	const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
 	const [edit, setEdit] = useState<boolean>(false);
     const rawUser= useAuthContext()
+	const [username, setUsername] = useState<string>(rawUser.user?.profile?.username || "")
 	const [url, setUrl] = useState<string>("")
     if (!rawUser || !rawUser.user) return <Text>"no user"</Text>
     const user = rawUser.user
-	const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
 	const avatarItem = user.profile?.avatar?.at(-1);
-	console.log("avatar", avatarItem?.crackedAvatar.split("/").at(-1))
 	const avatarUrl = avatarItem
 	? `http://10.0.2.2:8000/media/crackedAvatars/${avatarItem.crackedAvatar.split("/").at(-1)}`
 	: undefined;
-	const [username, setUsername] = useState<string>(user.profile?.username || "")
 	const submit = async () => {
         if (!edit) {
 			setEdit(true);

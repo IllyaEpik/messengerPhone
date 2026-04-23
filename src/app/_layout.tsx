@@ -17,7 +17,7 @@ export default function Layout() {
     'GTMedium': require('../../assets/fonts/font/GTWalsheimPro-Medium.ttf'),
     'GTBold': require('../../assets/fonts/font/GTWalsheimPro-Bold.ttf'),
     'GTBlack': require('../../assets/fonts/font/GTWalsheimPro-superBold.ttf'),
-    'GTUltraBold': require('../../assets/fonts/font/GTWalsheimPro-UltraBold.ttf'),
+    'GTUltraBold': require('../../assets/fonts/font/GTWalsheimPro-UltraBold.ttf')
   });
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {

@@ -64,7 +64,7 @@ export function AuthOption(props: AuthProps) {
                         placeholder="Введи пароль"
                         onChangeText={field.onChange}
                         value={field.value}
-                        secure
+                        secure={true}
                         error={fieldState.error?.message}
                     />
                 )}

@@ -2,8 +2,9 @@ import { View, Text} from "react-native";
 import { Checkbox } from 'expo-checkbox';
 import { styles } from "../styles/bottom";
 import { ICONS } from "@/shared/static/icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuthContext } from "@/modules/auth/context/authContext";
+import SignatureScreen from 'react-native-signature-canvas';
 export function ProfileBottom(){
 	const [edit, setEdit] = useState<boolean>(false);
     const [pseudonym, setPseudonym] = useState<boolean>(false)
@@ -28,6 +29,15 @@ export function ProfileBottom(){
                 </View>
             </View>
             <View style={styles.empty}></View>
+            <SignatureScreen
+                // ref={ref}
+                // onOK={handleOK}
+                // onClear={handleClear}
+                descriptionText="Sign here"
+                clearText="Clear"
+                confirmText="Save"
+                // webStyle={`.m-signature-pad--footer {display: none; margin: 0px;}`}
+            />
        </View>
     )
 }

@@ -59,6 +59,7 @@ export const userApi = baseApi.injectEndpoints({
             }),
             async onCacheEntryAdded(arg, api) {
                 const { data } = await api.cacheDataLoaded;
+                console.log(data)
 				await AsyncStorage.setItem("token", data.token);
                 useAuthContext().setToken(data.token);
 			}

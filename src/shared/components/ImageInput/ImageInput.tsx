@@ -8,7 +8,8 @@ export function ImageInput(props:IProps ) {
         onChange, 
         filled,
         icon,
-        text
+        text,
+        style
     } = props
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -23,7 +24,7 @@ export function ImageInput(props:IProps ) {
         }
     }
     return (
-        <Pressable style={[styles.basic,filled && styles.filled]} onPress={pickImage}>
+        <Pressable style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
             ...{icon}
             <Text>{text}</Text>
         </Pressable>

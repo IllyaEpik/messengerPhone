@@ -16,16 +16,15 @@ interface FormState {
 export function ProfileSettings() {
     const [edit, setEdit] = useState<boolean>(false);
     const rawUser = useAuthContext();
-    if (!rawUser || !rawUser.user) return <Text>No user</Text>;
-    const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
-    
-    const { user, token } = rawUser;
     const [form, setForm] = useState<FormState>({
         firstName: "",
         lastName: "",
         email: "",
         birthday: "",
     });
+    const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
+    
+    const { user, token } = rawUser;
     
     useEffect(() => {
         if (!user) return;
@@ -44,6 +43,7 @@ export function ProfileSettings() {
         setForm((prev) => ({ ...prev, [key]: value }));
     };
 
+    if (!rawUser || !rawUser.user) return <Text>No user</Text>;
 
     const submit = async () => {
         if (!edit) {
@@ -131,6 +131,7 @@ export function ProfileSettings() {
         onChangeText={() => {}}
         error={""}
         editable={false}
+        secure
       />
 
       {isError && <Text style={styles.errorText}>Could not save profile. Please try again.</Text>}

@@ -29,17 +29,22 @@ export function useAuthContext() {
 export function AuthProvider(props: AuthProviderProps) {
     const { children } = props;
     const [token, setToken] = useState<string>("")
+    const [isInitialized, setIsInitialized] = useState<boolean>(false)
     const [user, setUser] = useState<IUser | null>(null)
     const {data} = useGetUserQuery(token, { skip: !token, pollingInterval: 5000 });
-    
-    
-    useEffect(() => { 
-        AsyncStorage.getItem("token").then((token) => {
-            if (token) {
-                console.log("from storage",token)
-                setToken(token)
-            }
-        })
+
+    useEffect(() => {
+        AsyncStorage.getItem("token")
+            .then((token) => {
+                if (token) {
+                    console.log("from storage", token)
+                    setToken(token)
+                }
+            })
+            .finally(() => {
+                console.log(13132132)
+                setIsInitialized(true)
+            })
     }, [])
 
     useEffect(() => {
@@ -47,15 +52,19 @@ export function AuthProvider(props: AuthProviderProps) {
             setUser(data)
         }
     }, [data])
-    
+
     function logout() {
         setToken("")
-        AsyncStorage.removeItem("token")
         setUser(null)
+        AsyncStorage.removeItem("token")
+    }
+
+    if (!isInitialized) {
+        return null
     }
 
     return (
-        <AuthContext.Provider value={{ user: data || null, setToken, logout, token }}>
+        <AuthContext.Provider value={{ user, setToken, logout, token }}>
             {children}
         </AuthContext.Provider>
     )
