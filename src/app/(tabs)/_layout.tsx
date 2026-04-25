@@ -11,10 +11,12 @@ import { PublicIcon } from "@/shared/static/icons/_icons/publics";
 import FooterTab from "@/shared/components/footer/ui/footerTab";
 import { useAuthContext } from "@/modules/auth/context/authContext";
 import { CreateProfileModal } from "@/modules/auth/components/profileModal";
+import { PaperProvider } from "react-native-paper";
 //   const Tab = createBottomTabNavigator()
 export default function Layout() {
   
   return (
+    <PaperProvider>
         <Tabs screenOptions={{ 
             tabBarActiveTintColor: '#070A1C',
             headerShown:true,
@@ -67,5 +69,6 @@ export default function Layout() {
       }} 
     />
         </Tabs>
+        </PaperProvider>
   );
 }

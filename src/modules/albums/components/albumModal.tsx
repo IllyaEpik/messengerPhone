@@ -2,34 +2,67 @@ import { View, Text } from "react-native";
 import { styles } from "../styles/albumModal";
 import { Input } from "@/shared/components/Input/Input";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { albumModalProps, albumForm } from "../types/albumModal";
 import { Dropdown } from "react-native-element-dropdown";
-
+import { useCreateAlbumMutation, useUpdateAlbumsMutation } from "../api/albumApi";
+import { useAuthContext } from "@/modules/auth/context/authContext";
 
 export function AlbumModal(props: albumModalProps){
-    const date = new Date()
-    const topics = [
-    { label: "Природа", value: "nature" },
-    { label: "Місто", value: "city" },
-    { label: "Люди", value: "people" },
-    ];
-    
-    const years = Array.from({ length: 100 }, (_, i) => {
-    const year = date.getFullYear() - i;
-        return { label: String(year), value: String(year) };
-    });
     const {
         isEdit,
         isOpen,
-        close
+        close,
+        album
     } = props 
-    const [form, setForm] = useState<albumForm >({year:date.getFullYear(), topic:"", name:""})
+    const date = new Date()
+    const topics = [
+    { label: "Природа", value: "Природа" },
+    { label: "Місто", value: "Місто" },
+    { label: "Люди", value: "Люди" },
+    ];
+    const [createAlbum, {isLoading}] = useCreateAlbumMutation()
+    const [updateAlbum] = useUpdateAlbumsMutation()
+    const userData = useAuthContext()
+    const years = Array.from({ length: 100 }, (_, i) => {
+            const year = date.getFullYear() - i;
+            return { label: String(year), value: String(year) };
+        });
+
+    const [form, setForm] = useState<albumForm >({year:date.getFullYear(), topic:"", title:""})
     const handleChange = (key: keyof albumForm, value: string) => {
         setForm((prev) => ({ ...prev, [key]: value }));
     };
+    useEffect(()=>{
+        if (album){
+            setForm({
+                title:album.title,
+                topic:album.topic.name,
+                year:album.year
+            })
+        }
+    },[])
     function submit() {
+        if (isLoading) return
         
+        try {
+            if (isEdit && album){
+                updateAlbum({
+                    token:userData.token,
+                    ...form,
+                    id:album.id
+                })
+            }else{
+                createAlbum({
+                    token:userData.token,
+                    ...form
+                })
+                setForm({year:date.getFullYear(), topic:"", title:""})
+            }
+            close()
+        } catch (error) {
+        	console.error("Update profile failed", error);
+        }
     }
     if (!isOpen) return null
     return (<>
@@ -45,8 +78,8 @@ export function AlbumModal(props: albumModalProps){
                     <Input
                         label="Назва альбому "
                         placeholder="Настрій"
-                        onChangeText={(value) => handleChange("name", value)}
-                        value={form.name}
+                        onChangeText={(value) => handleChange("title", value)}
+                        value={form.title}
                         containerInputStyles={styles.input}
                         error=""
                     />

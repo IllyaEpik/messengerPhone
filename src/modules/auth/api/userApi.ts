@@ -20,7 +20,6 @@ export const userApi = baseApi.injectEndpoints({
         }),
         profile: builder.mutation<LoginResponse, IProfile>({
             query: (body) => {
-                console.log(body)
                 return {
                     url: "/users/profile",
                     method: "POST",
@@ -59,7 +58,6 @@ export const userApi = baseApi.injectEndpoints({
             }),
             async onCacheEntryAdded(arg, api) {
                 const { data } = await api.cacheDataLoaded;
-                console.log(data)
 				await AsyncStorage.setItem("token", data.token);
                 useAuthContext().setToken(data.token);
 			}

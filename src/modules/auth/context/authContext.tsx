@@ -37,12 +37,10 @@ export function AuthProvider(props: AuthProviderProps) {
         AsyncStorage.getItem("token")
             .then((token) => {
                 if (token) {
-                    console.log("from storage", token)
                     setToken(token)
                 }
             })
             .finally(() => {
-                console.log(13132132)
                 setIsInitialized(true)
             })
     }, [])

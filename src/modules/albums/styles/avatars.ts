@@ -21,17 +21,16 @@ export const styles = StyleSheet.create({
         width:"100%",
         alignItems:"center"
     },
-
     publicButton:{
-        // flexDirection: "row",
         borderRadius: 100,
         borderColor: "#543C52",
         borderWidth: 1,
         borderStyle: "solid",
         padding: 10,
-        // gap:10
+
 
     },
+    
     avatars:{
         flexDirection: "row",
         justifyContent:"flex-start",
@@ -48,8 +47,23 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         
     },
-    noOne: {
-        fontFamily: "GTMedium",
-        fontSize: 16,
+    buttonIcon:{
+        padding: 9,
+        backgroundColor: "#FFFFFF",
+        borderRadius: 100,
+        borderColor: "#543C52",
+        borderWidth: 1,
+        borderStyle: "solid",
+        flexDirection: "row"
+    },
+    iconContainer: {
+        position: "relative"
+    },
+    iconsOnImg:{
+        position: "absolute",
+        right: 10,
+        bottom: 10,
+        flexDirection:"row",
+        gap:10
     }
 })

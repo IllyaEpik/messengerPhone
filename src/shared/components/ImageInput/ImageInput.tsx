@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
+import {  Text, Pressable } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import {styles} from "./imageInput.styles"
 import { IProps } from "./imageInputs.types";
@@ -9,7 +9,8 @@ export function ImageInput(props:IProps ) {
         filled,
         icon,
         text,
-        style
+        style,
+        children
     } = props
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -25,8 +26,9 @@ export function ImageInput(props:IProps ) {
     }
     return (
         <Pressable style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
-            ...{icon}
-            <Text>{text}</Text>
+            ...{typeof icon !== "string" && icon}
+            {text && <Text>{text}</Text>}
+            ...{children}
         </Pressable>
     )
 }
