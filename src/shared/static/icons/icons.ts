@@ -1,4 +1,5 @@
 import { ChatIcon } from "./_icons/chat";
+import { checkmark } from "./_icons/checkmark";
 import { closedIcon } from "./_icons/closedIcon";
 import { Edit } from "./_icons/edit";
 import { HouseIcon } from "./_icons/house";
@@ -26,5 +27,6 @@ export const ICONS = {
 	closedIcon,
 	openIcon,
 	OptionsIcon,
-	TrashIcon
+	TrashIcon,
+	checkmark
 };

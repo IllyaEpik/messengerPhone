@@ -47,18 +47,18 @@ export function ProfileSettings() {
 
     const submit = async () => {
         if (!edit) {
-        setEdit(true);
-        return;
+			setEdit(true);
+			return;
         }
 
 
-        try {
-        updateProfile({
-            firstName: form.firstName?.trim() || "",
-            lastName: form.lastName?.trim() || "",
-            token,
-        })
-        setEdit(false);
+		try {
+			updateProfile({
+				firstName: form.firstName?.trim() || "",
+				lastName: form.lastName?.trim() || "",
+				token,
+			})
+			setEdit(false);
         } catch (error) {
         console.error("Update profile failed", error);
         }

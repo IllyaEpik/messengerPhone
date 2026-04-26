@@ -43,7 +43,7 @@ export function Avatars(){
                         ? `http://10.0.2.2:8000/media/Avatars/${avatar.avatar.split("/").at(-1)}`
                         : `http://10.0.2.2:8000/media/crackedAvatars/${avatar.crackedAvatar.split("/").at(-1)}`
                         return (
-                            <View style={styles.iconContainer}>
+                            <View style={styles.iconContainer} key={avatar.avatar}>
                                 <Image
                                     style={styles.icon}
                                     source={

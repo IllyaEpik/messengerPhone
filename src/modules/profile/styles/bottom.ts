@@ -55,5 +55,39 @@ export const styles = StyleSheet.create({
     },
     element: {
         gap:24
+    },
+    activatedEditButton: {
+        backgroundColor:"#E9E5EE"
+    },
+    button:{
+        borderColor:"#543C52",
+        borderWidth:1,
+        height:40,
+        padding:10
+    },
+    saveButton:{
+        backgroundColor:"#E9E5EE"
+    },
+    buttons:{
+        width:200,
+        flexDirection: "row",
+        gap:10
+    },
+    buttonText:{
+        fontSize:14,
+        fontFamily:"GTMedium"
+    },
+    color:{
+        borderRadius:999,
+        height:44,
+        width:44,
+        backgroundColor:"#070A1C"
+    },
+    selectedColor:{
+        borderColor:"#81818D",
+        borderWidth:3
+    },
+    brown:{
+        backgroundColor:"#543C52"
     }
 })
