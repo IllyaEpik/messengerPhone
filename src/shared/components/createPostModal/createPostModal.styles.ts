@@ -66,10 +66,10 @@ export const createPostModalStyles = StyleSheet.create({
     backgroundColor: "#543C52",
     borderRadius: 16,
     paddingVertical: 14,
-    alignItems: "center",
+
   },
   submitButtonText: {
-    color: "#fff",
+
     fontWeight: "bold",
     fontSize: 16,
   },
