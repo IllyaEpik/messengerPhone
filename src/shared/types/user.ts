@@ -10,6 +10,10 @@ export interface IProfile{
     firstName: string | null,
     lastName: string | null
     avatar: IAvatar[] | null
+
+    showNickname: boolean
+    showElectronicSignature: boolean
+    electronicSignature: string | null
 }
 export interface IAvatar {
     avatar: string

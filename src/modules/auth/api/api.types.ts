@@ -15,4 +15,8 @@ export interface IProfile{
     nickname: string
     username: string
     token:string
+
+    showNickname: boolean
+    showElectronicSignature: boolean
+    electronicSignature: string | null
 }

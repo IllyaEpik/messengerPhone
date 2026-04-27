@@ -11,17 +11,22 @@ export const userApi = baseApi.injectEndpoints({
             query: (body) => {
                 const formData = new FormData();
                 
-                // Conditionally append text fields only if they exist
                 if (body.firstName) formData.append("firstName", body.firstName);
                 if (body.lastName) formData.append("lastName", body.lastName);
                 if (body.nickName) formData.append("nickName", body.nickName);
                 if (body.username) formData.append("username", body.username);
                 
-                // Append avatar as a file (React Native style) only if present
                 if (body.avatar) {
                     formData.append("avatar", {
                         uri: body.avatar,
                         name: "avatar.jpg",
+                        type: "image/jpeg",
+                    } as unknown as Blob);
+                }
+                if (body.electronicSignature) {
+                    formData.append("electronicSignature", {
+                        uri: body.electronicSignature,
+                        name: "electronicSignature.jpg",
                         type: "image/jpeg",
                     } as unknown as Blob);
                 }

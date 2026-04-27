@@ -6,4 +6,7 @@ export interface IUpdateProfile{
     avatar?:string
     nickName?: string
     username?: string
+    showNickname?: boolean
+    showElectronicSignature?: boolean
+    electronicSignature?: string
 }
