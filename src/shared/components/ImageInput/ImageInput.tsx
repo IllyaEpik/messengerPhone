@@ -10,14 +10,17 @@ export function ImageInput(props:IProps ) {
         icon,
         text,
         style,
-        children
+        children,
+        aspect,
+        notAspect
     } = props
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
-            aspect: [1, 1],
+            aspect: notAspect ? undefined : aspect || [1,1],
             quality: 0.5,
+
         });
 
         if (!result.canceled) {

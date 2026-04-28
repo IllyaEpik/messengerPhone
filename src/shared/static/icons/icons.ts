@@ -2,6 +2,7 @@ import { ChatIcon } from "./_icons/chat";
 import { checkmark } from "./_icons/checkmark";
 import { closedIcon } from "./_icons/closedIcon";
 import { Edit } from "./_icons/edit";
+import { ExitIcon } from "./_icons/exitIcon";
 import { HouseIcon } from "./_icons/house";
 import { LogoutIcon } from "./_icons/logout";
 import { openIcon } from "./_icons/openIcon";
@@ -9,7 +10,9 @@ import { OptionsIcon } from "./_icons/options";
 import { PeopleIcon } from "./_icons/people";
 import { PlusIcon } from "./_icons/plus";
 import { PublicIcon } from "./_icons/publics";
+import { SendIcon } from "./_icons/sendIcon";
 import { SettingsIcon } from "./_icons/settings";
+import { Smile } from "./_icons/smile";
 import { TrashIcon } from "./_icons/trash";
 import { WorldIT } from "./_icons/worldIT";
 
@@ -28,5 +31,8 @@ export const ICONS = {
 	openIcon,
 	OptionsIcon,
 	TrashIcon,
-	checkmark
+	checkmark,
+	SendIcon,
+	Smile,
+	ExitIcon
 };

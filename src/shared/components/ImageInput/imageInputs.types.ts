@@ -8,4 +8,6 @@ export interface IProps {
     text?: string; 
     style?: StyleProp<ViewStyle>;
     children?: ReactNode
+    aspect?: [number, number]
+    notAspect?: boolean
 }

@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { G, Path, Defs, ClipPath,SvgProps } from "react-native-svg"
 
-function SvgComponent(props:SvgProps) {
+export function ExitIcon(props:SvgProps) {
   return (
     <Svg
       width={20}
@@ -25,5 +25,3 @@ function SvgComponent(props:SvgProps) {
     </Svg>
   )
 }
-
-export default SvgComponent

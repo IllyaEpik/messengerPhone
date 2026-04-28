@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 		marginBottom: 3,
 		backgroundColor: "#FFFFFF",
-		position: "relative"
+		position: "relative",
+		flex:1
 	},
 
 	input: {
@@ -19,7 +20,8 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		color: "#070A1C",
 		fontFamily:"GTRegular",
-		lineHeight:22
+		lineHeight:22,
+		// width:"auto"
 	},
 	error: {
 		color: "#FF4C4C",
@@ -41,6 +43,16 @@ export const styles = StyleSheet.create({
 		right: 5,
 		width: 5,
 		height: 5
+	},
+	fullInput:{
+		flex:1,
+		width:"100%",
+	},
+	fullInputWithIcon:{
+		flexDirection:"row",
+		flex:1,
+		gap:10
+
 	}
 
 });
