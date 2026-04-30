@@ -5,13 +5,15 @@ import { ICONS } from "@/shared/static/icons";
 import { Input } from "../../../shared/components/Input/Input";
 import { ImageInput } from "@/shared/components/ImageInput/ImageInput";
 
+import type { PostData } from "./Post";
 interface CreatePostModalProps {
-  visible: boolean;
-  onClose: () => void;
+	visible: boolean;
+	onClose: () => void;
+	onSubmit: (post: PostData) => void;
 }
 
 export function CreatePostModal(props: CreatePostModalProps) {
-	const { visible, onClose } = props;
+	const { visible, onClose, onSubmit } = props;
 	const [link, setLink] = useState<string>("")
 	const [title, setTitle] = useState<string>("")
 	const [topic, setTopic] = useState<string>("")
@@ -20,6 +22,22 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const tagsList = ['відпочинок','натхнення','життя','природа','читання','спокій','гармонія','музика','фільми','подорожі'];
 	function addImage(image:string) {
 		setImages([...images, image])
+	}
+
+	function handleSubmit() {
+		onSubmit({
+			title,
+			topic,
+			content,
+			link,
+			images,
+		});
+		setTitle("");
+		setTopic("");
+		setContent("");
+		setLink("");
+		setImages([]);
+		onClose();
 	}
 	return (
 		<Modal
@@ -118,7 +136,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 						</View>
 						<Pressable
 							style={createPostModalStyles.submitButton}
-							onPress={onClose}
+							onPress={handleSubmit}
 						>
 							<Text style={createPostModalStyles.submitButtonText}>Публікація</Text>
 							<ICONS.SendIcon/>
