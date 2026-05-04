@@ -16,7 +16,6 @@ export function Signature(props:IProps) {
     } = props
     const ref = useRef<SignatureViewRef | null>(null);
     const [color, setColor] = useState<string>("#543C52")
-
     useEffect(() => {
         ref.current?.changePenColor(color)
     },[color])

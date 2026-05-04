@@ -32,7 +32,6 @@ export function AuthProvider(props: AuthProviderProps) {
     const [isInitialized, setIsInitialized] = useState<boolean>(false)
     const [user, setUser] = useState<IUser | null>(null)
     const {data} = useGetUserQuery(token, { skip: !token, pollingInterval: 5000 });
-
     useEffect(() => {
         AsyncStorage.getItem("token")
             .then((token) => {

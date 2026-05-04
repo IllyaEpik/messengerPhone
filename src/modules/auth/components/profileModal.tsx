@@ -18,12 +18,14 @@ export function CreateProfileModal(){
     function submitButton() {
         createProfile({nickname,username, token});
     }
+    
     return (
         <>
             <View style={styles.container}>
                 <View style={styles.modal}>
                     <Text style={styles.title}>Додай деталі про себе</Text>
                     <View style={styles.main}>
+                        <ScrollView style={{ flexGrow: 0 }} scrollEnabled={false}>
                         <Input
                             label="Псевдонім автора "
                             placeholder="Введіть Псевдонім автора "
@@ -42,6 +44,7 @@ export function CreateProfileModal(){
                             />
                         <Text style={styles.text}>Або оберіть: <Text style={styles.greenText}>(Запропоновані варіанти відповідно до Ім’я та Прізвища)</Text></Text>
                         </View>
+                        </ScrollView>
 
                     </View>
                     <View style={styles.buttonContainer}>

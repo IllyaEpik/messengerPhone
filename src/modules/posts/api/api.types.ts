@@ -1,3 +1,4 @@
+import { IUser } from "@/shared/types/user"
 
 export interface IImage {
     image: string
@@ -10,16 +11,32 @@ export interface ILink {
 }
 
 export interface IPost {
-    id: 1,
-    title: "title",
-    content: "content",
-    creatorId: 1,
+    id: number,
+    creator: IUser
+    title: string,
+    content: string,
+    topic: string | null
+    creatorId: number,
     tags: ITag[],
     images: IImage[],
     links: ILink[],
     _count: {
-        likes: 1,
-        views: 1,
-        loves: 0
+        likes: number,
+        views: number,
+        loves: number
     }
+}
+export interface ICreatePost {
+    title: string
+    content: string
+    token: string
+    topic?: string
+    tags?: string[]
+    links?: string[]
+    images?: string[]
+}
+export interface IGetPosts{ 
+    token:string,
+    isMine: boolean,
+    skip?: number
 }

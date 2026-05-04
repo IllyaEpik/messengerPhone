@@ -4,14 +4,17 @@ import { createPostModalStyles } from "../styles/createPostModal.styles";
 import { ICONS } from "@/shared/static/icons";
 import { Input } from "../../../shared/components/Input/Input";
 import { ImageInput } from "@/shared/components/ImageInput/ImageInput";
-
+import { useCreatePostMutation } from "../api/postApi";
+import { useAuthContext } from "@/modules/auth/context/authContext";
 interface CreatePostModalProps {
-  visible: boolean;
-  onClose: () => void;
+	visible: boolean;
+	onClose: () => void;
 }
 
 export function CreatePostModal(props: CreatePostModalProps) {
 	const { visible, onClose } = props;
+	const [createPost] = useCreatePostMutation()
+	const {token} = useAuthContext()
 	const [link, setLink] = useState<string>("")
 	const [title, setTitle] = useState<string>("")
 	const [topic, setTopic] = useState<string>("")
@@ -21,6 +24,24 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	function addImage(image:string) {
 		setImages([...images, image])
 	}
+	
+	async function handleSubmit() {
+		await createPost({
+			title,
+			token,
+			content,
+			topic,
+			images,
+			// [link],
+		});
+		setTitle("");
+		setTopic("");
+		setContent("");
+		setLink("");
+		setImages([]);
+		onClose();
+	}
+
 	return (
 		<Modal
 		visible={visible}
@@ -61,9 +82,9 @@ export function CreatePostModal(props: CreatePostModalProps) {
 						</View>
 						<View style={createPostModalStyles.tagsContainer}>
 							{tagsList.map(tag => (
-								<View key={tag} style={createPostModalStyles.tag}>
+								<Pressable key={tag} style={createPostModalStyles.tag} onPress={() => {setContent(content + " #" + tag)}}>
 									<Text style={createPostModalStyles.tagText}>#{tag}</Text>
-								</View>
+								</Pressable>
 							))}
 							<View style={createPostModalStyles.plusButton}>
 								<ICONS.PlusIcon />
@@ -118,7 +139,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 						</View>
 						<Pressable
 							style={createPostModalStyles.submitButton}
-							onPress={onClose}
+							onPress={handleSubmit}
 						>
 							<Text style={createPostModalStyles.submitButtonText}>Публікація</Text>
 							<ICONS.SendIcon/>
@@ -130,3 +151,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 		</Modal>
 	);
 };
+function useAthContext(): { userToken: any; } {
+	throw new Error("Function not implemented.");
+}
+

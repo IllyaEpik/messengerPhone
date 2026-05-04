@@ -32,14 +32,14 @@ export default function Layout() {
           <FooterTab selected={focused} icon={<HouseIcon/>}/>
         ),
         }}/>  
-        
-        <Tabs.Screen name="chat" 
-        options={{
-          title: "Чати",
-          tabBarIcon: ({ focused }) => (
-          <FooterTab selected={focused} icon={<ChatIcon/>}/>
-        ),
+        <Tabs.Screen name="publics" 
+            options={{
+              title: "Мої публікації",
+              tabBarIcon: ({ focused }) => (
+              <FooterTab selected={focused} icon={<PublicIcon/>}/>
+            ),
         }}/>
+        
 
         <Tabs.Screen name="friends" 
         options={{
@@ -49,13 +49,14 @@ export default function Layout() {
         ),
         }}/> 
         
-        <Tabs.Screen name="publics" 
-            options={{
-              title: "Мої публікації",
-              tabBarIcon: ({ focused }) => (
-              <FooterTab selected={focused} icon={<PublicIcon/>}/>
-            ),
+        <Tabs.Screen name="chat" 
+        options={{
+          title: "Чати",
+          tabBarIcon: ({ focused }) => (
+          <FooterTab selected={focused} icon={<ChatIcon/>}/>
+        ),
         }}/>
+        
     {/* <Tabs.Screen 
       name="(auth)" 
       options={{

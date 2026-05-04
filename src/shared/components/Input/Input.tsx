@@ -32,7 +32,7 @@ export const Input = (props: Props) => {
 
   return (
     <View style={styles.fullInput}>
-      	{label && <Text style={styles.label}>{label}</Text>}
+      	{label ? <Text style={styles.label}>{label}</Text> : null}
         <View style={styles.fullInputWithIcon}>
 			
 			<View style={[styles.container, error ? styles.containerWithError : {}, containerInputStyles]}>

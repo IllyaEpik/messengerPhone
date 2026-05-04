@@ -22,16 +22,18 @@ export function ProfileBottom(props:IProps){
         if (edit) return
         console.log({
             showElectronicSignature:showSignature,
-            token:token,
+            token,
             showNickname:pseudonym,
             ...( signature && {electronicSignature:signature})
         })
-        await updateProfile({
+        
+        const result = await updateProfile({
             showElectronicSignature:showSignature,
             token:token,
             showNickname:pseudonym,
             ...( signature && {electronicSignature:signature})
         })
+        console.log(result)
     }
     if (!user) return
     return (

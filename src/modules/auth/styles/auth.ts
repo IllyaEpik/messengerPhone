@@ -26,7 +26,12 @@ export const styles = StyleSheet.create({
     width: "100%"
   },
   inputs:{
-    gap:10
+    gap:10,
+    position:"relative",
+    flexDirection:"column",
+    minHeight: 150, // This ensures the container stays open
+    width: "100%",
+    flex:0
   },
   buttonText:{
     fontSize:16

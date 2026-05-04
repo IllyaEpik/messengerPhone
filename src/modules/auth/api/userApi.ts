@@ -1,6 +1,6 @@
 import { baseApi } from "src/shared/api/baseApi";
 import { ILogin, IUser } from "../../../shared/types/user";
-import { IProfile, IRegister, LoginResponse } from "./api.types";
+import { ICreateProfile, IRegister, LoginResponse } from "./api.types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuthContext } from "../context/authContext";
 
@@ -18,7 +18,7 @@ export const userApi = baseApi.injectEndpoints({
                 }
             }
         }),
-        profile: builder.mutation<LoginResponse, IProfile>({
+        profile: builder.mutation<LoginResponse, ICreateProfile>({
             query: (body) => {
                 return {
                     url: "/users/profile",
@@ -43,7 +43,6 @@ export const userApi = baseApi.injectEndpoints({
             async onCacheEntryAdded(arg, api) {
 				const { data } = await api.cacheDataLoaded;
 				await AsyncStorage.setItem("token", data.token);
-                useAuthContext().setToken(data.token);
 			}
         }),
 
@@ -59,7 +58,6 @@ export const userApi = baseApi.injectEndpoints({
             async onCacheEntryAdded(arg, api) {
                 const { data } = await api.cacheDataLoaded;
 				await AsyncStorage.setItem("token", data.token);
-                useAuthContext().setToken(data.token);
 			}
         }),
         getUser: builder.query<IUser, string>({

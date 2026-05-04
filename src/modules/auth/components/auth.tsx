@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, View } from "react-native";
 import { Input } from "@/shared/components/Input/Input";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import { styles } from "../styles/auth";
@@ -9,10 +9,12 @@ import { RegistrationForm, LoginForm } from "../models/types/auth";
 import { registrationValidator,loginValidator } from "../models/lib/auth";
 import { Controller, useForm, FormProvider } from "react-hook-form";
 import { router } from "expo-router";
+import { useAuthContext } from "../context/authContext";
 
 export function AuthOption(props: AuthProps) {
 	const { authType } = props
 
+    const {setToken} = useAuthContext()
 	const [ login ]    = useLoginMutation();
 	const [ register ] = useRegistrationMutation();
 	type formType = RegistrationForm | LoginForm;
@@ -23,11 +25,13 @@ export function AuthOption(props: AuthProps) {
 	const { control, handleSubmit } = methods;
     async function onSubmit(data: formType){
 		if (authType === "login") {
-			await login({...data});
+            const response = await login({...data});
+            setToken(response.data?.token || "")
 			router.push({pathname: "/(tabs)"});
 			return;
 		}else{
-			await register({...data});
+			const response = await register({...data});
+            setToken(response.data?.token || "")
 			router.push({pathname: "/(auth)/writeCode"});
 
 		}
@@ -37,7 +41,7 @@ export function AuthOption(props: AuthProps) {
 			<Text style={styles.subtitle}>
 				{authType==="register" ? "Приєднуйся до World IT" : "Раді тебе знову бачити!"}
 			</Text>
-            <View style={styles.inputs}>
+            <ScrollView style={{ flexGrow: 0 }} scrollEnabled={false}>
                 
 			<Controller
                     name="email"
@@ -86,7 +90,7 @@ export function AuthOption(props: AuthProps) {
                     )}
                 />
             )}
-            </View>
+            </ScrollView>
 			
     
 			<RegButton 

@@ -20,3 +20,11 @@ export interface IProfile{
     showElectronicSignature: boolean
     electronicSignature: string | null
 }
+
+
+export interface ICreateProfile{
+    nickname: string
+    username: string
+    token:string
+
+}

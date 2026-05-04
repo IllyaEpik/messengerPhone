@@ -10,4 +10,5 @@ export interface IProps {
     children?: ReactNode
     aspect?: [number, number]
     notAspect?: boolean
+    maxSize?: number
 }

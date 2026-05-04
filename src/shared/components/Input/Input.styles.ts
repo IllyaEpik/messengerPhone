@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
 	fullInput:{
 		flex:1,
 		width:"100%",
+		flexDirection:"column"
 	},
 	fullInputWithIcon:{
 		flexDirection:"row",

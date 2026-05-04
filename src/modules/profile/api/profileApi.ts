@@ -27,7 +27,7 @@ export const userApi = baseApi.injectEndpoints({
                     formData.append("electronicSignature", {
                         uri: body.electronicSignature,
                         name: "electronicSignature.jpg",
-                        type: "image/jpeg",
+                        type: "image/png",
                     } as unknown as Blob);
                 }
                 
