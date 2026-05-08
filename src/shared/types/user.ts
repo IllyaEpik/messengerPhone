@@ -4,26 +4,28 @@ export interface ILogin{
 }
 export interface IProfile{
     id: number,
-    nickname: string,
-    username: string,
+    pseudonym: string,
     userId: number,
     firstName: string | null,
     lastName: string | null
-    avatar: IAvatar[] | null
+    avatar: string
 
     showNickname: boolean
     showElectronicSignature: boolean
     electronicSignature: string | null
+    user?: {
+        username: string
+    }
 }
 export interface IAvatar {
     avatar: string
     crackedAvatar: string
 }
 export interface IUser{
+    username: string,
     email: string
     avatar?: string;
     id: number;
-    // lastSeenAt: Date;
     dateOfBirth?: Date;
     addedAt: Date
     confirmedUser: false

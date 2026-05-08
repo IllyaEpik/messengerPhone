@@ -17,8 +17,8 @@ export function FriendsSection(props: friendsSectionProps) {
             {
                 friends.map(friend => (
                     <FriendCard
-                        name={friend.name}
-                        username={friend.username}
+                        name={friend.pseudonym}
+                        username={friend.user?.username || ""}
                         primaryAction={primaryAction}
                         secondaryAction="Видалити"
                         friendAvatar={friend.avatar}
