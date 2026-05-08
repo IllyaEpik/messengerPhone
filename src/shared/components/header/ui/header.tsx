@@ -23,7 +23,7 @@ export default function Header(props: IHeaderProps) {
 		<ICONS.WorldIT></ICONS.WorldIT>
 		{!auth && <>
 		<View style={styles.nav}>
-				<IconButton onPress={() => setVisible(true)}><ICONS.PlusIcon/></IconButton>
+				...{!isCreatePostHidden ? <IconButton onPress={() => setVisible(true)}><ICONS.PlusIcon/></IconButton> : null}
 				<IconButton onPress={() => router.push("/profile")} variant={path === "/profile" ? "filled" : undefined}>
 				<ICONS.SettingsIcon/>
 				</IconButton>

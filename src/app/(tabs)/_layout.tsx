@@ -22,6 +22,7 @@ export default function Layout() {
             headerShown:true,
             header: () => <Header />,
       tabBarInactiveTintColor: "#070A1C",
+      
 
              }}>
         

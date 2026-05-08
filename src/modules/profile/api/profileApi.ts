@@ -13,7 +13,7 @@ export const userApi = baseApi.injectEndpoints({
                 
                 if (body.firstName) formData.append("firstName", body.firstName);
                 if (body.lastName) formData.append("lastName", body.lastName);
-                if (body.nickName) formData.append("nickName", body.nickName);
+                if (body.nickName) formData.append("pseudonym", body.nickName);
                 if (body.username) formData.append("username", body.username);
                 
                 if (body.avatar) {

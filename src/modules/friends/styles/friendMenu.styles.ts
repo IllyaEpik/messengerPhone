@@ -6,8 +6,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 10,
     width: "100%",
-    justifyContent: "space-evenly",
-    alignItems:"center"
+    // justifyContent: "s",
+    alignItems:"center",
+    height: 50,
+    marginHorizontal:10,
+    marginBottom: 10,
   },
   active:{
     color:"#070A1C",
@@ -21,7 +24,7 @@ export const styles = StyleSheet.create({
   text:{
     fontFamily:"GTRegular",
     fontWeight:500,
-    fontSize: 25,
+    fontSize: 15,
     textAlignVertical:"center"
   }
 });
