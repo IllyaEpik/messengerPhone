@@ -29,3 +29,4 @@ export interface Photos{
     crackedPhoto: string,
     photo: string
 }
+wwrerwthrgefd
