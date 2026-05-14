@@ -17,7 +17,9 @@ export function FriendsScreen() {
   //     avatar: "https://avatars.githubusercontent.com/u/106783863?v=4"
   //    }
   // ]
-  const friends = useGetFriendsDataQuery(token).data
+  const { data  } = useGetFriendsDataQuery(token, { skip: !token, pollingInterval: 5000 })
+  const friends = data
+  console.log(friends)
   return (
     <>
       <FriendMenu 
@@ -25,25 +27,27 @@ export function FriendsScreen() {
         setVariant={setPage}
       />
     <ScrollView style={styles.container}>
+      {(page === "main" || page === "requests") ?
       <FriendsSection 
         title="Запити"
 
         primaryAction="Підтвердити"
         friends={friends?.friendRequests || []}
-      />
-
+      /> : null}
+      {(page === "main" || page === "recommend") ?
       <FriendsSection 
         title="Рекомендації"
 
         primaryAction="Додати"
         friends={friends?.friendRequests || []}
-      />
+      /> : null}
+      {(page === "main" || page === "all") ?
       <FriendsSection 
         title="Всі друзі"
 
         primaryAction="Повідомлення"
         friends={friends?.friends || []}
-      />
+      />: null}
     </ScrollView>
     </>
   );

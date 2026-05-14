@@ -12,7 +12,7 @@ export interface IProfile{
 
     showNickname: boolean
     showElectronicSignature: boolean
-    electronicSignature: string | null
+    signature: string | null
     user?: {
         username: string
     }

@@ -7,13 +7,14 @@ import { ICONS } from '@/shared/static/icons';
 
 export function Post(props: IPostProps) {
   	const {post} = props
-	const avatarItem = post.creator.profile?.avatar?.at(-1);
+	console.log(post)
+	const avatarItem = post.author.profile?.avatar?.split("/").at(-1);
 	const avatarUrl = avatarItem
-	? `http://10.0.2.2:8000/media/crackedAvatars/${avatarItem.crackedAvatar.split("/").at(-1)}`
+	? `http://192.168.0.146:8000/media/crackedAvatars/${avatarItem}`
 	: undefined;
-	const signatureItem = post.creator.profile?.electronicSignature
+	const signatureItem = post.author.profile?.signature
 	const signatureUrl = signatureItem
-	? `http://10.0.2.2:8000/media/crackedAvatars/${signatureItem.split("/").at(-1)}.jpg`
+	? `http://192.168.0.146:8000/media/crackedAvatars/${signatureItem.split("/").at(-1)}.jpg`
 	: undefined;
 
 	return <View style={postStyles.card}>
@@ -27,7 +28,7 @@ export function Post(props: IPostProps) {
 						:
 						<Image source={require("../../../media/icon/user.png")} style={postStyles.icon} />
 					}
-					<Text style={postStyles.title}>{post.creator?.profile?.nickname}</Text>
+					<Text style={postStyles.title}>{post.author?.profile?.pseudonym}</Text>
 
 				</View>
 				<ICONS.OptionsIcon/>
@@ -43,7 +44,7 @@ export function Post(props: IPostProps) {
 				
 				{post.images.map((img, idx) => (
 					<>
-					<Image key={idx} source={{ uri: `http://10.0.2.2:8000/media/crackedAvatars/${img.image}` }} style={postStyles.image} />
+					<Image key={idx} source={{ uri: `http://192.168.0.146:8000/media/crackedAvatars/${img.image}` }} style={postStyles.image} />
 					</>
 				))}
 			</View>
