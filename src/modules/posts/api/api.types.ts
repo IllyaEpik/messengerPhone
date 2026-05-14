@@ -12,7 +12,7 @@ export interface ILink {
 
 export interface IPost {
     id: number,
-    creator: IUser
+    author: IUser
     title: string,
     content: string,
     topic: string | null
