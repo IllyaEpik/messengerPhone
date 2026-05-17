@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image } from 'react-native';
 import { postStyles } from '../styles/post.styles';
 import { IPostProps } from '../types/post';
 import { ICONS } from '@/shared/static/icons';
+import { PostOptions } from './postOptions';
+import { useAuthContext } from '@/modules/auth/context/authContext';
 
 
 export function Post(props: IPostProps) {
-  	const {post} = props
-	console.log(post)
+  	const {post, isMine} = props
+	const [removed, setRemoved] = useState(false)
+	const {token} = useAuthContext()
 	const avatarItem = post.author.profile?.avatar?.split("/").at(-1);
 	const avatarUrl = avatarItem
-	? `http://192.168.0.146:8000/media/crackedAvatars/${avatarItem}`
+	? `http://127.0.0.1:8000/media/${avatarItem}`
 	: undefined;
 	const signatureItem = post.author.profile?.signature
 	const signatureUrl = signatureItem
-	? `http://192.168.0.146:8000/media/crackedAvatars/${signatureItem.split("/").at(-1)}.jpg`
+	? `http://127.0.0.1:8000/media/crackedAvatars/${signatureItem.split("/").at(-1)}.jpg`
 	: undefined;
-
+	if (removed) return null
 	return <View style={postStyles.card}>
 		<View style={postStyles.header}>
 		<View style={postStyles.topHeaderLine}>
@@ -31,8 +34,7 @@ export function Post(props: IPostProps) {
 					<Text style={postStyles.title}>{post.author?.profile?.pseudonym}</Text>
 
 				</View>
-				<ICONS.OptionsIcon/>
-				
+				{isMine && <PostOptions post={post} token={token} remove={() => setRemoved(true)} />}
 		</View>
 		<Image  source={{uri: signatureUrl}} style={postStyles.signature} />
 		</View>
@@ -67,3 +69,7 @@ export function Post(props: IPostProps) {
 		
 	</View>
 }
+function AuthContext(): { token: any; } {
+	throw new Error('Function not implemented.');
+}
+

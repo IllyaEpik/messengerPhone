@@ -11,7 +11,6 @@ export function PostList(props: IPostList) {
     const { isMine } = props
     const [skip, setSkip] = useState(0)
     const {token} = useAuthContext()
-    console.log(`/posts${isMine ? "/me/": `?skip=${skip}`}`)
     const [staticPosts, setStaticPosts] = useState<IPost[]>([])
     const {data, isLoading} = useGetPostsQuery({
         token,
@@ -34,7 +33,7 @@ export function PostList(props: IPostList) {
     }
     return <FlatList
         data={staticPosts}
-        renderItem={({item}) => <Post post={item}/>}
+        renderItem={({item}) => <Post post={item} isMine={isMine} />}
         keyExtractor={(item) => item.id.toString()}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}

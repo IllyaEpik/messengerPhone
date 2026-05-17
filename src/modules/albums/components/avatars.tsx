@@ -38,35 +38,35 @@ export function Avatars(){
             
             <View style={styles.avatars}>
                 {
-                    avatarItems.map((avatar) => {
-                        const avatarUrl = avatar.avatar
-                        ? `http://10.0.2.2:8000/media/Avatars/${avatar.avatar.split("/").at(-1)}`
-                        : `http://10.0.2.2:8000/media/crackedAvatars/${avatar.crackedAvatar.split("/").at(-1)}`
-                        return (
-                            <View style={styles.iconContainer} key={avatar.avatar}>
-                                <Image
-                                    style={styles.icon}
-                                    source={
-                                        avatarUrl
-                                        ? { uri: avatarUrl }
-                                        : require("../../../media/icon/user.png")
-                                    }
-                                    resizeMode="contain"
-                                />
-                                <View style={styles.iconsOnImg}>
-                                    <View style={styles.buttonIcon}>
-                                        <ICONS.openIcon color={"#070A1C"}/>
-                                    </View> 
-                                    <View style={styles.buttonIcon}>
-                                        <ICONS.TrashIcon color={"#070A1C"}/>
-                                    </View> 
+                    // avatarItems.map((avatar) => {
+                    //     const avatarUrl = avatar.avatar
+                    //     ? `http://10.0.2.2:8000/media/Avatars/${avatar.avatar.split("/").at(-1)}`
+                    //     : `http://10.0.2.2:8000/media/crackedAvatars/${avatar.crackedAvatar.split("/").at(-1)}`
+                    //     return (
+                    //         <View style={styles.iconContainer} key={avatar.avatar}>
+                    //             <Image
+                    //                 style={styles.icon}
+                    //                 source={
+                    //                     avatarUrl
+                    //                     ? { uri: avatarUrl }
+                    //                     : require("../../../media/icon/user.png")
+                    //                 }
+                    //                 resizeMode="contain"
+                    //             />
+                    //             <View style={styles.iconsOnImg}>
+                    //                 <View style={styles.buttonIcon}>
+                    //                     <ICONS.openIcon color={"#070A1C"}/>
+                    //                 </View> 
+                    //                 <View style={styles.buttonIcon}>
+                    //                     <ICONS.TrashIcon color={"#070A1C"}/>
+                    //                 </View> 
 
-                                </View>
-                            </View>
+                    //             </View>
+                    //         </View>
 
-                        )
+                    //     )
 
-                    })
+                    // })
                 }
             </View>
         </View>

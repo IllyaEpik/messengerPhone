@@ -23,10 +23,13 @@ export default function Header(props: IHeaderProps) {
 		<ICONS.WorldIT></ICONS.WorldIT>
 		{!auth && <>
 		<View style={styles.nav}>
-				...{!isCreatePostHidden ? <IconButton onPress={() => setVisible(true)}><ICONS.PlusIcon/></IconButton> : null}
-				<IconButton onPress={() => router.push("/profile")} variant={path === "/profile" ? "filled" : undefined}>
-				<ICONS.SettingsIcon/>
+				{!isCreatePostHidden ? <IconButton onPress={() => setVisible(true)}><ICONS.PlusIcon/></IconButton> : null}
+				{!isSettingsHidden ? 
+				<IconButton onPress={() => router.push("/profile")} variant={path === "/profile" ? "filled" : undefined}> 
+				
+					<ICONS.SettingsIcon/>
 				</IconButton>
+				: null}
 				<IconButton onPress={() => {logout();router.push("/(auth)")}}><ICONS.LogoutIcon/></IconButton>
 			</View>
 			<CreatePostModal visible={visible} onClose={() => setVisible(false)} />

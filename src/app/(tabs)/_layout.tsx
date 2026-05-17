@@ -19,16 +19,16 @@ export default function Layout() {
     <PaperProvider>
         <Tabs screenOptions={{ 
             tabBarActiveTintColor: '#070A1C',
-            headerShown:true,
-            header: () => <Header />,
-      tabBarInactiveTintColor: "#070A1C",
-      
-
+            headerShown: false,
+            tabBarInactiveTintColor: "#070A1C",
              }}>
         
         <Tabs.Screen name="index" 
         options={{
           title: "Головна",
+          
+          headerShown:true,
+          header: () => <Header />,
           tabBarIcon: ({ focused }) => (
           <FooterTab selected={focused} icon={<HouseIcon/>}/>
         ),
@@ -67,8 +67,9 @@ export default function Layout() {
     <Tabs.Screen 
       name="profile" 
       options={{
-        href: null
+        href: null,
       }} 
+      
     />
         </Tabs>
         </PaperProvider>

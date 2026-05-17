@@ -55,7 +55,7 @@ export function ProfileBottom(props:IProps){
                         setIsChecked={setPseudonym}
                         disabled={!edit}
                     />
-                <Text style= {styles.name}>{authData.user?.profile?.nickname}</Text>
+                <Text style= {styles.name}>{authData.user?.profile?.pseudonym}</Text>
 
                     <Checkbox 
                         text="Мій електронний підпис"

@@ -23,7 +23,7 @@ export interface IProfile{
 
 
 export interface ICreateProfile{
-    nickname: string
+    pseudonym: string
     username: string
     token:string
 

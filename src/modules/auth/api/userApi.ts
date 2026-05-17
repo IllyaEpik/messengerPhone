@@ -20,11 +20,12 @@ export const userApi = baseApi.injectEndpoints({
         }),
         profile: builder.mutation<LoginResponse, ICreateProfile>({
             query: (body) => {
+                console.log(body)
                 return {
                     url: "/users/profile",
                     method: "POST",
                     body: {
-                        nickname:body.nickname,
+                        pseudonym:body.pseudonym,
                         username:body.username,
                     },
                     headers: {

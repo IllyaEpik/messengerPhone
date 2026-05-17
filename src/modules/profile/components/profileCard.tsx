@@ -12,14 +12,12 @@ export function ProfileCard(){
 	const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
 	const [edit, setEdit] = useState<boolean>(false);
     const rawUser= useAuthContext()
-	const [username, setUsername] = useState<string>(rawUser.user?.profile?.username || "")
+	const [username, setUsername] = useState<string>(rawUser.user?.username || "")
 	const [url, setUrl] = useState<string>("")
     if (!rawUser || !rawUser.user) return <Text>"no user"</Text>
     const user = rawUser.user
-	const avatarItem = user.profile?.avatar?.at(-1);
-	const avatarUrl = avatarItem
-	? `http://10.0.2.2:8000/media/crackedAvatars/${avatarItem.crackedAvatar.split("/").at(-1)}`
-	: undefined;
+	const avatarItem = user.profile?.avatar.split("/").at(-1);
+	const avatarUrl = `http://127.0.0.1:8000/media/${avatarItem}`
 	const submit = async () => {
         if (!edit) {
 			setEdit(true);
@@ -65,12 +63,12 @@ export function ProfileCard(){
 				<ImageInput icon={<ICONS.PlusIcon/>} text="Додайте фото" onChange={setUrl}/>
 				<ImageInput icon={<ICONS.PublicIcon/>} text="Оберіть фото" onChange={setUrl}/>
 			</View> }
-			<Text style={styles.nickname}>{user.profile?.nickname}</Text>
-			{!edit ? <Text style={styles.username}>@{user.profile?.username}</Text> :
+			<Text style={styles.nickname}>{user.profile?.pseudonym}</Text>
+			{!edit ? <Text style={styles.username}>@{user?.username}</Text> :
 			<Input
 				label = "Ім’я користувача"
 				value = {"@" + username}
-				placeholder = {user.profile?.username || "@"}
+				placeholder = {user?.username || "@"}
 				error=""
 				onChangeText = {setUsername}
 			/>}

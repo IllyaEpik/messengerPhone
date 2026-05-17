@@ -52,9 +52,9 @@ export function ImageInput(props:IProps ) {
     
     return (
         <Pressable style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
-            ...{typeof icon !== "string" && icon}
+            {typeof icon !== "string" && icon}
             {text && <Text>{text}</Text>}
-            ...{children}
+            {children}
         </Pressable>
     )
 }

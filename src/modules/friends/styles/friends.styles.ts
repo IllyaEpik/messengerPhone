@@ -3,7 +3,7 @@ export const styles = StyleSheet.create({
   container: {
     // width: 440,
     // height: 744,
-    gap: 8,
+    gap: 50,
     // opacity: 1,
     // top: 189
 
@@ -25,5 +25,11 @@ export const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
 
+  },
+  crayText: {
+    color: "#81818d"
+  },
+  activeText:{
+    color: "#543C52"
   }
 });

@@ -57,10 +57,10 @@ export function Signature(props:IProps) {
                 </View>
             </>
             : <>
-                { (signature || user?.profile?.electronicSignature) && (
+                { (signature || user?.profile?.signature) && (
                     <Image
                         style={{ width: '100%', height: 100 }}
-                        source={{ uri: signature || `http://10.0.2.2:8000/media/crackedAvatars/${user?.profile?.electronicSignature}.jpg` }}
+                        source={{ uri: signature || `http://10.0.2.2:8000/media/crackedAvatars/${user?.profile?.signature}.jpg` }}
                         resizeMode="contain"
                     />
                 )}

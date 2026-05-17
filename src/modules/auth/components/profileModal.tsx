@@ -12,11 +12,11 @@ import { useAuthContext } from "../context/authContext";
 
 export function CreateProfileModal(){
     const {token} = useAuthContext()
-    const [nickname, setNickname] = useState("")
+    const [pseudonym, setPseudonym] = useState("")
     const [username, setUsername] = useState("")
     const [ createProfile ] = useProfileMutation()
     function submitButton() {
-        createProfile({nickname,username, token});
+        createProfile({pseudonym,username, token});
     }
     
     return (
@@ -29,8 +29,8 @@ export function CreateProfileModal(){
                         <Input
                             label="Псевдонім автора "
                             placeholder="Введіть Псевдонім автора "
-                            onChangeText={setNickname}
-                            value={nickname}
+                            onChangeText={setPseudonym}
+                            value={pseudonym}
                             error=""
                         />
 

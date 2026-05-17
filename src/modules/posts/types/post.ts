@@ -10,4 +10,5 @@ import { IPost } from "../api/api.types";
 // }
 export interface IPostProps{
   post:IPost
+  isMine?:boolean
 }
