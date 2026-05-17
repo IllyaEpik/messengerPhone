@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { styles } from "./avatar.style";
 
 interface IProps {
-  image:string, 
+  image?:string, 
   style?: object
 }
 
