@@ -29,7 +29,9 @@ export function ContactsScreen(){
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
     [activeTab]
+    
   );
+  console.log(activeTab)
 
   return (
     <View style={styles.container}>
