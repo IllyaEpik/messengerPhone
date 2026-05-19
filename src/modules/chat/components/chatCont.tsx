@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import { styles } from "../styles/chat.styles";
 
 const tabs = [
@@ -24,14 +25,17 @@ const groupChats = [
 ];
 
 export function ContactsScreen(){
-    const [activeTab, setActiveTab] = useState("contacts");
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState("contacts");
 
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
     [activeTab]
-    
   );
-  console.log(activeTab)
+
+  const openChat = (id: string) => {
+    router.push({ pathname: "/(tabs)/chat/[id]", params: { id } });
+  };
 
   return (
     <View style={styles.container}>
@@ -60,7 +64,7 @@ export function ContactsScreen(){
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.contactItem}>
+            <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
               <Image source={{ uri: item.image }} style={styles.avatar} />
               <Text style={styles.contactName}>{item.name}</Text>
             </TouchableOpacity>
@@ -81,7 +85,7 @@ export function ContactsScreen(){
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.groupItem}>
+            <TouchableOpacity style={styles.groupItem} onPress={() => openChat(item.id)}>
               <View style={styles.groupAvatar}>
                 <Text style={styles.groupAvatarText}>{item.title.slice(0, 2).toUpperCase()}</Text>
               </View>
