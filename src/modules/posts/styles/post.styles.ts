@@ -23,9 +23,14 @@ export const postStyles = StyleSheet.create({
 },
   link: { 
     color: '#007AFF', 
-    fontSize: 12, 
-    marginBottom: 4 
-},
+    fontSize: 14, 
+    marginBottom: 4,
+    textDecorationLine: 'underline'
+  },
+  linksBlock: {
+    marginBottom: 8,
+    gap: 4
+  },
 
 	imagesRow: { 
 		flexDirection: 'row', 
