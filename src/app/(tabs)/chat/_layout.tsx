@@ -11,6 +11,7 @@ export default function Layout() {
                 header: () => <Header />,
                 }}>
         <Stack.Screen name='index'></Stack.Screen>
+        <Stack.Screen name='[id]/chat'></Stack.Screen>
     </Stack>
   );
 }

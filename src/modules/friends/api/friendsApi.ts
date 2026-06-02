@@ -31,7 +31,6 @@ export const userApi = baseApi.injectEndpoints({
                     Authorization: `Bearer ${token}`,
                 }
             }),
-            
         }),
         removeUser: builder.mutation<void, { userid: number, token: string}>({
             query: ({ userid, token }) => ({

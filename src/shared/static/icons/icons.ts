@@ -1,4 +1,5 @@
 
+import { BackIcon } from "./_icons/backIcon";
 import { ChatIcon } from "./_icons/chat";
 import { checkmark } from "./_icons/checkmark";
 import { closedIcon } from "./_icons/closedIcon";
@@ -21,6 +22,7 @@ import { View } from "./_icons/view";
 import { WorldIT } from "./_icons/worldIT";
 
 
+
 export const ICONS = {
 	WorldIT,
 	ChatIcon,
@@ -41,5 +43,6 @@ export const ICONS = {
 	ExitIcon,
 	Like,
 	Love,
-	View
+	View,
+	BackIcon
 };

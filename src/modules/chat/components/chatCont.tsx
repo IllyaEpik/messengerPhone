@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity } from "react-native";
-import { styles } from "../styles/chat.styles";
+import { styles } from "../styles/chatCont.styles";
+import { useGetChatMutation, useGetChatsQuery } from "../api/chatApi";
+import { useAuthContext } from "@/modules/auth/context/authContext";
+import { useGetFriendsDataQuery } from "@/modules/friends/api/friendsApi";
+import { Avatar } from "@/shared/components/avatar/avatar";
+// import { router } from "expo-router/build/exports";
+import { router } from "expo-router";
 
 const tabs = [
   { id: "contacts", label: "Контакти" },
@@ -8,31 +14,24 @@ const tabs = [
   { id: "groups", label: "Групові чати" },
 ];
 
-const contacts = [
-  { id: "1", name: "Jane Cooper", image: "https://randomuser.me/api/portraits/women/1.jpg" },
-  { id: "2", name: "Cameron Williamson", image: "https://randomuser.me/api/portraits/men/2.jpg" },
-  { id: "3", name: "Leslie Alexander", image: "https://randomuser.me/api/portraits/women/3.jpg" },
-  { id: "4", name: "Robert Fox", image: "https://randomuser.me/api/portraits/men/4.jpg" },
-  { id: "5", name: "Jacob Jones", image: "https://randomuser.me/api/portraits/men/5.jpg" },
-  { id: "6", name: "Brooklyn Simmons", image: "https://randomuser.me/api/portraits/women/6.jpg" },
-];
-
-const groupChats = [
-  { id: "g1", title: "New group", message: "Привіт! Як справи ?", time: "09:41" },
-  { id: "g2", title: "Ann Ti", message: "Привіт!", time: "25.04.2025" },
-  { id: "g3", title: "Ness Ty", message: "Привіт!", time: "25.04.2025" },
-];
-
 export function ContactsScreen(){
-    const [activeTab, setActiveTab] = useState("contacts");
-
+  const [activeTab, setActiveTab] = useState("contacts");
+  const { user, token } = useAuthContext();
+  const [getChat] = useGetChatMutation();
+  const chats = useGetChatsQuery({ userId: user?.id!, token: token }, { skip: !user?.id || !token });
+  const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
     [activeTab]
     
   );
-  console.log(activeTab)
-
+  async function openChatContact(friendId: number) {
+      const chat = await getChat({ friendId, token: token! }).unwrap();
+      router.push({ pathname: '/chat/[id]/chat', params: { id: chat.id } });
+  }
+  function openChat(chatId: number) {
+    router.push({ pathname: '/chat/[id]/chat', params: { id: chatId } });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.tabs}>
@@ -54,47 +53,72 @@ export function ContactsScreen(){
       <TextInput placeholder="Пошук" placeholderTextColor="#999" style={styles.searchInput} />
 
       {activeTab === "contacts" && (
-        <FlatList
-          data={contacts}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.list}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.contactItem}>
-              <Image source={{ uri: item.image }} style={styles.avatar} />
-              <Text style={styles.contactName}>{item.name}</Text>
-            </TouchableOpacity>
-          )}
-        />
+        friends.data?.friends ? (
+          <FlatList
+            data={friends.data?.friends}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.list}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.contactItem} onPress={() => openChatContact(item.userId)}>
+                <Avatar style={styles.avatar} image={item.avatar}/>
+                <Text style={styles.contactName}>{item.pseudonym || "unknown"}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        ) : <View style={styles.placeholderBox}>
+          <Text style={styles.placeholderText}>У тебе поки що немає контактів.</Text>
+        </View>
       )}
 
       {activeTab === "messages" && (
+        chats.data && chats.data.filter(chat => !chat.isGroup).length > 0 ? (
+        <FlatList
+            data={chats.data.filter(chat => !chat.isGroup)}
+            keyExtractor={(item) => item.id.toString()}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.list}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
+                {/* <Image source={{ uri: item.avatar }} style={styles.avatar} /> */}
+                <Avatar style={styles.avatar} image={item.avatar}/>
+                <Text style={styles.contactName}>{item.chatName || "unknown"}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        ) : 
         <View style={styles.placeholderBox}>
-          <Text style={styles.placeholderText}>Поки тут показуються тільки контакти.</Text>
+          <Text style={styles.placeholderText}>У тебе поки що немає повідомлень.</Text>
         </View>
       )}
 
       {activeTab === "groups" && (
+
+        chats.data && chats.data.filter(chat => chat.isGroup).length > 0 ? (
         <FlatList
-          data={groupChats}
-          keyExtractor={(item) => item.id}
+          data={chats.data.filter(chat => chat.isGroup)}
+          keyExtractor={(item) => item.id.toString()}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.groupItem}>
+            <TouchableOpacity style={styles.groupItem} onPress={() => openChat(item.id)}>
               <View style={styles.groupAvatar}>
-                <Text style={styles.groupAvatarText}>{item.title.slice(0, 2).toUpperCase()}</Text>
+                <Text style={styles.groupAvatarText}>{item.chatName}</Text>
               </View>
               <View style={styles.groupInfo}>
                 <View style={styles.groupHeader}>
-                  <Text style={styles.contactName}>{item.title}</Text>
-                  <Text style={styles.groupTime}>{item.time}</Text>
+                  <Text style={styles.contactName}>{item.chatName}</Text>
+                  <Text style={styles.groupTime}>{typeof item.time === "string" ? item.time : "00:00"}</Text>
                 </View>
                 <Text style={styles.groupMessage}>{item.message}</Text>
               </View>
             </TouchableOpacity>
           )}
         />
+        ) :
+        <View style={styles.placeholderBox}>
+          <Text style={styles.placeholderText}>У тебе поки що немає груп.</Text>
+        </View>
       )}
     </View>
   );
