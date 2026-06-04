@@ -13,6 +13,7 @@ interface Props extends React.ComponentProps<typeof TextInput> {
   error:string | undefined
   containerInputStyles?:StyleProp<ViewStyle>
   icon?: ReactNode
+  onIconPress?: () => void
 }
 
 export const Input = (props: Props) => {
@@ -26,6 +27,7 @@ export const Input = (props: Props) => {
     style,
     containerInputStyles,
     icon,
+    onIconPress,
     ...other
   } = props;
   const [hidden, setHidden] = useState(secure);
@@ -56,7 +58,15 @@ export const Input = (props: Props) => {
 					</TouchableOpacity>
 				)}
 			</View>
-			...{icon}
+			{icon ? (
+				onIconPress ? (
+					<TouchableOpacity onPress={onIconPress}>
+						{icon}
+					</TouchableOpacity>
+				) : (
+					<>{icon}</>
+				)
+			) : null}
 		</View>
 
       	{error && <Text style={styles.error}>{error}</Text>}

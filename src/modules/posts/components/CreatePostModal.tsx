@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import { Modal, View, Text, TextInput, Pressable, ScrollView,Image } from "react-native";
+import { Modal, View, Text, Pressable, ScrollView, Image } from "react-native";
 import { createPostModalStyles } from "../styles/createPostModal.styles";
 import { ICONS } from "@/shared/static/icons";
 import { Input } from "../../../shared/components/Input/Input";
@@ -18,7 +18,8 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const [createPost] = useCreatePostMutation()
 	const [editPost] = useEditPostMutation()
 	const {token} = useAuthContext()
-	const [link, setLink] = useState<string>(post?.links?.at(0)?.link || "")
+	const initialLinks = post?.links?.map(l => l.link) ?? []
+	const [links, setLinks] = useState<string[]>(initialLinks.length ? [...initialLinks, ""] : [""])
 	const [title, setTitle] = useState<string>( post?.title || "")
 	const [topic, setTopic] = useState<string>( post?.topic || "")
 	const [content, setContent] = useState<string>( post?.content || "")
@@ -28,8 +29,21 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	function addImage(image:string) {
 		setImages([...images, image])
 	}
+
+	function updateLink(index:number, value:string) {
+		setLinks(prev => prev.map((item, idx) => idx === index ? value : item));
+	}
+
+	function addLinkField() {
+		setLinks(prev => [...prev, ""]);
+	}
+
+	function removeLink(index:number) {
+		setLinks(prev => prev.filter((_, idx) => idx !== index));
+	}
 	
 	async function handleSubmit() {
+		const filteredLinks = links.map(link => link.trim()).filter(link => link.length > 0)
 		if (post) {
 			await editPost({
 				id: post.id,
@@ -38,6 +52,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				content,
 				topic,
 				images,
+				links: filteredLinks,
 			})
 		}else{
 			await createPost({
@@ -46,13 +61,13 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				content,
 				topic,
 				images,
-				// [link],
+				links: filteredLinks,
 			});
 		}
 		setTitle("");
 		setTopic("");
 		setContent("");
-		setLink("");
+		setLinks([""])
 		setImages([]);
 		onClose();
 	}
@@ -116,20 +131,32 @@ export function CreatePostModal(props: CreatePostModalProps) {
 							label=""
 							multiline
 						/>
-						<View>
-							<Input 
-								placeholder= "https://www.instagram.com/"
-								value={link}
-								onChangeText={setLink}
-								error= ""
-								label="Посилання"
-								icon={
-									<View style={createPostModalStyles.plusButton}>
-										<ICONS.PlusIcon />
-									</View>
-								}
-							/>
-						</View>
+						{links.map((linkText, index) => {
+							const isLast = index === links.length - 1;
+							return (
+								<View key={index} style={createPostModalStyles.linkFieldRow}>
+									<Input 
+										placeholder="https://www.instagram.com/"
+										value={linkText}
+										onChangeText={(value) => updateLink(index, value)}
+										error=""
+										label={index === 0 ? "Посилання" : ""}
+										containerInputStyles={{ flex: 1 }}
+										icon={isLast ? (
+											<View style={createPostModalStyles.plusButton}>
+												<ICONS.PlusIcon />
+											</View>
+										) : undefined}
+										onIconPress={isLast ? addLinkField : undefined}
+									/>
+									{links.length > 1 && (
+										<Pressable onPress={() => removeLink(index)} style={createPostModalStyles.removeLinkButton}>
+											<ICONS.TrashIcon />
+										</Pressable>
+									)}
+								</View>
+							)
+						})}
 						{images.map((image,index) => {
 							return <View style={createPostModalStyles.imageContainer} key={index}>
 								<Image
