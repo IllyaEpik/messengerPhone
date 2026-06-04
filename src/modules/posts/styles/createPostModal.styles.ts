@@ -91,6 +91,20 @@ export const createPostModalStyles = StyleSheet.create({
 		gap: 10,
 		marginTop:16
     },
+	linkFieldRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		gap: 10,
+		width: "100%",
+	},
+	removeLinkButton: {
+		padding: 8,
+		backgroundColor: "#FFFFFF",
+		borderRadius: 100,
+		borderColor: "#543C52",
+		borderWidth: 2,
+		borderStyle: "solid",
+	},
 	fullInput:{
 		flexDirection: "row"
 	},
