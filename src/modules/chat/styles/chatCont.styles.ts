@@ -4,20 +4,20 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: "#FFFFFF",
     paddingTop: 20,
   },
 
   tabs: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "flex-start",
 
     paddingHorizontal: 16,
     height: 54,
 
-    borderBottomWidth: 1,
-    borderBottomColor: "#E7E7E7",
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E7E7E7",
 
     marginBottom: 20,
   },
@@ -27,27 +27,27 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
 
-    borderBottomWidth: 2,
-    borderBottomColor: "transparent",
+    borderTopWidth: 2,
+    borderTopColor: "transparent",
 
     paddingHorizontal: 5,
   },
 
   activeTab: {
-    borderBottomColor: "#4B314F",
+    borderTopColor: "#4B314F", 
   },
 
-  activeTabText: {
-    color: "#070A1C",
-    fontFamily: "GTMedium",
-    fontWeight: "600",
-    fontSize: 13,
-  },
+  // activeTabText: {
+    // color: "#070A1C",
+    // fontSize: 13,
+  // },
 
   tabText: {
-    color: "#81818D",
-    fontSize: 13,
+    // color: "#81818D",
+    color: "#070A1C",
+    fontSize: 14,
     fontWeight: "500",
+    fontFamily: "GTMedium"
   },
 
   title: {
@@ -91,9 +91,9 @@ export const styles = StyleSheet.create({
   groupItem: {
     flexDirection: "row",
     alignItems: "center",
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    backgroundColor: "#FFFFFF",
+    paddingVertical: 4,
+    paddingHorizontal: 4,
+    // backgroundColor: "#FFFFFF",
     borderRadius: 18,
     marginBottom: 16,
     marginHorizontal: 0,

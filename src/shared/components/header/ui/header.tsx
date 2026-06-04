@@ -7,12 +7,14 @@ import { IHeaderProps } from "../types/header";
 import { styles } from "../styles/header";
 import { CreatePostModal } from "../../../../modules/posts/components/CreatePostModal";
 import { useState } from "react";
+import { ChatModal } from "@/modules/chat/components/createGroup/selectPeople";
 
 export default function Header(props: IHeaderProps) {
 	const {
 		auth,
 		isSettingsHidden,
-		isCreatePostHidden
+		isCreatePostHidden,
+		isChat
 	} = props
 	const path = usePathname()
 	const {logout} = useAuthContext()
@@ -32,7 +34,12 @@ export default function Header(props: IHeaderProps) {
 				: null}
 				<IconButton onPress={() => {logout();router.push("/(auth)")}}><ICONS.LogoutIcon/></IconButton>
 			</View>
-			<CreatePostModal visible={visible} onClose={() => setVisible(false)} />
+			{
+				!isChat ? 
+				<CreatePostModal visible={visible} onClose={() => setVisible(false)} />
+					:
+				<ChatModal visible={visible} onCancel={() => setVisible(false)} />
+			}
 		</>
 		}
 		</View>

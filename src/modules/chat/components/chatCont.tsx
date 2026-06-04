@@ -7,6 +7,7 @@ import { useGetFriendsDataQuery } from "@/modules/friends/api/friendsApi";
 import { Avatar } from "@/shared/components/avatar/avatar";
 // import { router } from "expo-router/build/exports";
 import { router } from "expo-router";
+import { ICONS } from "@/shared/static/icons";
 
 const tabs = [
   { id: "contacts", label: "Контакти" },
@@ -19,6 +20,7 @@ export function ContactsScreen(){
   const { user, token } = useAuthContext();
   const [getChat] = useGetChatMutation();
   const chats = useGetChatsQuery({ userId: user?.id!, token: token }, { skip: !user?.id || !token });
+  console.log(chats)
   const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
@@ -41,7 +43,8 @@ export function ContactsScreen(){
             style={[styles.tab, activeTab === tab.id && styles.activeTab]}
             onPress={() => setActiveTab(tab.id)}
           >
-            <Text style={activeTab === tab.id ? styles.activeTabText : styles.tabText}>
+            {tab.id === "contacts" ? <ICONS.PeopleIcon/>: <ICONS.ChatIcon/>}
+            <Text style={styles.tabText}>
               {tab.label}
             </Text>
           </TouchableOpacity>
@@ -61,7 +64,8 @@ export function ContactsScreen(){
             contentContainerStyle={styles.list}
             renderItem={({ item }) => (
               <TouchableOpacity style={styles.contactItem} onPress={() => openChatContact(item.userId)}>
-                <Avatar style={styles.avatar} image={item.avatar}/>
+                {/* image={item.avatar} */}
+                <Avatar style={styles.avatar}/>
                 <Text style={styles.contactName}>{item.pseudonym || "unknown"}</Text>
               </TouchableOpacity>
             )}
@@ -81,7 +85,8 @@ export function ContactsScreen(){
             renderItem={({ item }) => (
               <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
                 {/* <Image source={{ uri: item.avatar }} style={styles.avatar} /> */}
-                <Avatar style={styles.avatar} image={item.avatar}/>
+                {/*  image={item.avatar} */}
+                <Avatar style={styles.avatar}/>
                 <Text style={styles.contactName}>{item.chatName || "unknown"}</Text>
               </TouchableOpacity>
             )}
@@ -103,7 +108,11 @@ export function ContactsScreen(){
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.groupItem} onPress={() => openChat(item.id)}>
               <View style={styles.groupAvatar}>
-                <Text style={styles.groupAvatarText}>{item.chatName}</Text>
+                <Text style={styles.groupAvatarText}>
+                  {item.chatName
+                  .split(" ").map((text, i) => {return i < 2 ? text[0] : ""})
+                  .join("").toUpperCase()}
+                </Text>
               </View>
               <View style={styles.groupInfo}>
                 <View style={styles.groupHeader}>

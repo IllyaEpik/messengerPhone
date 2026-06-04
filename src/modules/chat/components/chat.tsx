@@ -8,8 +8,9 @@ import { router, useLocalSearchParams } from "expo-router/build/exports";
 import { ICreateMessagePayload, IMessage } from "../api/api.types";
 import { useAuthContext } from "@/modules/auth/context/authContext";
 import { Message } from "./message";
-import { useGetMessagesQuery } from "../api/chatApi";
+import { useGetCurrentChatQuery, useGetMessagesQuery } from "../api/chatApi";
 import { socket } from "@/shared/api/socket/socket";
+import { ChatOptions } from "./chatOptions";
 
 
 export function ChatScreen() {
@@ -18,6 +19,15 @@ export function ChatScreen() {
     const [messages, setMessages] = useState<IMessage[]>([]);
     console.log(messages);
     const { token, user } = useAuthContext();
+    const chat = useGetCurrentChatQuery({
+      chatId,
+      token,
+      userId: user?.id!
+    }, {skip: 
+      !chatId || 
+      !token || 
+      !user?.id
+    })
     const { data } = useGetMessagesQuery({ chatId: chatId, token: token }, { skip: !token || !chatId });
     const [inputText, setInputText] = useState("");
     useEffect(() => {
@@ -60,29 +70,7 @@ export function ChatScreen() {
     console.log("Go back");
     router.push("/chat/");
   }
-//   const renderMessage = ({ item }: { item: IMessage }) => (
-//     <View style={[styles.messageRow, item.isOwn ? styles.myMessageRow : styles.theirMessageRow]}>
-//       {!item.isOwn && (
-//         <Avatar
-//           style={styles.messageAvatar}
-//         //   image={item.avatar} 
-//         />
-//       )}
-//       <View style={[styles.messageBubble, item.isOwn ? styles.myBubble : styles.theirBubble]}>
-//         <View>
-//             {!item.isOwn && <Text style={styles.senderName}>{item.senderName}</Text>}
-//             <Text style={styles.messageText}>{item.text}</Text>
-//         </View>
-//         <View style={styles.deteils}>
-
-//             <Text style={styles.messageTime}>{item.timestamp}</Text>
-//             <ICONS.checkmark/>
-//         </View>
-
-//       </View>
-//     </View>
-//   );
-
+  console.log(chat.data, "31123231321132321123123231312nldssdadsaknjfs")
   return (
     <View style={styles.chatContainer}>
        <View style={styles.header}>
@@ -93,12 +81,13 @@ export function ChatScreen() {
             <Avatar style={styles.avatar} />
             <View style={styles.headerCenter}>
                 
-                <Text style={styles.groupName}>New Group</Text>
+                <Text style={styles.groupName}>{chat.data?.chatName}</Text>
                 <Text style={styles.memberStatus}>3 учасники, 1 в перехід</Text>
             </View>
         </View>
         <TouchableOpacity style={styles.iconButton}>
-            <ICONS.OptionsIcon />
+            {/* <ICONS.OptionsIcon /> */}
+            <ChatOptions isAdmin={false} id={chatId} chat={chat.data!}/>
         </TouchableOpacity>
         </View>
       <FlatList

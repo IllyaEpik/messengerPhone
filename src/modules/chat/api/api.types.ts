@@ -12,6 +12,18 @@ export interface IChat {
     time: Date | string
     message: string
 }
+export interface IChatContactDetailed {
+    id: number
+    chatName: string
+    avatar: string 
+    isGroup: boolean
+    time: Date | string
+    message: string
+    users: {
+        username: string
+        id: number
+    }[]
+}
 export type IMessage = {
     _count: {
         readers: number;
@@ -52,6 +64,14 @@ export interface IChatCreate {
     avatar?: string
     name?: string
 }
+export interface IChatUpdate {
+    id: number
+    name?: string
+    users: number[];
+    avatar?: string
+    Isgroup?: boolean
+    token: string
+}
 export interface IChatGetPayload {
     userId: number;
     token: string;
@@ -67,4 +87,16 @@ export interface IMessageGetPayload {
 export interface ICreateMessagePayload {
     chatId: number;
     text: string;
+}
+export interface IChatCreate {
+    users: number[];
+    Isgroup?: boolean
+    avatar?: string
+    name?: string
+    token: string
+}
+export interface IGetCurrentChat {
+    chatId: number,
+    userId: number
+    token: string
 }

@@ -21,6 +21,9 @@ export const styles = StyleSheet.create({
 	},
 	invisbleText: {
 		color: "#5B3F4C",
+	},
+	disabledButton: {
+		backgroundColor: "#81818D",
 	}
 
 });

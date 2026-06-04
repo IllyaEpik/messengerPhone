@@ -8,7 +8,8 @@ export default function Layout() {
   
     <Stack screenOptions={{
                 headerShown:true,
-                header: () => <Header />,
+                header: () => <Header isChat isSettingsHidden/>,
+                
                 }}>
         <Stack.Screen name='index'></Stack.Screen>
         <Stack.Screen name='[id]/chat'></Stack.Screen>

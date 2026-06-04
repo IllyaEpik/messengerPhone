@@ -8,6 +8,7 @@ interface Props {
   Buttonstyle?: StyleProp<ViewStyle>;
   TextStyle?: StyleProp<TextStyle>;
   invisible?: boolean;
+  disabled?: boolean
 }
 
 export const RegButton = (props: Props) => {
@@ -16,10 +17,11 @@ export const RegButton = (props: Props) => {
     onPress,
     Buttonstyle,
     TextStyle,
-    invisible
+    invisible,
+    disabled
   } = props
   return (
-    <Pressable style={[styles.button, invisible && styles.invisbleButton, Buttonstyle ?? {}]} onPress={onPress}>
+    <Pressable style={[styles.button, invisible && styles.invisbleButton, Buttonstyle ?? {}, disabled ? styles.disabledButton : {}]} disabled={disabled} onPress={onPress}>
       <Text style={[styles.text, invisible && styles.invisbleText, TextStyle ?? {}]}>{title}</Text>
     </Pressable>
   );

@@ -139,7 +139,7 @@ header: {
   avatar: {
     width: 46,
     height: 46,
-    borderRadius: "50%",
+    borderRadius: 90,
   },
   deteils: {
     flexDirection: "row",
