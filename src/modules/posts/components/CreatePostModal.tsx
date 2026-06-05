@@ -132,32 +132,33 @@ export function CreatePostModal(props: CreatePostModalProps) {
 							label=""
 							multiline
 						/>
-						{links.map((linkText, index) => {
-							const isLast = index === links.length - 1;
-							return (
-								<View key={index} style={createPostModalStyles.linkFieldRow}>
-									<Input 
-										placeholder="https://www.instagram.com/"
-										value={linkText}
-										onChangeText={(value) => updateLink(index, value)}
-										error=""
-										label={index === 0 ? "Посилання" : ""}
-										containerInputStyles={{ flex: 1 }}
-										icon={isLast ? (
-											<View style={createPostModalStyles.plusButton}>
-												<ICONS.PlusIcon />
-											</View>
-										) : undefined}
-										onIconPress={isLast ? addLinkField : undefined}
-									/>
-									{links.length > 1 && (
-										<Pressable onPress={() => removeLink(index)} style={createPostModalStyles.removeLinkButton}>
-											<ICONS.TrashIcon />
-										</Pressable>
-									)}
-								</View>
-							)
-						})}
+						<View>
+							<View style={createPostModalStyles.linkLabelRow}>
+								<Text style={createPostModalStyles.linkLabel}>Посилання</Text>
+								<Pressable onPress={addLinkField} style={createPostModalStyles.plusButton}>
+									<ICONS.PlusIcon />
+								</Pressable>
+							</View>
+							{links.map((linkText, index) => {
+								return (
+									<View key={index} style={createPostModalStyles.linkFieldRow}>
+										<Input 
+											placeholder="https://www.instagram.com/"
+											value={linkText}
+											onChangeText={(value) => updateLink(index, value)}
+											error=""
+											label=""
+											containerInputStyles={{ flex: 1 }}
+										/>
+										{links.length > 1 && (
+											<Pressable onPress={() => removeLink(index)} style={createPostModalStyles.removeLinkButton}>
+												<ICONS.TrashIcon />
+											</Pressable>
+										)}
+									</View>
+								)
+							})}
+						</View>
 						{images.map((image,index) => {
 							return <View style={createPostModalStyles.imageContainer} key={index}>
 								<Image

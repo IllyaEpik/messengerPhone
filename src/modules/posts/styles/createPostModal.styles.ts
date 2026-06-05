@@ -96,6 +96,18 @@ export const createPostModalStyles = StyleSheet.create({
 		alignItems: "center",
 		gap: 10,
 		width: "100%",
+		marginBottom: 8,
+	},
+	linkLabelRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		marginBottom: 8,
+	},
+	linkLabel: {
+		fontSize: 14,
+		fontFamily: "GTMedium",
+		color: "#000",
 	},
 	removeLinkButton: {
 		padding: 8,
