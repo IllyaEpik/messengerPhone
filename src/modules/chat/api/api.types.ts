@@ -19,6 +19,7 @@ export interface IChatContactDetailed {
     isGroup: boolean
     time: Date | string
     message: string
+    isAdmin: boolean
     users: {
         username: string
         id: number

@@ -63,7 +63,12 @@ messageTime: {
 },
 chatContainer: {
   flex: 1,
-  backgroundColor: '#FAF8FF',
+  backgroundColor: '#FFFFFF',
+
+  borderTopLeftRadius: 10,
+  borderTopRightRadius: 10,
+  borderTopColor: "#CDCED2",
+  borderTopWidth: 1
 },
 chatList: {
   paddingHorizontal: 16,
@@ -75,7 +80,6 @@ chatList: {
 inputPanel: {
   flexDirection: 'row',
   alignItems: 'center',
-  backgroundColor: '#FFFFFF',
   borderRadius: 30,
 //   marginHorizontal: 16,
   marginBottom: 16,
@@ -111,9 +115,12 @@ header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 16,
+    marginHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: "#FAF8FF",
+
+  borderTopLeftRadius: 10,
+    borderBottomColor: "#CDCED2",
+    borderBottomWidth: 1,
   },
   iconButton: {
     padding: 6,
@@ -146,5 +153,40 @@ header: {
     alignItems: "flex-end",
     gap: 4,
 
-  }
+  },
+  tabText: {
+    // color: "#81818D",
+    color: "#070A1C",
+    fontSize: 14,
+    fontWeight: "500",
+    fontFamily: "GTMedium"
+  },
+  tabs: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    // alignItems: "flex-start",
+
+    paddingHorizontal: 16,
+    height: 54,
+
+    // borderBottomWidth: 1,
+    // borderBottomColor: "#E7E7E7",
+
+    // marginBottom: 20,
+  },
+  tab: {
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+
+    borderTopWidth: 2,
+    borderTopColor: "transparent",
+
+    paddingHorizontal: 5,
+  },
+  activeTab: {
+    borderTopColor: "#4B314F", 
+  },
+
 })

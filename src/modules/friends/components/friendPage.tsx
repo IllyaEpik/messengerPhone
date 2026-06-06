@@ -1,6 +1,6 @@
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import React, { useState } from "react";
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image, Pressable, ScrollView } from "react-native";
 import { styles } from "../styles/friendPage";
 import { router, useLocalSearchParams, useNavigation } from "expo-router";
 import { Avatar } from "@/shared/components/avatar/avatar";
@@ -21,9 +21,7 @@ export function FriendPage(){
     const [sendRequest] = useSendRequestMutation()
     const { token} = useAuthContext()
     const { moveUser } = useFriends();
-    console.log("tok", token, id,action)
     const {data} = useGetFriendQuery({userid:Number(id), token}, { skip: !token, pollingInterval: 5000 })
-    console.log(data,id)
     const friend = data as friendInfoOutput | undefined
     const friendData: IProfile = friend ? {
         id: Number(id),
@@ -71,9 +69,10 @@ export function FriendPage(){
     };
 
     return (
-        <View>
+        <>
+            <ScrollView>
             <FriendModal isOpen={visible} userId={Number(id)} setIsOpen={setVisible} variant={action}/>
-            
+                
             <View style={styles.container}>
             {/* Header / Back Button */}
             <View style={styles.header}>
@@ -133,8 +132,9 @@ export function FriendPage(){
                 />
             </View>
             </View>
-            <AlbumCard/>
+            <AlbumCard/> 
             <Text style={styles.deactiveText}>постів поки що немає</Text>
-        </View>
+            </ScrollView>
+        </>
     );
 };

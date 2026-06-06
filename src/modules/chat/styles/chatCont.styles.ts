@@ -3,23 +3,28 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    paddingTop: 20,
-  },
+  flex: 1,
+  backgroundColor: 'white',
+
+  borderTopLeftRadius: 10,
+  borderTopRightRadius: 10,
+  borderTopColor: "#CDCED2",
+  borderTopWidth: 1
+},
 
   tabs: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
 
+    backgroundColor: "white",
     paddingHorizontal: 16,
     height: 54,
 
     // borderBottomWidth: 1,
     // borderBottomColor: "#E7E7E7",
 
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 
   tab: {

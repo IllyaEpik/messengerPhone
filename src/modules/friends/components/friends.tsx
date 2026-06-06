@@ -11,20 +11,19 @@ import { FriendsProvider, useFriends } from "../context/storage";
 
 export function FriendsScreen() {
   const [page, setPage] = useState<friendMenuVariant>("main")
-  const {token} = useAuthContext()
+  const { token } = useAuthContext()
   const { clear } = useFriends();
   const [recommendPage, setRecommendPage] = useState<number>(1)
   const [requestPage, setRequestPage] = useState<number>(1)
   const { data  } = useGetFriendsDataQuery({token,pagination:{
     recommends:recommendPage,
     requests:requestPage
-  }}, { skip: !token, pollingInterval: 5000 })
+  }}, { skip: !token, pollingInterval: 500000 })
   const friends = data
   
   useEffect(()=>{
     clear()
   },[data])
-  console.log(data)
   return (
     <View>
       <FriendMenu 
@@ -43,6 +42,7 @@ export function FriendsScreen() {
         friends={friends?.friendRequests || []}
         noFriendsMessage="У тебе поки немає запитів"
         setVariant={setPage}
+        isSelected={page==="requests"}
       /> : null}
       {(page === "main" || page === "recommend") ?
       <FriendsSection 
@@ -52,6 +52,7 @@ export function FriendsScreen() {
         friends={friends?.friendsRecommneds || []}
         noFriendsMessage="У тебе поки немає рекомендацій"
         setVariant={setPage}
+        isSelected={page==="recommend"}
       /> : null}
       {(page === "main" || page === "all") ?
       <FriendsSection 
@@ -61,7 +62,9 @@ export function FriendsScreen() {
         friends={friends?.friends || []}
         noFriendsMessage="У тебе поки немає доданих друзів"
         setVariant={setPage}
+        isSelected={page==="all"}
       />: null}
+      <View style={{height: 180}}/>
       </View>
     </ScrollView>
     </View>

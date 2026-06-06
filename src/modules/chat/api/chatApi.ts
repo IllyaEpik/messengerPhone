@@ -1,10 +1,9 @@
 import { baseApi } from "src/shared/api/baseApi";
-import { ILogin, IUser } from "../../../shared/types/user";
 import { IChat, IChatContactDetailed, IChatContactGetPayload, IChatCreate, IChatGetPayload, IChatUpdate, IGetCurrentChat, IMessage, IMessageGetPayload } from "./api.types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAuthContext } from "../../auth/context/authContext";
+// tagTypes: ['ChatList'],
 
 export const userApi = baseApi.injectEndpoints({
+
     endpoints: (builder) => ({
         getChat: builder.mutation<IChat, IChatContactGetPayload>({
             query: (payload) => {
@@ -15,7 +14,8 @@ export const userApi = baseApi.injectEndpoints({
                         Authorization: `Bearer ${payload.token}`,
                     }
                 }
-            }
+            },
+            invalidatesTags: [{ type: 'ChatList', id: 'LIST' }]
         }),
         getChats: builder.query<IChat[], IChatGetPayload>({
             query: (payload) => ({
@@ -24,7 +24,11 @@ export const userApi = baseApi.injectEndpoints({
                 headers: {
                     Authorization: `Bearer ${payload.token}`,
                 }
-            })
+            }),
+             providesTags: (result) => 
+        result
+          ? [...result.map(({ id }) => ({ type: 'ChatList' as const, id })), { type: 'ChatList', id: 'LIST' }]
+          : [{ type: 'ChatList', id: 'LIST' }],
         }),
         getMessages: builder.query<IMessage[], IMessageGetPayload>({
             query: (payload) => ({
@@ -37,15 +41,32 @@ export const userApi = baseApi.injectEndpoints({
         }),
         createChat: builder.mutation<IChat, IChatCreate>({
             query: ({token, ...body}) => {
+                const formData = new FormData();
+                formData.append("name",body.name || "no name")
+                formData.append("Isgroup",String(body.Isgroup || true))
+                if (body.users) {
+                    body.users.forEach((user) => {
+                        formData.append("users", String(user)); 
+                    });
+                }
+                if (body.avatar) {
+                    formData.append("avatar", {
+                        uri: body.avatar,
+                        name: `image.jpg`,
+                        type: "image/jpeg",
+                    } as unknown as Blob); 
+                }
+
                 return {
                     url: `/chats/`,
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                    body: body
+                    body: formData
                 }
-            }
+            },
+            invalidatesTags: [{ type: 'ChatList', id: 'LIST' }]
         }),
         deleteChat: builder.mutation<IChat, IMessageGetPayload>({
             query: ({token, chatId}) => {
@@ -56,7 +77,8 @@ export const userApi = baseApi.injectEndpoints({
                         Authorization: `Bearer ${token}`,
                     }
                 }
-            }
+            },
+            invalidatesTags: [{ type: 'ChatList', id: 'LIST' }]
         }),
         getCurrentChat: builder.query<IChatContactDetailed, IGetCurrentChat>({
             query: (payload) => ({
@@ -65,19 +87,40 @@ export const userApi = baseApi.injectEndpoints({
                 headers: {
                     Authorization: `Bearer ${payload.token}`,
                 }
-            })
+            }),
+            //  providesTags: (result) => 
+            //     result
+            //     ? [{ type: 'ChatList', id: result.id }, { type: 'ChatList', id: 'LIST' }]
+            //     : [{ type: 'ChatList', id: 'LIST' }],
         }),
         updateChat: builder.mutation<IChat, IChatUpdate>({
             query: ({token, id, ...body}) => {
+                const formData = new FormData();
+                formData.append("name",body.name || "no name")
+                formData.append("Isgroup",String(body.Isgroup || true))
+                if (body.users) {
+                    body.users.forEach((user) => {
+                        formData.append("users", String(user)); 
+                    });
+                }
+                if (body.avatar) {
+                    console.log("1234567890p-0987654321234567ui7utyt4kjyrmloekgnfm v", body.avatar)
+                    formData.append("avatar", {
+                        uri: body.avatar,
+                        name: `image.jpg`,
+                        type: "image/jpeg",
+                    } as unknown as Blob); 
+                }
                 return {
                     url: `/chats/${id}`,
                     method: "PATCH",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
-                    body: body
+                    body: formData
                 }
-            }
+            },
+            invalidatesTags: [{ type: 'ChatList', id: 'LIST' }]
         }),
     }),
     overrideExisting: false

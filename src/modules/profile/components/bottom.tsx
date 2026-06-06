@@ -20,12 +20,6 @@ export function ProfileBottom(props:IProps){
     async function submit() {
         setEdit(!edit)
         if (edit) return
-        console.log({
-            showElectronicSignature:showSignature,
-            token,
-            showNickname:pseudonym,
-            ...( signature && {electronicSignature:signature})
-        })
         
         const result = await updateProfile({
             showElectronicSignature:showSignature,
@@ -33,7 +27,6 @@ export function ProfileBottom(props:IProps){
             showNickname:pseudonym,
             ...( signature && {electronicSignature:signature})
         })
-        console.log(result)
     }
     if (!user) return
     return (

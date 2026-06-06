@@ -8,6 +8,7 @@ import { useConfirmRequestMutation, useSendRequestMutation } from "../api/friend
 import { useAuthContext } from "@/modules/auth/context/authContext";
 import { router } from "expo-router";
 import { useFriends } from "../context/storage";
+import { useGetChatMutation } from "@/modules/chat/api/chatApi";
 
 
 export function FriendsSection(props: friendsSectionProps) {
@@ -18,6 +19,7 @@ export function FriendsSection(props: friendsSectionProps) {
     // const [sendRequest] = useSendRequestMutation()
     const {token} = useAuthContext()
     const [userId, setUserId] = useState(0);
+    const [getChat] = useGetChatMutation();
     async function onConfirm(friendId: number) {        
         setVisible(false)
         if (props.variant === "requests") {
@@ -25,6 +27,11 @@ export function FriendsSection(props: friendsSectionProps) {
         }
         if (props.variant === "recommend") {
             // await sendRequest({token, profileId: friendId})
+        }
+        if (props.variant === "all"){
+            const chat = await getChat({ friendId, token: token! }).unwrap();
+            router.push({ pathname: '/chat/[id]/chat', params: { id: chat.id } });
+            return
         }
         router.push(`friends/${props.variant}/${friendId}`)
     }
@@ -49,8 +56,8 @@ export function FriendsSection(props: friendsSectionProps) {
                     ];
 
                     return displayedFriends.length > 0 ? (
-                        displayedFriends.map(friend => {
-                            const isExcluded = exlude[variant]?.includes(friend.id);
+                        displayedFriends.map((friend, index) => {
+                            const isExcluded = exlude[variant]?.includes(friend.id) || index > 2 && !props.isSelected;
                             return isExcluded ? null : <FriendCard
                                 key={friend.id}
                                 name={friend.pseudonym}

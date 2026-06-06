@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
     paddingBottom: 20,
-    width: '94%', // Centers nicely on device screens
+    width: '100%', // Centers nicely on device screens
     alignSelf: 'center',
     marginTop: 20,
     // Soft shadows for iOS & Android
@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 10,
-    elevation: 3, 
+    // elevation: 3, 
   },
   headerRow: {
     flexDirection: 'row',
@@ -46,7 +46,7 @@ export const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    backgroundColor: '#EAEAEA',
+    backgroundColor: '#CDCED2',
     marginBottom: 16,
   },
   textSection: {

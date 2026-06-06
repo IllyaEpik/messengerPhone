@@ -14,14 +14,12 @@ export const styles = StyleSheet.create({
 		position: "relative",
 		flex:1
 	},
-
 	input: {
 		flex: 1,
 		fontSize: 16,
 		color: "#070A1C",
 		fontFamily:"GTRegular",
-		lineHeight:22,
-		// width:"auto"
+		lineHeight:22
 	},
 	error: {
 		color: "#FF4C4C",

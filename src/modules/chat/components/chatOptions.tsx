@@ -12,10 +12,11 @@ interface IProps {
     isAdmin?: boolean,
     id: number
     chat: IChatContactDetailed
+    isChat?: boolean
 }
 
 export function ChatOptions(props:IProps){
-    const {isAdmin, id, chat} = props
+    const {isAdmin, id, chat, isChat} = props
     const { token } = useAuthContext()
     const [visible, setVisibility] = useState<boolean>(false)
     const [editing, setEditing] = useState<boolean>(false)
@@ -45,17 +46,29 @@ export function ChatOptions(props:IProps){
         onPress={() => {}} 
         title="Медіа" titleStyle={styles.menuText}
       />
-      <Menu.Item 
+      {
+        isAdmin ?
+        <Menu.Item 
         leadingIcon= {ICONS.Edit}
         onPress={() => setEditing(true)} 
         title="Редагувати групу" titleStyle={styles.menuText}
-      />
+      />: null
+      }
+      
       <Divider />
-      <Menu.Item 
+      {
+        isAdmin || isChat?
+        <Menu.Item 
         leadingIcon= {ICONS.TrashIcon}
         onPress={deletePostOption} 
-        title="Видалити групу" titleStyle={styles.menuText}
+        title="Видалити чат" titleStyle={styles.menuText}
+      />: <Menu.Item 
+        leadingIcon= {ICONS.LogoutIcon}
+        onPress={deletePostOption} 
+        title="Покинути групу" titleStyle={styles.menuText}
       />
+      }
+      
     </Menu>
         <Portal>
             {/* <CreatePostModal  visible={editing} onClose={() => setEditing(false)} post={post}/> */}

@@ -9,7 +9,8 @@ export const styles = StyleSheet.create({
     borderColor:"#CDCED2",
     borderWidth:1,
     borderRadius:10,
-    marginTop:5
+    marginTop:5,
+    height: "100%"
   },
   header: {
     height: 48,
@@ -52,7 +53,8 @@ export const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: "#C4C4C4",
     borderWidth: 3,
-    borderColor: "#FFFFFF",
+    borderColor: "#FFFFFF"
+
   },
   nameText: {
     fontSize: 28,
@@ -72,7 +74,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 12,
-    marginBottom: 40,
+    marginBottom: 40
   },
   statBox: {
     flex: 1,
@@ -100,7 +102,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 16,
     marginTop: "auto",
-    marginBottom: 24,
+    marginBottom: 24
   },
   actionButton: {
     flex: 1, // Ensures both buttons split the width evenly

@@ -11,10 +11,17 @@ import { Message } from "./message";
 import { useGetCurrentChatQuery, useGetMessagesQuery } from "../api/chatApi";
 import { socket } from "@/shared/api/socket/socket";
 import { ChatOptions } from "./chatOptions";
+import { GroupAvatar } from "./groupAvatar";
 
+const tabs = [
+  { id: "contacts", label: "Контакти" },
+  { id: "messages", label: "Повідомлення" },
+  { id: "groups", label: "Групові чати" },
+];
 
 export function ChatScreen() {
-    const { id } = useLocalSearchParams<{ id: string }>();
+    const { id, tabId } = useLocalSearchParams<{ id: string, tabId?:string }>();
+    const activeTab = tabId || "contacts"
     const chatId = Number(id);
     const [messages, setMessages] = useState<IMessage[]>([]);
     console.log(messages);
@@ -32,7 +39,7 @@ export function ChatScreen() {
     const [inputText, setInputText] = useState("");
     useEffect(() => {
         if (data) {
-            console.log(messages, data);
+            console.log(messages);
             setMessages(data);
         }
     }, [data]);
@@ -49,7 +56,6 @@ export function ChatScreen() {
             socket.off("newMessage");
             socket.disconnect();
         }
-        console.log("Chat ID:", chatId);
     }, []);
     // Placeholder handlers – replace with your actual send / attach logic
     function handleSend() {
@@ -66,19 +72,45 @@ export function ChatScreen() {
   const handleAttachImage = () => {
     console.log("Attach image");
   };
-  function handleBack() {
-    console.log("Go back");
-    router.push("/chat/");
+  function handleBack(tabId?: string) {
+    router.push({
+    // Путь к целевой странице без динамических сегментов
+    pathname: '/(tabs)/chat',
+    // Параметры, которые вы хотите передать
+    params: {tabId: tabId || activeTab}
+  });
   }
-  console.log(chat.data, "31123231321132321123123231312nldssdadsaknjfs")
+  // function handleBack() {
+  //   console.log("Go back");
+  //   router.push("/chat/");
+  // }
   return (
+    <>
+      <View style={styles.tabs}>
+        {tabs.map((tab) => (
+          <TouchableOpacity
+            key={tab.id}
+            style={[styles.tab, activeTab === tab.id && styles.activeTab]}
+            onPress={() => handleBack(tab.id)}
+          >
+            {tab.id === "contacts" ? <ICONS.PeopleIcon/>: <ICONS.ChatIcon/>}
+            <Text style={styles.tabText}>
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     <View style={styles.chatContainer}>
        <View style={styles.header}>
         <View style={styles.headerLeft}>
-            <TouchableOpacity  style={styles.iconButton} onPress={handleBack}>
+            <TouchableOpacity  style={styles.iconButton} onPress={() => handleBack()}>
                 <ICONS.BackIcon />
             </TouchableOpacity>
-            <Avatar style={styles.avatar} />
+            {
+              chat.data?.isGroup ? 
+              <GroupAvatar name={chat.data.chatName} avatar={chat.data.avatar} style={styles.avatar}/> :
+              <Avatar style={styles.avatar} image={chat.data?.avatar}/>
+            }
             <View style={styles.headerCenter}>
                 
                 <Text style={styles.groupName}>{chat.data?.chatName}</Text>
@@ -87,7 +119,7 @@ export function ChatScreen() {
         </View>
         <TouchableOpacity style={styles.iconButton}>
             {/* <ICONS.OptionsIcon /> */}
-            <ChatOptions isAdmin={false} id={chatId} chat={chat.data!}/>
+            <ChatOptions isAdmin={chat.data?.isAdmin} id={chatId} chat={chat.data!} isChat={!chat.data?.isGroup}/>
         </TouchableOpacity>
         </View>
       <FlatList
@@ -116,6 +148,7 @@ export function ChatScreen() {
         </TouchableOpacity>
       </View>
     </View>
+    </>
   );
 }
 function useParams() {

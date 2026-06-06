@@ -6,8 +6,9 @@ import { useAuthContext } from "@/modules/auth/context/authContext";
 import { useGetFriendsDataQuery } from "@/modules/friends/api/friendsApi";
 import { Avatar } from "@/shared/components/avatar/avatar";
 // import { router } from "expo-router/build/exports";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { ICONS } from "@/shared/static/icons";
+import { GroupAvatar } from "./groupAvatar";
 
 const tabs = [
   { id: "contacts", label: "Контакти" },
@@ -16,11 +17,11 @@ const tabs = [
 ];
 
 export function ContactsScreen(){
-  const [activeTab, setActiveTab] = useState("contacts");
+  const { tabId } = useLocalSearchParams<{ tabId?: string }>();
+  const [activeTab, setActiveTab] = useState(tabId || "contacts");
   const { user, token } = useAuthContext();
   const [getChat] = useGetChatMutation();
-  const chats = useGetChatsQuery({ userId: user?.id!, token: token }, { skip: !user?.id || !token });
-  console.log(chats)
+  const chats = useGetChatsQuery({ userId: user?.id!, token: token }, { skip: !user?.id || !token, pollingInterval: 500000 });
   const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
@@ -32,10 +33,10 @@ export function ContactsScreen(){
       router.push({ pathname: '/chat/[id]/chat', params: { id: chat.id } });
   }
   function openChat(chatId: number) {
-    router.push({ pathname: '/chat/[id]/chat', params: { id: chatId } });
+    router.push({ pathname: '/chat/[id]/chat', params: { id: chatId, tabId: activeTab } });
   }
   return (
-    <View style={styles.container}>
+    <>
       <View style={styles.tabs}>
         {tabs.map((tab) => (
           <TouchableOpacity
@@ -50,7 +51,7 @@ export function ContactsScreen(){
           </TouchableOpacity>
         ))}
       </View>
-
+    <View style={styles.container}>
       <Text style={styles.title}>{activeTabLabel}</Text>
 
       <TextInput placeholder="Пошук" placeholderTextColor="#999" style={styles.searchInput} />
@@ -83,12 +84,22 @@ export function ContactsScreen(){
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.list}
             renderItem={({ item }) => (
-              <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
-                {/* <Image source={{ uri: item.avatar }} style={styles.avatar} /> */}
-                {/*  image={item.avatar} */}
-                <Avatar style={styles.avatar}/>
-                <Text style={styles.contactName}>{item.chatName || "unknown"}</Text>
-              </TouchableOpacity>
+              // <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
+              //   {/* <Image source={{ uri: item.avatar }} style={styles.avatar} /> */}
+              //   {/*  image={item.avatar} */}
+              //   <Avatar style={styles.avatar}/>
+              //   <Text style={styles.contactName}>{item.chatName || "unknown"}</Text>
+              // </TouchableOpacity>
+              <TouchableOpacity style={styles.groupItem} onPress={() => openChat(item.id)}>
+              <Avatar style={styles.avatar}/>
+              <View style={styles.groupInfo}>
+                <View style={styles.groupHeader}>
+                  <Text style={styles.contactName}>{item.chatName}</Text>
+                  <Text style={styles.groupTime}>{typeof item.time === "string" ? item.time : "00:00"}</Text>
+                </View>
+                <Text style={styles.groupMessage}>{item.message}</Text>
+              </View>
+            </TouchableOpacity>
             )}
           />
         ) : 
@@ -100,6 +111,7 @@ export function ContactsScreen(){
       {activeTab === "groups" && (
 
         chats.data && chats.data.filter(chat => chat.isGroup).length > 0 ? (
+          
         <FlatList
           data={chats.data.filter(chat => chat.isGroup)}
           keyExtractor={(item) => item.id.toString()}
@@ -107,13 +119,7 @@ export function ContactsScreen(){
           contentContainerStyle={styles.list}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.groupItem} onPress={() => openChat(item.id)}>
-              <View style={styles.groupAvatar}>
-                <Text style={styles.groupAvatarText}>
-                  {item.chatName
-                  .split(" ").map((text, i) => {return i < 2 ? text[0] : ""})
-                  .join("").toUpperCase()}
-                </Text>
-              </View>
+              <GroupAvatar name={item.chatName} avatar={item.avatar}/>
               <View style={styles.groupInfo}>
                 <View style={styles.groupHeader}>
                   <Text style={styles.contactName}>{item.chatName}</Text>
@@ -129,7 +135,8 @@ export function ContactsScreen(){
           <Text style={styles.placeholderText}>У тебе поки що немає груп.</Text>
         </View>
       )}
-    </View>
+      </View>
+    </>
   );
 };
 

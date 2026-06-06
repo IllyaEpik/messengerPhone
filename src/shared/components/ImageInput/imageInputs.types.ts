@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
 export interface IProps {
     onChange: (uri: string) => void;
@@ -11,4 +11,5 @@ export interface IProps {
     aspect?: [number, number]
     notAspect?: boolean
     maxSize?: number
+    textStyle?: StyleProp<TextStyle>
 }

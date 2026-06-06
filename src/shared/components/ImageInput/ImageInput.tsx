@@ -1,6 +1,6 @@
 import React from "react";
 import * as ImageManipulator from 'expo-image-manipulator';
-import {  Text, Pressable } from "react-native";
+import {  Text, Pressable, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import {styles} from "./imageInput.styles"
 import { IProps } from "./imageInputs.types";
@@ -33,7 +33,8 @@ export function ImageInput(props:IProps ) {
         children,
         aspect,
         notAspect,
-        maxSize
+        maxSize,
+        textStyle
     } = props
     async function pickImage() {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -51,10 +52,10 @@ export function ImageInput(props:IProps ) {
     }
     
     return (
-        <Pressable style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
+        <TouchableOpacity style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
             {typeof icon !== "string" && icon}
-            {text && <Text>{text}</Text>}
+            {text && <Text style={textStyle}>{text}</Text>}
             {children}
-        </Pressable>
+        </TouchableOpacity>
     )
 }

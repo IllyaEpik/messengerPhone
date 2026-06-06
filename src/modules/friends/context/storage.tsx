@@ -82,7 +82,7 @@ export function FriendsProvider (props: {children:ReactNode} ){
     }
 
   
-
+//  style={{flex:1}}
   return (
     <FriendsContext.Provider value={{ exlude, apper, moveUser, clear }}>
         {children}

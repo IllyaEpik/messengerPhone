@@ -72,7 +72,6 @@ export function CreatePostModal(props: CreatePostModalProps) {
 		setImages([]);
 		onClose();
 	}
-	console.log("l")
 	return (
 		<Modal
 		visible={visible}

@@ -15,4 +15,5 @@ export interface friendsSectionProps {
     variant: friendMenuVariant
     noFriendsMessage: string
     setVariant: (variant: friendMenuVariant) => void
+    isSelected: boolean
 }

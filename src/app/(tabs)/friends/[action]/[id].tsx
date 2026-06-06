@@ -5,8 +5,6 @@ import { View, Text } from "react-native";
 
 export default function OtherPage() {
     return (
-          <View>
             <FriendPage/>
-          </View>
     )
 }

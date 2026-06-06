@@ -16,6 +16,8 @@ import {
 import { useCreateChatMutation, useUpdateChatMutation } from '../../api/chatApi';
 import { useAuthContext } from '@/modules/auth/context/authContext';
 import { IChatContactDetailed } from '../../api/api.types';
+import { ImageInput } from '@/shared/components/ImageInput/ImageInput';
+import { GroupAvatar } from '../groupAvatar';
 
 interface Participant {
   id: number;
@@ -40,13 +42,12 @@ export function CreateGroupDetails({
   isEdit,
   chat
 }: CreateGroupDetailsProps) {
+  const [image, setImage] = useState<string>(" ")
   const [groupName, setGroupName] = useState(chat?.chatName || '');
   const [participants, setParticipants] = useState<Participant[]>(initialParticipants || []);
-  const { token, user } = useAuthContext()
+  const { token, user } = useAuthContext() 
   const [createChat] = useCreateChatMutation()
   const [updateChat] = useUpdateChatMutation()
-  // useUpdateChatMutation
-  console.log(chat?.users, "alllllllllllllll")
   // Быстрое удаление участника из списка на клиенте
   const handleRemoveParticipant = (id: number) => {
     setParticipants((prev) => prev.filter((p) => p.id !== id));
@@ -61,15 +62,24 @@ export function CreateGroupDetails({
           users: participantIds.concat([user?.id!]),
           name: groupName,
           Isgroup: true,
-          id:chat?.id
+          id:chat?.id,
+          ...(image===" " ? { } : {avatar:image})
       })
 
     }else{
+      console.log({
+          token,
+          users: participantIds.concat([user?.id!]),
+          name: groupName,
+          Isgroup: true,
+          ...(image===" " ? { } : {avatar:image})
+      })
       const createdChat = await createChat({
           token,
           users: participantIds.concat([user?.id!]),
           name: groupName,
-          Isgroup: true
+          Isgroup: true,
+          ...(image===" " ? { } : {avatar:image})
       })
       
     }
@@ -116,22 +126,42 @@ export function CreateGroupDetails({
         {/* <View style={styles.groupAvatarPlaceholder}>
           <Text style={styles.groupAvatarText}>NG</Text>
         </View> */}
-        <Avatar style={styles.groupAvatarPlaceholder}/>
+        {/* <Avatar style={styles.groupAvatarPlaceholder} image={image} local/> */}
+        <GroupAvatar name={groupName} avatar={image !== " " ? image : undefined} style={styles.groupAvatarPlaceholder} local/>
         {/* Avatar/> */}
 
         <View style={styles.avatarActionsRow}>
-          <TouchableOpacity style={styles.avatarActionButton} activeOpacity={0.7}>
+          {/* <TouchableOpacity style={styles.avatarActionButton} activeOpacity={0.7}>
             <ICONS.PlusIcon/>
             <Text style={styles.avatarActionText}>Додайте фото</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.avatarActionButton} activeOpacity={0.7}>
+          </TouchableOpacity> */}
+          <ImageInput 
+          onChange={setImage} 
+          icon={<ICONS.PlusIcon/>}
+          text='Додайте фото'
+          textStyle={styles.avatarActionText}
+          />
+          <ImageInput 
+          onChange={setImage} 
+          icon={<ICONS.PublicIcon/>}
+          text='Оберіть фото'
+          textStyle={styles.avatarActionText}
+          />
+          {/* <TouchableOpacity style={styles.avatarActionButton} activeOpacity={0.7}>
             <ICONS.PublicIcon/>
             <Text style={styles.avatarActionText}>Оберіть фото</Text> 
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
-
-      <Text style={styles.sectionTitle}>Учасники</Text>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>Учасники</Text>
+          <TouchableOpacity style={styles.sectionAddPeople} onPress={onBack}>
+            {isEdit ?<>
+            <ICONS.PlusIcon color={"#543C52"}/>
+            <Text style={styles.addPeoplePlus}>Додайте учасника</Text>
+            </> : null }
+          </TouchableOpacity>
+        </View>
 
       {/* Список выбранных участников */}
       <FlatList
@@ -179,6 +209,23 @@ export function CreateGroupDetails({
 }
 
 const styles = StyleSheet.create({
+  sectionHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: 24,
+    marginBottom: 12,
+  },
+  sectionAddPeople: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6  
+  },
+  addPeoplePlus: {
+    color: "#543C52",
+    fontFamily: "GTMedium",
+    fontSize: 16
+
+  },
   layoutContainer: {
     flex: 1,
     // alignItems: 'center',
@@ -256,8 +303,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#000',
-    marginHorizontal: 24,
-    marginBottom: 12,
   },
   scrollContainer: {
     paddingHorizontal: 24,

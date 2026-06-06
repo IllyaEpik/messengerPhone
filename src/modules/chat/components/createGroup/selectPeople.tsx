@@ -42,6 +42,7 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
   const [isNext, setNext] = useState(isEdit);
 
   const [selectedIds, setSelectedIds] = useState<Set<number>>( new Set() );
+  const countOfPeople = selectedIds.size - (isEdit ? 1 : 0)
   const { token } = useAuthContext();
   const [contacts, setContacts] = useState<Section[]>([]);
   const friends = useGetFriendsDataQuery({
@@ -104,8 +105,6 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
     })).filter((section) => section.data.length > 0);
   }, [searchQuery, friends.data]);
   function onNext(selectedIds: number[]) {
-    // Здесь будет логика создания группы с выбранными участниками
-    console.log('Создать группу с участниками:', selectedIds);
     setNext(true);
   }
   if (!visible) return null;
@@ -161,7 +160,7 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
         />
       </View>
 
-      <Text style={styles.counterText}>Вибрано: {selectedIds.size}</Text>
+      <Text style={styles.counterText}>Вибрано: {countOfPeople}</Text>
 
       {/* Список контактов */}
       <SectionList
