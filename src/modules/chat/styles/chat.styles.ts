@@ -30,6 +30,9 @@ messageBubble: {
     borderWidth: 1,
     borderColor: '#E9E5EE',
 },
+images: {
+  gap:10
+},
 myBubble: {
     backgroundColor: '#CDCED2',
     borderBottomRightRadius: 4,
@@ -74,7 +77,6 @@ chatList: {
   paddingHorizontal: 16,
   paddingTop: 16,
   paddingBottom: 8,
-  flexDirection: 'column-reverse', // Invert the list to show newest messages at the bottom
   flex:1
 },
 inputPanel: {
@@ -86,6 +88,8 @@ inputPanel: {
 //   paddingVertical: 6,
   paddingHorizontal: 12,
   gap: 8,
+  // flex:1,
+  // alignSelf:"flex-end/"
 },
 attachButton: {
   padding: 10,

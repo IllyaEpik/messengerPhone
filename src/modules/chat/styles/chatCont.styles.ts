@@ -54,31 +54,28 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     fontFamily: "GTMedium"
   },
-
-  title: {
-    fontSize: 28,
-    fontWeight: "600",
-    color: "#4F4F4F",
-
+  titleBlock: {
+    flexDirection: "row",
+    gap:8,
+    alignItems: "center",
     paddingHorizontal: 16,
-    marginBottom: 16,
+    paddingVertical: 8,
+    paddingBottom:16
   },
+  title: {
+    fontSize: 20,
+    fontFamily: "GTMedium",
+    color: "#81818D",
 
+    // marginBottom: 16,
+  },
+  searchInputContainer: {
+    height:40,
+    // marginVertical:10,
+    marginBottom: 20
+  },
   searchInput: {
-    height: 46,
-    backgroundColor: "#FFFFFF",
-
-    marginHorizontal: 16,
-    marginBottom: 24,
-
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#E5E5E5",
-
-    paddingHorizontal: 16,
-
-    fontSize: 14,
-    color: "#111",
+    marginHorizontal: 16, 
   },
 
   list: {
@@ -118,6 +115,7 @@ export const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "700",
     fontSize: 16,
+    fontFamily: "GTMedium"
   },
 
   groupInfo: {
@@ -134,11 +132,13 @@ export const styles = StyleSheet.create({
   groupMessage: {
     color: "#6B6B7B",
     fontSize: 14,
+    fontFamily: "GTRegular"
   },
 
   groupTime: {
     color: "#9E9EAF",
     fontSize: 12,
+    fontFamily: "GTRegular"
   },
 
   avatar: {
@@ -152,7 +152,7 @@ export const styles = StyleSheet.create({
   contactName: {
     fontSize: 16,
     color: "#111827",
-    fontWeight: "500",
+    fontFamily: "GTMedium"
   },
 
   placeholderBox: {

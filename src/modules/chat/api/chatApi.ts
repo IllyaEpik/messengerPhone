@@ -1,5 +1,5 @@
 import { baseApi } from "src/shared/api/baseApi";
-import { IChat, IChatContactDetailed, IChatContactGetPayload, IChatCreate, IChatGetPayload, IChatUpdate, IGetCurrentChat, IMessage, IMessageGetPayload } from "./api.types";
+import { IChat, IChatContactDetailed, IChatContactGetPayload, IChatCreate, IChatGetPayload, IChatUpdate, ICreateImageMessagePayload, ICreateMessagePayload, IGetCurrentChat, IMessage, IMessageGetPayload } from "./api.types";
 // tagTypes: ['ChatList'],
 
 export const userApi = baseApi.injectEndpoints({
@@ -104,7 +104,6 @@ export const userApi = baseApi.injectEndpoints({
                     });
                 }
                 if (body.avatar) {
-                    console.log("1234567890p-0987654321234567ui7utyt4kjyrmloekgnfm v", body.avatar)
                     formData.append("avatar", {
                         uri: body.avatar,
                         name: `image.jpg`,
@@ -116,6 +115,29 @@ export const userApi = baseApi.injectEndpoints({
                     method: "PATCH",
                     headers: {
                         Authorization: `Bearer ${token}`,
+                    },
+                    body: formData
+                }
+            },
+            invalidatesTags: [{ type: 'ChatList', id: 'LIST' }]
+        }),
+        sendMessage: builder.mutation<IMessage, ICreateImageMessagePayload>({
+            query: (body) => {
+                const formData = new FormData();
+                formData.append("text",body.text)
+                
+                body.images.forEach((image) => {
+                    formData.append("images", {
+                        uri: image,
+                        name: `image.jpg`,
+                        type: "image/jpeg",
+                    } as unknown as Blob); 
+                });
+                return {
+                    url: `/messages/${body.chatId}`,
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${body.token}`,
                     },
                     body: formData
                 }
@@ -134,5 +156,6 @@ export const {
     useCreateChatMutation,
     useGetCurrentChatQuery,
     useDeleteChatMutation,
-    useUpdateChatMutation
+    useUpdateChatMutation,
+    useSendMessageMutation
  } = userApi

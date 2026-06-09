@@ -14,6 +14,7 @@ import { OptionsIcon } from "./_icons/options";
 import { PeopleIcon } from "./_icons/people";
 import { PlusIcon } from "./_icons/plus";
 import { PublicIcon } from "./_icons/publics";
+import { SearchIcon } from "./_icons/searchIcon";
 import { SendIcon } from "./_icons/sendIcon";
 import { SettingsIcon } from "./_icons/settings";
 import { Smile } from "./_icons/smile";
@@ -44,5 +45,6 @@ export const ICONS = {
 	Like,
 	Love,
 	View,
-	BackIcon
+	BackIcon,
+	SearchIcon
 };

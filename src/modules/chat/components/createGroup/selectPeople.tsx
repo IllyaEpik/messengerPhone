@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { CreateGroupDetails } from './createGroup';
 import { IChatContactDetailed } from '../../api/api.types';
+import { useContactsContext } from '../../context/contactsContext';
 
 type Contact = {
   id: number;
@@ -45,14 +46,14 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
   const countOfPeople = selectedIds.size - (isEdit ? 1 : 0)
   const { token } = useAuthContext();
   const [contacts, setContacts] = useState<Section[]>([]);
-  const friends = useGetFriendsDataQuery({
-    token,
-    pagination: {
-        recommends: 0,
-        requests: 0,
-    }
-  }, {skip: !token, refetchOnReconnect: true});
-  
+  // const friends = useGetFriendsDataQuery({
+  //   token,
+  //   pagination: {
+  //       recommends: 0,
+  //       requests: 0,
+  //   }
+  // }, {skip: !token, refetchOnReconnect: true});
+  const friends = useContactsContext().contacts
   useEffect(() => {
     if (chat){
       setSelectedIds(new Set(chat.users.map(user => user.id)))
@@ -60,9 +61,8 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
   }, [chat])
   useEffect(() => {
     // let sectionsOfObject: Section[] = []
-    if (friends.data?.
-      friends[0]) {
-      const grouped = friends.data.friends.reduce((acc: Record<string, Contact[]>, friend) => {
+    if (friends) {
+      const grouped = friends.reduce((acc: Record<string, Contact[]>, friend) => {
         
         const firstLetter = friend.pseudonym[0].toUpperCase();
         if (!acc[firstLetter]) {
@@ -79,7 +79,7 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
       // sectionsOfObject = sections
       setContacts(sections);
     }
-  }, [friends.data]);
+  }, [friends]);
   // Быстрый переключатель выбора
   const toggleSelect = (id: number) => {
     setSelectedIds((prev) => {
@@ -103,7 +103,7 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
         item.name.toLowerCase().includes(searchQuery.toLowerCase())
       ),
     })).filter((section) => section.data.length > 0);
-  }, [searchQuery, friends.data]);
+  }, [searchQuery, friends, contacts]);
   function onNext(selectedIds: number[]) {
     setNext(true);
   }
@@ -157,6 +157,7 @@ export function ChatModal({ onCancel, visible, isEdit, chat }: NewGroupScreenPro
         //   icon={<ICONS. />} 
           label=""
           error=""
+          leftIcon={<ICONS.SearchIcon/>}
         />
       </View>
 
@@ -249,10 +250,10 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   mainTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    fontSize: 34,
+    fontFamily: "GTMedium",
     textAlign: 'center',
-    color: '#050E1E',
+    color: '#070A1C',
     marginVertical: 16,
   },
   searchBarWrapper: {
@@ -289,7 +290,7 @@ const styles = StyleSheet.create({
   contactLabel: {
     flex: 1,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: "GTMedium",
     color: '#050E1E',
     marginLeft: 16,
   },

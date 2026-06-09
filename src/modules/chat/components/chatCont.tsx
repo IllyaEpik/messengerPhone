@@ -9,6 +9,8 @@ import { Avatar } from "@/shared/components/avatar/avatar";
 import { router, useLocalSearchParams } from "expo-router";
 import { ICONS } from "@/shared/static/icons";
 import { GroupAvatar } from "./groupAvatar";
+import { Input } from "@/shared/components/Input/Input";
+import { useContactsContext } from "../context/contactsContext";
 
 const tabs = [
   { id: "contacts", label: "Контакти" },
@@ -19,10 +21,12 @@ const tabs = [
 export function ContactsScreen(){
   const { tabId } = useLocalSearchParams<{ tabId?: string }>();
   const [activeTab, setActiveTab] = useState(tabId || "contacts");
+  const [search, setSearch] = useState("")
   const { user, token } = useAuthContext();
   const [getChat] = useGetChatMutation();
   const chats = useGetChatsQuery({ userId: user?.id!, token: token }, { skip: !user?.id || !token, pollingInterval: 500000 });
-  const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
+  // const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
+  const { contacts } = useContactsContext()
   const activeTabLabel = useMemo(
     () => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
     [activeTab]
@@ -52,14 +56,29 @@ export function ContactsScreen(){
         ))}
       </View>
     <View style={styles.container}>
-      <Text style={styles.title}>{activeTabLabel}</Text>
+      <View style={styles.titleBlock}>
 
-      <TextInput placeholder="Пошук" placeholderTextColor="#999" style={styles.searchInput} />
+        {activeTab==="contacts" ? <ICONS.PeopleIcon color={"#81818D"}/> : <ICONS.ChatIcon color={"#81818D"}/>}
+        <Text style={styles.title}>{activeTabLabel}</Text>
 
+      </View>
+        
+      {/* <TextInput placeholder="Пошук" placeholderTextColor="#999" style={styles.searchInput} /> */}
+      <View style={styles.searchInputContainer}>
+
+        <Input
+        placeholder="Пошук"
+        value={search}
+        onChangeText={setSearch}
+        label=""
+        leftIcon={ <ICONS.SearchIcon/>}
+        containerInputStyles={styles.searchInput}  
+        />
+      </View>
       {activeTab === "contacts" && (
-        friends.data?.friends ? (
+        contacts ? (
           <FlatList
-            data={friends.data?.friends}
+            data={contacts}
             keyExtractor={(item) => item.id.toString()}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.list}

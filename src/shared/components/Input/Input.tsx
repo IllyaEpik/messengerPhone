@@ -9,11 +9,13 @@ interface Props extends React.ComponentProps<typeof TextInput> {
   value: string;
   onChangeText: (text: string) => void;
   secure?: boolean;
-  label: string,
-  error:string | undefined
+  label?: string,
+  error?:string | undefined
   containerInputStyles?:StyleProp<ViewStyle>
   icon?: ReactNode
   onIconPress?: () => void
+  leftIcon?: ReactNode
+  
 }
 
 export const Input = (props: Props) => {
@@ -27,6 +29,7 @@ export const Input = (props: Props) => {
     style,
     containerInputStyles,
     icon,
+	leftIcon,
     onIconPress,
     ...other
   } = props;
@@ -38,6 +41,7 @@ export const Input = (props: Props) => {
         <View style={styles.fullInputWithIcon}>
 			
 			<View style={[styles.container, error ? styles.containerWithError : {}, containerInputStyles]}>
+				{leftIcon ? leftIcon : null}
 				<TextInput
 					placeholder={placeholder}
 					// placeholderTextColor="#A0A0A0"

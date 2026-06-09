@@ -89,6 +89,12 @@ export interface ICreateMessagePayload {
     chatId: number;
     text: string;
 }
+export interface ICreateImageMessagePayload {
+    chatId: number;
+    text: string;
+    images: string[]
+    token: string
+}
 export interface IChatCreate {
     users: number[];
     Isgroup?: boolean

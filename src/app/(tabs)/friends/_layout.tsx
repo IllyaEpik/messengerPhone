@@ -3,6 +3,7 @@ import { Stack } from "expo-router";
 
 import Header from "@/shared/components/header/ui/header";
 import { FriendsProvider } from "@/modules/friends/context/storage";
+import { ContactsProvider } from "@/modules/chat/context/contactsContext";
 
 export default function Layout() {
   return (

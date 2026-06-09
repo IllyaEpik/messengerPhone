@@ -53,7 +53,7 @@ export function ImageInput(props:IProps ) {
     
     return (
         <TouchableOpacity style={[styles.basic,filled && styles.filled, style]} onPress={pickImage}>
-            {typeof icon !== "string" && icon}
+            {typeof icon !== "string" ? icon : null}
             {text && <Text style={textStyle}>{text}</Text>}
             {children}
         </TouchableOpacity>

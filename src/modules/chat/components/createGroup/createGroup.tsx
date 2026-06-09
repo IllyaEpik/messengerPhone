@@ -18,6 +18,7 @@ import { useAuthContext } from '@/modules/auth/context/authContext';
 import { IChatContactDetailed } from '../../api/api.types';
 import { ImageInput } from '@/shared/components/ImageInput/ImageInput';
 import { GroupAvatar } from '../groupAvatar';
+import { router } from 'expo-router';
 
 interface Participant {
   id: number;
@@ -67,13 +68,6 @@ export function CreateGroupDetails({
       })
 
     }else{
-      console.log({
-          token,
-          users: participantIds.concat([user?.id!]),
-          name: groupName,
-          Isgroup: true,
-          ...(image===" " ? { } : {avatar:image})
-      })
       const createdChat = await createChat({
           token,
           users: participantIds.concat([user?.id!]),
@@ -81,6 +75,8 @@ export function CreateGroupDetails({
           Isgroup: true,
           ...(image===" " ? { } : {avatar:image})
       })
+      if (!createdChat.data?.id) return null
+      router.push({ pathname: '/chat/[id]/chat', params: { id: createdChat.data.id, tabId: "groups" } });
       
     }
       onClose()
@@ -256,10 +252,10 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   mainTitle: {
-    fontSize: 32,
-    fontWeight: '700',
+    fontSize: 34,
+    fontFamily: "GTMedium",
     textAlign: 'center',
-    color: '#050E1E',
+    color: '#070A1C',
     marginVertical: 16,
   },
   inputWrapper: {
@@ -295,13 +291,13 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   avatarActionText: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontFamily: "GTMedium",
     color: '#4E374E',
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: "GtMedium",
     color: '#000',
   },
   scrollContainer: {
@@ -318,7 +314,7 @@ const styles = StyleSheet.create({
   participantLabel: {
     flex: 1,
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: "GTMedium",
     color: '#050E1E',
     marginLeft: 16,
   },
