@@ -1,3 +1,1 @@
-const COLORS = {
-    
-}
+const COLORS = {};

@@ -12,46 +12,44 @@ export const styles = StyleSheet.create({
 		marginBottom: 3,
 		backgroundColor: "#FFFFFF",
 		position: "relative",
-		flex:1
+		flex: 1,
 	},
 	input: {
 		flex: 1,
 		fontSize: 16,
 		color: "#070A1C",
-		fontFamily:"GTRegular",
-		lineHeight:22
+		fontFamily: "GTRegular",
+		lineHeight: 22,
 	},
 	error: {
 		color: "#FF4C4C",
-		fontFamily:"GTRegular",
+		fontFamily: "GTRegular",
 		fontSize: 13,
-		marginTop:-10
+		marginTop: -10,
 	},
-	label:{
-		fontFamily:"GTRegular",
-		fontSize:16
+	label: {
+		fontFamily: "GTRegular",
+		fontSize: 16,
 	},
 	containerWithError: {
-		borderColor:"#FF4C4C",
-		borderWidth:1,
-		borderStyle:"solid"
+		borderColor: "#FF4C4C",
+		borderWidth: 1,
+		borderStyle: "solid",
 	},
-	icon:{
+	icon: {
 		position: "absolute",
 		right: 5,
 		width: 5,
-		height: 5
+		height: 5,
 	},
-	fullInput:{
-		flex:1,
-		width:"100%",
-		flexDirection:"column"
+	fullInput: {
+		flex: 1,
+		width: "100%",
+		flexDirection: "column",
 	},
-	fullInputWithIcon:{
-		flexDirection:"row",
-		flex:1,
-		gap:10
-
-	}
-
+	fullInputWithIcon: {
+		flexDirection: "row",
+		flex: 1,
+		gap: 10,
+	},
 });

@@ -14,7 +14,7 @@ export const createPostModalStyles = StyleSheet.create({
 		padding: 20,
 	},
 	closeButton: {
-		cursor:"pointer"
+		cursor: "pointer",
 	},
 	closeButtonText: {
 		fontSize: 22,
@@ -23,7 +23,7 @@ export const createPostModalStyles = StyleSheet.create({
 		fontSize: 24,
 		marginBottom: 20,
 		textAlign: "left",
-		fontFamily:"GTMedium"
+		fontFamily: "GTMedium",
 	},
 	tagsContainer: {
 		flexDirection: "row",
@@ -34,7 +34,7 @@ export const createPostModalStyles = StyleSheet.create({
 	tag: {
 		backgroundColor: "#E9E5EE",
 		borderRadius: 8,
-		padding: 6
+		padding: 6,
 	},
 	tagText: {
 		color: "#543C52",
@@ -52,45 +52,41 @@ export const createPostModalStyles = StyleSheet.create({
 		gap: 8,
 		borderRadius: 1234,
 		justifyContent: "center",
-    alignItems: "center",
-	flexDirection:"row"
-
-
+		alignItems: "center",
+		flexDirection: "row",
 	},
 	submitButtonText: {
 		color: "#FFFFFF",
 		fontWeight: "bold",
 		fontSize: 16,
-		
 	},
-	plusButton:{
-        padding: 3,
-        backgroundColor: "#FFFFFF",
-        borderRadius: 100,
-        borderColor: "#543C52",
-        borderWidth: 2,
-        borderStyle: "solid",
-        flexDirection: "row",
-        alignSelf:"center"
-
-    },
+	plusButton: {
+		padding: 3,
+		backgroundColor: "#FFFFFF",
+		borderRadius: 100,
+		borderColor: "#543C52",
+		borderWidth: 2,
+		borderStyle: "solid",
+		flexDirection: "row",
+		alignSelf: "center",
+	},
 	buttonIcon: {
 		padding: 10,
-    	backgroundColor: "#FFFFFF",
-        borderRadius: 100,
-        borderColor: "#543C52",
-        borderWidth: 2,
-        borderStyle: "solid",
-        flexDirection: "row",
-        alignSelf:"center"
+		backgroundColor: "#FFFFFF",
+		borderRadius: 100,
+		borderColor: "#543C52",
+		borderWidth: 2,
+		borderStyle: "solid",
+		flexDirection: "row",
+		alignSelf: "center",
 	},
-    buttonsContainer:{
-		flex:1,
-		flexDirection:"row",
-		justifyContent:"flex-end",
+	buttonsContainer: {
+		flex: 1,
+		flexDirection: "row",
+		justifyContent: "flex-end",
 		gap: 10,
-		marginTop:16
-    },
+		marginTop: 16,
+	},
 	linkFieldRow: {
 		flexDirection: "row",
 		alignItems: "center",
@@ -105,32 +101,32 @@ export const createPostModalStyles = StyleSheet.create({
 		borderWidth: 2,
 		borderStyle: "solid",
 	},
-	fullInput:{
-		flexDirection: "row"
+	fullInput: {
+		flexDirection: "row",
 	},
 	buttonContainer: {
 		width: "100%",
 		height: 20,
 		position: "relative",
 		flexDirection: "row-reverse",
-		textAlign: "center"
+		textAlign: "center",
 	},
-	scrollView:{
-		gap:16
+	scrollView: {
+		gap: 16,
 	},
-	image:{
-		width:"100%",
-		height:"100%",
-		borderRadius:25
+	image: {
+		width: "100%",
+		height: "100%",
+		borderRadius: 25,
 	},
-	imageContainer:{
-		position:"relative",
-		width:"100%",
-		height:225
+	imageContainer: {
+		position: "relative",
+		width: "100%",
+		height: 225,
 	},
-	trashIcon:{
-		position:"absolute",
-		top:10,
-		right:10
-	}
+	trashIcon: {
+		position: "absolute",
+		top: 10,
+		right: 10,
+	},
 });

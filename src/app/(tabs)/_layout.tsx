@@ -1,5 +1,3 @@
-
-
 import { Redirect, router, Tabs } from "expo-router";
 
 import Header from "@/shared/components/header/ui/header";
@@ -14,64 +12,79 @@ import { CreateProfileModal } from "@/modules/auth/components/profileModal";
 import { PaperProvider } from "react-native-paper";
 //   const Tab = createBottomTabNavigator()
 export default function Layout() {
-  
-  return (
-    <PaperProvider>
-        <Tabs screenOptions={{ 
-            tabBarActiveTintColor: '#070A1C',
-            headerShown: false,
-            tabBarInactiveTintColor: "#070A1C",
-             }}>
-        
-        <Tabs.Screen name="index" 
-        options={{
-          title: "Головна",
-          
-          headerShown:true,
-          header: () => <Header />,
-          tabBarIcon: ({ focused }) => (
-          <FooterTab selected={focused} icon={<HouseIcon/>}/>
-        ),
-        }}/>  
-        <Tabs.Screen name="publics" 
-            options={{
-              title: "Мої публікації",
-              tabBarIcon: ({ focused }) => (
-              <FooterTab selected={focused} icon={<PublicIcon/>}/>
-            ),
-        }}/>
-        
+	return (
+		<PaperProvider>
+			<Tabs
+				screenOptions={{
+					tabBarActiveTintColor: "#070A1C",
+					headerShown: false,
+					tabBarInactiveTintColor: "#070A1C",
+				}}
+			>
+				<Tabs.Screen
+					name="index"
+					options={{
+						title: "Головна",
 
-        <Tabs.Screen name="friends" 
-        options={{
-          title: "Друзі",
-          tabBarIcon: ({ focused }) => (
-          <FooterTab selected={focused} icon={<PeopleIcon/>}/>
-        ),
-        }}/> 
-        
-        <Tabs.Screen name="chat" 
-        options={{
-          title: "Чати",
-          tabBarIcon: ({ focused }) => (
-          <FooterTab selected={focused} icon={<ChatIcon/>}/>
-        ),
-        }}/>
-        
-    {/* <Tabs.Screen 
+						headerShown: true,
+						header: () => <Header />,
+						tabBarIcon: ({ focused }) => (
+							<FooterTab
+								selected={focused}
+								icon={<HouseIcon />}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name="publics"
+					options={{
+						title: "Мої публікації",
+						tabBarIcon: ({ focused }) => (
+							<FooterTab
+								selected={focused}
+								icon={<PublicIcon />}
+							/>
+						),
+					}}
+				/>
+
+				<Tabs.Screen
+					name="friends"
+					options={{
+						title: "Друзі",
+						tabBarIcon: ({ focused }) => (
+							<FooterTab
+								selected={focused}
+								icon={<PeopleIcon />}
+							/>
+						),
+					}}
+				/>
+
+				<Tabs.Screen
+					name="chat"
+					options={{
+						title: "Чати",
+						tabBarIcon: ({ focused }) => (
+							<FooterTab selected={focused} icon={<ChatIcon />} />
+						),
+					}}
+				/>
+
+				{/* <Tabs.Screen 
       name="(auth)" 
       options={{
         href: null
       }} 
     /> */}
-    <Tabs.Screen 
-      name="profile" 
-      options={{
-        href: null,
-      }} 
-      
-    />
-        </Tabs>
-        </PaperProvider>
-  );
+				<Tabs.Screen
+					name="profile"
+					options={{
+						href: null,
+					}}
+				/>
+			</Tabs>
+		</PaperProvider>
+	);
 }

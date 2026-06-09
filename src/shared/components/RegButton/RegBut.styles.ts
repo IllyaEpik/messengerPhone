@@ -14,16 +14,15 @@ export const styles = StyleSheet.create({
 	text: {
 		color: "#fff",
 		fontSize: 16,
-		fontFamily:"GTMedium"
+		fontFamily: "GTMedium",
 	},
 	invisbleButton: {
-		backgroundColor: "transparent"
+		backgroundColor: "transparent",
 	},
 	invisbleText: {
 		color: "#5B3F4C",
 	},
 	disabledButton: {
 		backgroundColor: "#81818D",
-	}
-
+	},
 });

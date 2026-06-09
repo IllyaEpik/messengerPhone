@@ -3,101 +3,102 @@ import { Input } from "@/shared/components/Input/Input";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import { styles } from "../styles/auth";
 import { AuthProps } from "../types/props";
-import { useLoginMutation,useRegistrationMutation } from "../api/userApi";
+import { useLoginMutation, useRegistrationMutation } from "../api/userApi";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegistrationForm, LoginForm } from "../models/types/auth";
-import { registrationValidator,loginValidator } from "../models/lib/auth";
+import { registrationValidator, loginValidator } from "../models/lib/auth";
 import { Controller, useForm, FormProvider } from "react-hook-form";
 import { router } from "expo-router";
 import { useAuthContext } from "../context/authContext";
 
 export function AuthOption(props: AuthProps) {
-	const { authType } = props
+	const { authType } = props;
 
-    const {setToken} = useAuthContext()
-	const [ login ]    = useLoginMutation();
-	const [ register ] = useRegistrationMutation();
+	const { setToken } = useAuthContext();
+	const [login] = useLoginMutation();
+	const [register] = useRegistrationMutation();
 	type formType = RegistrationForm | LoginForm;
-	const methods = useForm<formType>({ 
-		resolver: yupResolver(authType === "register" ? registrationValidator : loginValidator) 
-	})
-	
-	const { control, handleSubmit } = methods;
-    async function onSubmit(data: formType){
-		if (authType === "login") {
-            const response = await login({...data});
-            setToken(response.data?.token || "")
-			router.push({pathname: "/(tabs)"});
-			return;
-		}else{
-			const response = await register({...data});
-            setToken(response.data?.token || "")
-			router.push({pathname: "/(auth)/writeCode"});
+	const methods = useForm<formType>({
+		resolver: yupResolver(
+			authType === "register" ? registrationValidator : loginValidator,
+		),
+	});
 
+	const { control, handleSubmit } = methods;
+	async function onSubmit(data: formType) {
+		if (authType === "login") {
+			const response = await login({ ...data });
+			setToken(response.data?.token || "");
+			router.push({ pathname: "/(tabs)" });
+			return;
+		} else {
+			const response = await register({ ...data });
+			setToken(response.data?.token || "");
+			router.push({ pathname: "/(auth)/writeCode" });
 		}
-    }
+	}
 	return (
 		<FormProvider {...methods}>
 			<Text style={styles.subtitle}>
-				{authType==="register" ? "Приєднуйся до World IT" : "Раді тебе знову бачити!"}
+				{authType === "register"
+					? "Приєднуйся до World IT"
+					: "Раді тебе знову бачити!"}
 			</Text>
-            <ScrollView style={{ flexGrow: 0 }} scrollEnabled={false}>
-                
-			<Controller
-                    name="email"
-                    control={control}
-                    render={({ field, fieldState }) => {
-                        return (
-                            <Input
-                                label="Електронна пошта"
-                                placeholder="you@example.com"
-                                onChangeText={field.onChange}
-                                value={field.value}
-                                error={fieldState.error?.message}
-                            />
-                        )
-                    }}
-                />
-	
-            <Controller
-                name="password"
-                control={control}
-                render={({ field, fieldState }) => (
-                    <Input
-                        label="Пароль"
-                        placeholder="Введи пароль"
-                        onChangeText={field.onChange}
-                        value={field.value}
-                        secure={true}
-                        error={fieldState.error?.message}
-                    />
-                )}
-            />
+			<ScrollView style={{ flexGrow: 0 }} scrollEnabled={false}>
+				<Controller
+					name="email"
+					control={control}
+					render={({ field, fieldState }) => {
+						return (
+							<Input
+								label="Електронна пошта"
+								placeholder="you@example.com"
+								onChangeText={field.onChange}
+								value={field.value}
+								error={fieldState.error?.message}
+							/>
+						);
+					}}
+				/>
 
-            {authType === "register" && (
-                <Controller
-                    name="confirm"
-                    control={control}
-                    render={({ field, fieldState }) => (
-                        <Input
-                            label="Підтверди пароль"
-                            placeholder="Повтори пароль"
-                            onChangeText={field.onChange}
-                            value={field.value}
-                            secure
-                            error={fieldState.error?.message}
-                        />
-                    )}
-                />
-            )}
-            </ScrollView>
-			
-    
-			<RegButton 
-				title={authType === "register" ? "Створити акаунт" : "Увійти"} 
-				onPress={handleSubmit(onSubmit)}  
+				<Controller
+					name="password"
+					control={control}
+					render={({ field, fieldState }) => (
+						<Input
+							label="Пароль"
+							placeholder="Введи пароль"
+							onChangeText={field.onChange}
+							value={field.value}
+							secure={true}
+							error={fieldState.error?.message}
+						/>
+					)}
+				/>
+
+				{authType === "register" && (
+					<Controller
+						name="confirm"
+						control={control}
+						render={({ field, fieldState }) => (
+							<Input
+								label="Підтверди пароль"
+								placeholder="Повтори пароль"
+								onChangeText={field.onChange}
+								value={field.value}
+								secure
+								error={fieldState.error?.message}
+							/>
+						)}
+					/>
+				)}
+			</ScrollView>
+
+			<RegButton
+				title={authType === "register" ? "Створити акаунт" : "Увійти"}
+				onPress={handleSubmit(onSubmit)}
 				Buttonstyle={styles.button}
-                TextStyle={styles.buttonText}
+				TextStyle={styles.buttonText}
 			/>
 		</FormProvider>
 	);

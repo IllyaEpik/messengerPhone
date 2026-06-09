@@ -1,30 +1,27 @@
-export interface LoginPayload{
-    email: string;
-    password: string;
+export interface LoginPayload {
+	email: string;
+	password: string;
 }
-export interface LoginResponse{
-    token: string
+export interface LoginResponse {
+	token: string;
 }
-export interface IRegister{
-    email: string
-    password: string
-}
-
-
-export interface IProfile{
-    nickname: string
-    username: string
-    token:string
-
-    showNickname: boolean
-    showElectronicSignature: boolean
-    electronicSignature: string | null
+export interface IRegister {
+	email: string;
+	password: string;
 }
 
+export interface IProfile {
+	nickname: string;
+	username: string;
+	token: string;
 
-export interface ICreateProfile{
-    pseudonym: string
-    username: string
-    token:string
+	showNickname: boolean;
+	showElectronicSignature: boolean;
+	electronicSignature: string | null;
+}
 
+export interface ICreateProfile {
+	pseudonym: string;
+	username: string;
+	token: string;
 }

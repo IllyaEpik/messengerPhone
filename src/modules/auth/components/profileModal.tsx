@@ -9,51 +9,62 @@ import { Redirect, router } from "expo-router";
 import { useAuthContext } from "../context/authContext";
 // import { BlurView } from "expo-blur";?
 
+export function CreateProfileModal() {
+	const { token } = useAuthContext();
+	const [pseudonym, setPseudonym] = useState("");
+	const [username, setUsername] = useState("");
+	const [createProfile] = useProfileMutation();
+	function submitButton() {
+		createProfile({ pseudonym, username, token });
+	}
 
-export function CreateProfileModal(){
-    const {token} = useAuthContext()
-    const [pseudonym, setPseudonym] = useState("")
-    const [username, setUsername] = useState("")
-    const [ createProfile ] = useProfileMutation()
-    function submitButton() {
-        createProfile({pseudonym,username, token});
-    }
-    
-    return (
-        <>
-            <View style={styles.container}>
-                <View style={styles.modal}>
-                    <Text style={styles.title}>Додай деталі про себе</Text>
-                    <View style={styles.main}>
-                        <ScrollView style={{ flexGrow: 0 }} scrollEnabled={false}>
-                        <Input
-                            label="Псевдонім автора "
-                            placeholder="Введіть Псевдонім автора "
-                            onChangeText={setPseudonym}
-                            value={pseudonym}
-                            error=""
-                        />
+	return (
+		<>
+			<View style={styles.container}>
+				<View style={styles.modal}>
+					<Text style={styles.title}>Додай деталі про себе</Text>
+					<View style={styles.main}>
+						<ScrollView
+							style={{ flexGrow: 0 }}
+							scrollEnabled={false}
+						>
+							<Input
+								label="Псевдонім автора "
+								placeholder="Введіть Псевдонім автора "
+								onChangeText={setPseudonym}
+								value={pseudonym}
+								error=""
+							/>
 
-                        <View style={styles.inputWithText}> 
-                            <Input
-                                label="Ім’я користувача"
-                                placeholder="@"
-                                onChangeText={setUsername}
-                                value={username}
-                                error=""
-                            />
-                        <Text style={styles.text}>Або оберіть: <Text style={styles.greenText}>(Запропоновані варіанти відповідно до Ім’я та Прізвища)</Text></Text>
-                        </View>
-                        </ScrollView>
+							<View style={styles.inputWithText}>
+								<Input
+									label="Ім’я користувача"
+									placeholder="@"
+									onChangeText={setUsername}
+									value={username}
+									error=""
+								/>
+								<Text style={styles.text}>
+									Або оберіть:{" "}
+									<Text style={styles.greenText}>
+										(Запропоновані варіанти відповідно до
+										Ім’я та Прізвища)
+									</Text>
+								</Text>
+							</View>
+						</ScrollView>
+					</View>
+					<View style={styles.buttonContainer}>
+						<RegButton
+							title="Продовжити"
+							onPress={() => submitButton()}
+							Buttonstyle={styles.button}
+						></RegButton>
+					</View>
+				</View>
+			</View>
 
-                    </View>
-                    <View style={styles.buttonContainer}>
-                        <RegButton title="Продовжити" onPress={() => submitButton()} Buttonstyle={styles.button}></RegButton>
-                    </View>
-                </View>
-            </View>
-
-            <View style={styles.background}/>
-        </>
-    );
-};
+			<View style={styles.background} />
+		</>
+	);
+}

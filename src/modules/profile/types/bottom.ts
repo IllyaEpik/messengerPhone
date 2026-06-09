@@ -1,3 +1,3 @@
-export interface IProps{
-    setScrollEnabled: (enabled: boolean) => void
+export interface IProps {
+	setScrollEnabled: (enabled: boolean) => void;
 }

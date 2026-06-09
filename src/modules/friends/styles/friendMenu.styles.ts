@@ -1,30 +1,29 @@
-
-import { StyleSheet} from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  menu:{
-    flexDirection: "row",
-    gap: 10,
-    width: "100%",
-    // justifyContent: "s",
-    alignItems:"center",
-    height: 50,
-    marginHorizontal:10,
-    marginBottom: 10,
-  },
-  active:{
-    color:"#070A1C",
-    borderBottomWidth: 2,
-    borderBottomColor:"#543C52",
-    fontWeight:700
-  },
-  deactive:{
-    color:"#81818D"
-  },
-  text:{
-    fontFamily:"GTRegular",
-    fontWeight:500,
-    fontSize: 15,
-    textAlignVertical:"center"
-  }
+	menu: {
+		flexDirection: "row",
+		gap: 10,
+		width: "100%",
+		// justifyContent: "s",
+		alignItems: "center",
+		height: 50,
+		marginHorizontal: 10,
+		marginBottom: 10,
+	},
+	active: {
+		color: "#070A1C",
+		borderBottomWidth: 2,
+		borderBottomColor: "#543C52",
+		fontWeight: 700,
+	},
+	deactive: {
+		color: "#81818D",
+	},
+	text: {
+		fontFamily: "GTRegular",
+		fontWeight: 500,
+		fontSize: 15,
+		textAlignVertical: "center",
+	},
 });

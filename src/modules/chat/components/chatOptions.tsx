@@ -9,71 +9,79 @@ import { useAuthContext } from "@/modules/auth/context/authContext";
 import { useDeleteChatMutation } from "../api/chatApi";
 import { IChat, IChatContactDetailed } from "../api/api.types";
 interface IProps {
-    isAdmin?: boolean,
-    id: number
-    chat: IChatContactDetailed
-    isChat?: boolean
+	isAdmin?: boolean;
+	id: number;
+	chat: IChatContactDetailed;
+	isChat?: boolean;
 }
 
-export function ChatOptions(props:IProps){
-    const {isAdmin, id, chat, isChat} = props
-    const { token } = useAuthContext()
-    const [visible, setVisibility] = useState<boolean>(false)
-    const [editing, setEditing] = useState<boolean>(false)
-    const [deleteChat] = useDeleteChatMutation()
-    function deletePostOption(){
-        deleteChat({
-            token,
-            chatId:id
-        })
-        setVisibility(false)
-        router.push("chat/")
-    }
-    return (
-        <>
-        <Menu
-      visible={visible && !editing}
-      onDismiss={() => setVisibility(false)}
-      anchor={
-        <Pressable onPress={() => setVisibility(true)}>
-            <ICONS.OptionsIcon />
-        </Pressable>
-      }
-      contentStyle={styles.menuCard}
-    >
-      <Menu.Item 
-        leadingIcon= {ICONS.PublicIcon}
-        onPress={() => {}} 
-        title="Медіа" titleStyle={styles.menuText}
-      />
-      {
-        isAdmin ?
-        <Menu.Item 
-        leadingIcon= {ICONS.Edit}
-        onPress={() => setEditing(true)} 
-        title="Редагувати групу" titleStyle={styles.menuText}
-      />: null
-      }
-      
-      <Divider />
-      {
-        isAdmin || isChat?
-        <Menu.Item 
-        leadingIcon= {ICONS.TrashIcon}
-        onPress={deletePostOption} 
-        title="Видалити чат" titleStyle={styles.menuText}
-      />: <Menu.Item 
-        leadingIcon= {ICONS.LogoutIcon}
-        onPress={deletePostOption} 
-        title="Покинути групу" titleStyle={styles.menuText}
-      />
-      }
-      
-    </Menu>
-        <Portal>
-            {/* <CreatePostModal  visible={editing} onClose={() => setEditing(false)} post={post}/> */}
-            <ChatModal visible={editing} onCancel={() => setEditing(false)} isEdit chat={chat}/>
-        </Portal>
-    </>
-    );
-};
+export function ChatOptions(props: IProps) {
+	const { isAdmin, id, chat, isChat } = props;
+	const { token } = useAuthContext();
+	const [visible, setVisibility] = useState<boolean>(false);
+	const [editing, setEditing] = useState<boolean>(false);
+	const [deleteChat] = useDeleteChatMutation();
+	function deletePostOption() {
+		deleteChat({
+			token,
+			chatId: id,
+		});
+		setVisibility(false);
+		router.push("chat/");
+	}
+	return (
+		<>
+			<Menu
+				visible={visible && !editing}
+				onDismiss={() => setVisibility(false)}
+				anchor={
+					<Pressable onPress={() => setVisibility(true)}>
+						<ICONS.OptionsIcon />
+					</Pressable>
+				}
+				contentStyle={styles.menuCard}
+			>
+				<Menu.Item
+					leadingIcon={ICONS.PublicIcon}
+					onPress={() => {}}
+					title="Медіа"
+					titleStyle={styles.menuText}
+				/>
+				{isAdmin ? (
+					<Menu.Item
+						leadingIcon={ICONS.Edit}
+						onPress={() => setEditing(true)}
+						title="Редагувати групу"
+						titleStyle={styles.menuText}
+					/>
+				) : null}
+
+				<Divider />
+				{isAdmin || isChat ? (
+					<Menu.Item
+						leadingIcon={ICONS.TrashIcon}
+						onPress={deletePostOption}
+						title="Видалити чат"
+						titleStyle={styles.menuText}
+					/>
+				) : (
+					<Menu.Item
+						leadingIcon={ICONS.LogoutIcon}
+						onPress={deletePostOption}
+						title="Покинути групу"
+						titleStyle={styles.menuText}
+					/>
+				)}
+			</Menu>
+			<Portal>
+				{/* <CreatePostModal  visible={editing} onClose={() => setEditing(false)} post={post}/> */}
+				<ChatModal
+					visible={editing}
+					onCancel={() => setEditing(false)}
+					isEdit
+					chat={chat}
+				/>
+			</Portal>
+		</>
+	);
+}

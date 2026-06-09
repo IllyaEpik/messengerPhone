@@ -1,4 +1,3 @@
-
 import { BackIcon } from "./_icons/backIcon";
 import { ChatIcon } from "./_icons/chat";
 import { checkmark } from "./_icons/checkmark";
@@ -22,8 +21,6 @@ import { TrashIcon } from "./_icons/trash";
 import { View } from "./_icons/view";
 import { WorldIT } from "./_icons/worldIT";
 
-
-
 export const ICONS = {
 	WorldIT,
 	ChatIcon,
@@ -46,5 +43,5 @@ export const ICONS = {
 	Love,
 	View,
 	BackIcon,
-	SearchIcon
+	SearchIcon,
 };

@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
 		paddingBottom: 16,
 		backgroundColor: "#ffffff",
 		borderColor: "#CDCED2",
-    alignItems: "center",
+		alignItems: "center",
 	},
 
 	name: {
@@ -26,7 +26,6 @@ export const styles = StyleSheet.create({
 		// height: 40,
 		gap: 16,
 		flexDirection: "row",
-
 	},
 	primaryBtn: {
 		// width: 111,
@@ -38,7 +37,6 @@ export const styles = StyleSheet.create({
 		paddingBottom: 10,
 		paddingLeft: 16,
 		backgroundColor: "#543C52",
-
 	},
 	secondaryBtn: {
 		// width: 94,
@@ -50,7 +48,6 @@ export const styles = StyleSheet.create({
 		paddingRight: 16,
 		paddingBottom: 10,
 		paddingLeft: 16,
-			
 	},
 	primaryText: {
 		color: "#fff",
@@ -61,6 +58,6 @@ export const styles = StyleSheet.create({
 	avatar: {
 		width: 96,
 		height: 96,
-		borderRadius:50
-	}
+		borderRadius: 50,
+	},
 });

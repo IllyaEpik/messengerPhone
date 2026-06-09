@@ -1,4 +1,4 @@
 export interface IPostList {
-    isMine: boolean
-    // byId: boolean
+	isMine: boolean;
+	// byId: boolean
 }
