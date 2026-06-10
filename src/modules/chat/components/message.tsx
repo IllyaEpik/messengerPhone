@@ -10,7 +10,7 @@ type MessageProps = {
 };
 
 export function Message({ message, isOwn }: MessageProps) {
-	console.log(message.messageImage);
+	console.log(message.images);
 	const path = `http://10.0.2.2:8000/media/crackedAvatars/`;
 	return (
 		<View
@@ -33,29 +33,31 @@ export function Message({ message, isOwn }: MessageProps) {
 			>
 				<View>
 					<ScrollView horizontal style={styles.images}>
-						{message.messageImage.map((image) => (
+						{message.images.map((image) => (
 							<Image
 								// style={[styles.avatar]}
 								style={{
 									width: 100,
 									height: 100,
 									backgroundColor: "blue",
+									marginRight: 5,
+									// flex:1
 								}}
-								source={{ uri: path + image.image }}
+								source={{ uri: path + image }}
 								resizeMode="contain"
 							/>
 						))}
 					</ScrollView>
 					{!isOwn && (
 						<Text style={styles.senderName}>
-							{message.sender?.username}
+							{message.senderName}
 						</Text>
 					)}
 					<Text style={styles.messageText}>{message.text}</Text>
 				</View>
 				<View style={styles.deteils}>
 					{/* <Text style={styles.messageTime}>{typeof message.created_at === "string" ? message.created_at || "00:00" : message.created_at?.toLocaleTimeString() || "00:00"}</Text> */}
-					<Text style={styles.messageTime}>00:00</Text>
+					<Text style={styles.messageTime}>{message.date}</Text>
 					<ICONS.checkmark />
 				</View>
 			</View>

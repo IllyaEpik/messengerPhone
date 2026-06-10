@@ -192,7 +192,7 @@ export function ChatScreen() {
 				>
 					<FlatList
 						data={messages} // Mark messages as own based on senderId
-						keyExtractor={(item) => item.id.toString()}
+						keyExtractor={(item, i) => i.toString()}
 						renderItem={({ item }) => (
 							<Message
 								message={item}

@@ -25,40 +25,50 @@ export interface IChatContactDetailed {
 		id: number;
 	}[];
 }
-export type IMessage = {
-	_count: {
-		readers: number;
-	};
-	readers: {
-		id: number;
-		message_id: number;
-		user_id: number;
-	}[];
-	sender: {
-		id: number;
-		password: string;
-		last_login: Date | null;
-		is_superuser: boolean;
-		first_name: string;
-		last_name: string;
-		is_staff: boolean;
-		is_active: boolean;
-		date_joined: Date;
-		username: string | null;
-		email: string;
-	} | null;
-	messageImage: {
-		id: number;
-		message_id: number;
-		image: string;
-	}[];
-} & {
-	id: number;
+// export type IMessage = {
+// 	_count: {
+// 		readers: number;
+// 	};
+// 	readers: {
+// 		id: number;
+// 		message_id: number;
+// 		user_id: number;
+// 	}[];
+// 	sender: {
+// 		// id: number;
+// 		password: string;
+// 		last_login: Date | null;
+// 		is_superuser: boolean;
+// 		first_name: string;
+// 		last_name: string;
+// 		is_staff: boolean;
+// 		is_active: boolean;
+// 		date_joined: Date;
+// 		username: string | null;
+// 		email: string;
+// 	} | null;
+// 	messageImage: {
+// 		id: number;
+// 		message_id: number;
+// 		image: string;
+// 	}[];
+// } & {
+// 	id: number;
+// 	chatId: number;
+// 	text: string | null;
+// 	created_at: Date;
+// 	senderId: number | null;
+// };
+export interface IMessage {
+	text: string;
+	readers: number;
+	images: string[];
+	senderName: string;
+	senderAvatar: string;
+	date: string;
 	chatId: number;
-	text: string | null;
-	created_at: Date;
-	senderId: number | null;
-};
+	senderId: number;
+}
 export interface IChatCreate {
 	users: number[];
 	Isgroup?: boolean;

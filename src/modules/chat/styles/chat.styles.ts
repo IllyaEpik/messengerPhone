@@ -20,7 +20,6 @@ export const styles = StyleSheet.create({
 		marginRight: 8,
 	},
 	messageBubble: {
-		maxWidth: "75%",
 		paddingVertical: 10,
 		paddingHorizontal: 10,
 		borderRadius: 6,
