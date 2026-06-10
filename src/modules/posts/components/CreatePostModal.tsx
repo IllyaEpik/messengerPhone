@@ -24,7 +24,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const [topic, setTopic] = useState<string>( post?.topic || "")
 	const [content, setContent] = useState<string>( post?.content || "")
 	const [images, setImages] = useState<string[]>(  [])
-	// post?.images?.map((img) => img.image) ||
+		const [selectedTags, setSelectedTags] = useState<string[]>(post?.tags?.map(tag => tag.tag) ?? [])	// post?.images?.map((img) => img.image) ||
 	const tagsList = ['відпочинок','натхнення','життя','природа','читання','спокій','гармонія','музика','фільми','подорожі'];
 	function addImage(image:string) {
 		setImages([...images, image])
@@ -51,6 +51,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				token,
 				content,
 				topic,
+				tags: selectedTags,
 				images,
 				links: filteredLinks,
 			})
@@ -60,6 +61,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				token,
 				content,
 				topic,
+				tags: selectedTags,
 				images,
 				links: filteredLinks,
 
@@ -68,6 +70,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 		setTitle("");
 		setTopic("");
 		setContent("");
+		setSelectedTags([]);
 		setLinks([""])
 		setImages([]);
 		onClose();
@@ -114,11 +117,23 @@ export function CreatePostModal(props: CreatePostModalProps) {
 							/>
 						</View>
 						<View style={createPostModalStyles.tagsContainer}>
-							{tagsList.map(tag => (
-								<Pressable key={tag} style={createPostModalStyles.tag} onPress={() => {setContent(content + " #" + tag)}}>
-									<Text style={createPostModalStyles.tagText}>#{tag}</Text>
-								</Pressable>
-							))}
+							{tagsList.map(tag => {
+								const isSelected = selectedTags.includes(tag);
+								return (
+									<Pressable
+										key={tag}
+										style={[
+											createPostModalStyles.tag,
+											isSelected ? createPostModalStyles.tagSelected : null,
+										]}
+										onPress={() => {
+											setSelectedTags(prev => prev.includes(tag) ? prev.filter(item => item !== tag) : [...prev, tag]);
+										}}
+									>
+										<Text style={[createPostModalStyles.tagText, isSelected ? createPostModalStyles.tagTextSelected : null]}>#{tag}</Text>
+									</Pressable>
+								)
+							})}
 							<View style={createPostModalStyles.plusButton}>
 								<ICONS.PlusIcon />
 							</View>

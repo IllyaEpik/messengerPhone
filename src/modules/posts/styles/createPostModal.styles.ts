@@ -36,8 +36,14 @@ export const createPostModalStyles = StyleSheet.create({
 		borderRadius: 8,
 		padding: 6
 	},
+	tagSelected: {
+		backgroundColor: "#543C52",
+	},
 	tagText: {
 		color: "#543C52",
+	},
+	tagTextSelected: {
+		color: "#FFFFFF",
 	},
 	textarea: {
 		minHeight: 60,
