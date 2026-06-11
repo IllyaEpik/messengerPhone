@@ -9,6 +9,7 @@ export const createPostModalStyles = StyleSheet.create({
 	},
 	modalContainer: {
 		width: "90%",
+		maxHeight: "90%",
 		backgroundColor: "#fff",
 		borderRadius: 20,
 		padding: 20,
@@ -36,12 +37,30 @@ export const createPostModalStyles = StyleSheet.create({
 		borderRadius: 8,
 		padding: 6,
 	},
+	tagSelected: {
+		backgroundColor: "#543C52",
+	},
 	tagText: {
 		color: "#543C52",
+		fontFamily: "GTRegular",
+	},
+	tagTextSelected: {
+		color: "#FFFFFF",
 	},
 	textarea: {
 		minHeight: 60,
 		height: "auto",
+		// height: 48,
+		borderRadius: 10,
+		borderWidth: 1,
+		borderColor: "#E5E5E5",
+		paddingHorizontal: 14,
+		// alignItems: "center",
+		marginBottom: 3,
+		backgroundColor: "#FFFFFF",
+		position: "relative",
+		flex: 1,
+		justifyContent: "flex-start",
 	},
 	submitButton: {
 		backgroundColor: "#543C52",
@@ -69,6 +88,16 @@ export const createPostModalStyles = StyleSheet.create({
 		borderStyle: "solid",
 		flexDirection: "row",
 		alignSelf: "center",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	icon: {
+		// width: 15,
+		// height: 15,
+	},
+	icons: {
+		flexDirection: "row",
+		gap: 10,
 	},
 	buttonIcon: {
 		padding: 10,
@@ -92,14 +121,30 @@ export const createPostModalStyles = StyleSheet.create({
 		alignItems: "center",
 		gap: 10,
 		width: "100%",
+		marginBottom: 8,
 	},
-	removeLinkButton: {
+	linkLabelRow: {
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
+		marginBottom: 8,
+	},
+	linkLabel: {
+		fontSize: 14,
+		fontFamily: "GTMedium",
+		color: "#000",
+	},
+	LinkButton: {
 		padding: 8,
 		backgroundColor: "#FFFFFF",
 		borderRadius: 100,
 		borderColor: "#543C52",
 		borderWidth: 2,
 		borderStyle: "solid",
+		alignSelf: "center",
+	},
+	links: {
+		gap: 6,
 	},
 	fullInput: {
 		flexDirection: "row",
@@ -122,6 +167,8 @@ export const createPostModalStyles = StyleSheet.create({
 	imageContainer: {
 		position: "relative",
 		width: "100%",
+		// height: "100%",
+		// flex: 1
 		height: 225,
 	},
 	trashIcon: {

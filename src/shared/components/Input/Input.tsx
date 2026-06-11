@@ -10,7 +10,12 @@ import {
 
 import { styles } from "./Input.styles";
 import { ICONS } from "@/shared/static/icons";
-
+interface icon {
+	icon: ReactNode;
+	iconStyle: StyleProp<ViewStyle>;
+	onIconPress: () => void;
+	direction: "left" | "right";
+}
 interface Props extends React.ComponentProps<typeof TextInput> {
 	placeholder: string;
 	value: string;
@@ -20,6 +25,7 @@ interface Props extends React.ComponentProps<typeof TextInput> {
 	error?: string | undefined;
 	containerInputStyles?: StyleProp<ViewStyle>;
 	icon?: ReactNode;
+	iconStyle?: StyleProp<ViewStyle>;
 	onIconPress?: () => void;
 	leftIcon?: ReactNode;
 }
@@ -36,6 +42,7 @@ export const Input = (props: Props) => {
 		containerInputStyles,
 		icon,
 		leftIcon,
+		iconStyle,
 		onIconPress,
 		...other
 	} = props;
@@ -71,7 +78,10 @@ export const Input = (props: Props) => {
 				</View>
 				{icon ? (
 					onIconPress ? (
-						<TouchableOpacity onPress={onIconPress}>
+						<TouchableOpacity
+							onPress={onIconPress}
+							style={iconStyle}
+						>
 							{icon}
 						</TouchableOpacity>
 					) : (

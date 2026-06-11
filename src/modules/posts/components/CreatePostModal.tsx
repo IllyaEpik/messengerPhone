@@ -1,5 +1,14 @@
-import React, { useState } from "react";
-import { Modal, View, Text, Pressable, ScrollView, Image } from "react-native";
+import React, { useRef, useState } from "react";
+import {
+	Modal,
+	View,
+	Text,
+	Pressable,
+	ScrollView,
+	Image,
+	TouchableOpacity,
+	TextInput,
+} from "react-native";
 import { createPostModalStyles } from "../styles/createPostModal.styles";
 import { ICONS } from "@/shared/static/icons";
 import { Input } from "../../../shared/components/Input/Input";
@@ -7,6 +16,7 @@ import { ImageInput } from "@/shared/components/ImageInput/ImageInput";
 import { useCreatePostMutation, useEditPostMutation } from "../api/postApi";
 import { useAuthContext } from "@/modules/auth/context/authContext";
 import { IPost } from "../api/api.types";
+import { Tag } from "./Tag";
 interface CreatePostModalProps {
 	visible: boolean;
 	onClose: () => void;
@@ -26,7 +36,12 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const [topic, setTopic] = useState<string>(post?.topic || "");
 	const [content, setContent] = useState<string>(post?.content || "");
 	const [images, setImages] = useState<string[]>([]);
-	// post?.images?.map((img) => img.image) ||
+	const [wrirtingText, setWritingText] = useState("");
+	const [selectedTags, setSelectedTags] = useState<string[]>(
+		post?.tags
+		?.map((tag) => tag.tag) ?? [],
+	);
+	const inputTag = useRef<TextInput>(null);
 	const tagsList = [
 		"відпочинок",
 		"натхнення",
@@ -42,7 +57,21 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	function addImage(image: string) {
 		setImages([...images, image]);
 	}
+	function setIsWritingTag(){
+		inputTag.current?.focus()
+	}
+	function addTag(tag: string) {
+		setWritingText("")
+		setSelectedTags((prev) => [...prev, tag ])
+	}
+	function removeTag(tag: string) {
+		setSelectedTags(prev => prev.filter((selectedTag) => selectedTag !== tag))
+	}
+	function toggleTag(tag: string) {
+		selectedTags.includes(tag) ?
+			removeTag(tag) : addTag(tag)
 
+	}
 	function updateLink(index: number, value: string) {
 		setLinks((prev) =>
 			prev.map((item, idx) => (idx === index ? value : item)),
@@ -68,6 +97,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				token,
 				content,
 				topic,
+				tags: selectedTags,
 				images,
 				links: filteredLinks,
 			});
@@ -77,6 +107,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 				token,
 				content,
 				topic,
+				tags: selectedTags,
 				images,
 				links: filteredLinks,
 			});
@@ -84,6 +115,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 		setTitle("");
 		setTopic("");
 		setContent("");
+		setSelectedTags([]);
 		setLinks([""]);
 		setImages([]);
 		onClose();
@@ -113,7 +145,6 @@ export function CreatePostModal(props: CreatePostModalProps) {
 					<ScrollView
 						contentContainerStyle={createPostModalStyles.scrollView}
 					>
-						{/* <View style={createPostModalStyles.scrollView}> */}
 
 						<View>
 							<Input
@@ -134,41 +165,48 @@ export function CreatePostModal(props: CreatePostModalProps) {
 							/>
 						</View>
 						<View style={createPostModalStyles.tagsContainer}>
-							{tagsList.map((tag) => (
-								<Pressable
-									key={tag}
-									style={createPostModalStyles.tag}
-									onPress={() => {
-										setContent(content + " #" + tag);
-									}}
-								>
-									<Text style={createPostModalStyles.tagText}>
-										#{tag}
-									</Text>
-								</Pressable>
-							))}
-							<View style={createPostModalStyles.plusButton}>
-								<ICONS.PlusIcon />
-							</View>
-						</View>
-						<Input
-							containerInputStyles={
-								createPostModalStyles.textarea
+							{tagsList.map((tag) => {
+								const isSelected = selectedTags.includes(tag);
+								return (
+									<Tag isSelected={isSelected} tag={tag} onPress={toggleTag} />
+								);
+							})}
+							{selectedTags.map(tag  => {
+								const isNotInBasic = !tagsList.includes(tag);
+								if (!isNotInBasic) return null
+								return (
+									<Tag isSelected={true} tag={tag} onPress={removeTag} />
+								);
+							})
+								
 							}
-							placeholder="Текст публікації"
-							value={content}
-							onChangeText={setContent}
-							error=""
-							label=""
-							multiline
-						/>
-						{links.map((linkText, index) => {
-							const isLast = index === links.length - 1;
-							return (
-								<View
-									key={index}
-									style={createPostModalStyles.linkFieldRow}
-								>
+							<TextInput 
+							ref={inputTag} 
+							onBlur={(event) => addTag(wrirtingText)}
+							onChangeText={setWritingText}
+							value={wrirtingText}
+							/>
+							<TouchableOpacity style={createPostModalStyles.plusButton} onPress={() => setIsWritingTag()}>
+								<ICONS.PlusIcon />
+							</TouchableOpacity>
+						</View>
+						<View style={createPostModalStyles.textarea}>
+							<TextInput
+								placeholder="Текст публікації"
+								value={content}
+								onChangeText={setContent}
+								multiline
+							/>
+							<Text style={createPostModalStyles.tagText}>
+								{selectedTags.map((tag) => `#${tag} `)}
+							</Text>
+						</View>
+						<View style={createPostModalStyles.links}>
+							{links.map((linkText, index) => {
+								const isLast = links.length - 1 === index;
+								const isFirst = index === 0;
+								const isAlone = links.length === 1;
+								return (
 									<Input
 										placeholder="https://www.instagram.com/"
 										value={linkText}
@@ -176,36 +214,42 @@ export function CreatePostModal(props: CreatePostModalProps) {
 											updateLink(index, value)
 										}
 										error=""
-										label={index === 0 ? "Посилання" : ""}
+										label={isFirst ? "Посилання" : ""}
 										containerInputStyles={{ flex: 1 }}
 										icon={
-											isLast ? (
-												<View
-													style={
-														createPostModalStyles.plusButton
-													}
-												>
-													<ICONS.PlusIcon />
-												</View>
-											) : undefined
-										}
-										onIconPress={
-											isLast ? addLinkField : undefined
+											<View
+												style={
+													createPostModalStyles.icons
+												}
+											>
+												{isLast ? (
+													<TouchableOpacity
+														onPress={addLinkField}
+														style={
+															createPostModalStyles.plusButton
+														}
+													>
+														<ICONS.PlusIcon />
+													</TouchableOpacity>
+												) : null}
+												{!isAlone && isLast ? (
+													<TouchableOpacity
+														style={
+															createPostModalStyles.plusButton
+														}
+														onPress={() =>
+															removeLink(index)
+														}
+													>
+														<ICONS.ExitIcon />
+													</TouchableOpacity>
+												) : null}
+											</View>
 										}
 									/>
-									{links.length > 1 && (
-										<Pressable
-											onPress={() => removeLink(index)}
-											style={
-												createPostModalStyles.removeLinkButton
-											}
-										>
-											<ICONS.TrashIcon />
-										</Pressable>
-									)}
-								</View>
-							);
-						})}
+								);
+							})}
+						</View>
 						{images.map((image, index) => {
 							return (
 								<View
