@@ -4,7 +4,7 @@ export interface IImage {
 	image: string;
 }
 export interface ITag {
-	tag: string;
+	post_app_tag: {name: string};
 }
 export interface ILink {
 	link: string;
@@ -23,7 +23,7 @@ export interface IPost {
 	_count: {
 		likes: number;
 		views: number;
-		loves: number;
+		hearts: number;
 	};
 }
 export interface ICreatePost {

@@ -20,11 +20,27 @@ type JoinChatCallback = (
 				message?: string;
 		  },
 ) => void;
+interface getUsersOnlinePayload {
+	userIds: number[];
+}
+export type UserStatus = {
+	id: number,
+	status: "online" | "offline"
+}
+export type UserCallback = (
+	response:{
+		onlineUserIds?: UserStatus[];
+		status?: "error";
+		message?: string;
+	}
+) => void;
 export interface ClientEvents {
 	sendMessage: (data: SendMessagePayload) => void;
 	chatConnect: (data: JoinChatPayload, ack: JoinChatCallback) => void;
 	leaveChat(data: LeaveChatPayload): void;
+	getUsersOnline: (data: getUsersOnlinePayload, ack: UserCallback) => void;
 }
 export interface ServerEvents {
 	newMessage: (data: IMessage) => void;
+	statusUpdate: (data: UserStatus) => void
 }

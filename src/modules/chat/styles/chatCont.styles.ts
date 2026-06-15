@@ -147,6 +147,23 @@ export const styles = StyleSheet.create({
 
 		marginRight: 14,
 	},
+	descriptionBlock: {
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	notification: {
+		backgroundColor: "#FF4C4C",
+		borderColor: "#FFFFFF",
+		borderWidth:2.25,
+		// width:20,
+		// height:20,
+		color: "white",
+		borderRadius: 99999999999,
+		alignItems: "center",
+		textAlign:"center",
+		justifyContent: "center",
+		paddingHorizontal:6
+	},
 
 	contactName: {
 		fontSize: 16,

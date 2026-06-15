@@ -5,15 +5,14 @@ import { IPostProps } from "../types/post";
 import { ICONS } from "@/shared/static/icons";
 import { PostOptions } from "./postOptions";
 import { useAuthContext } from "@/modules/auth/context/authContext";
+import { Avatar } from "@/shared/components/avatar/avatar";
 
 export function Post(props: IPostProps) {
 	const { post, isMine } = props;
 	const [removed, setRemoved] = useState(false);
 	const { token } = useAuthContext();
 	const avatarItem = post.author.profile?.avatar?.split("/").at(-1);
-	const avatarUrl = avatarItem
-		? `http://127.0.0.1:8000/media/${avatarItem}`
-		: undefined;
+
 	const signatureItem = post.author.profile?.signature;
 	const signatureUrl = signatureItem
 		? `http://127.0.0.1:8000/media/crackedAvatars/${signatureItem.split("/").at(-1)}.jpg`
@@ -36,22 +35,16 @@ export function Post(props: IPostProps) {
 	}
 
 	if (removed) return null;
+	console.log(post.author)
 	return (
 		<View style={postStyles.card}>
 			<View style={postStyles.header}>
 				<View style={postStyles.topHeaderLine}>
 					<View style={postStyles.iconWithTitle}>
-						{avatarUrl ? (
-							<Image
-								source={{ uri: avatarUrl }}
-								style={postStyles.icon}
-							/>
-						) : (
-							<Image
-								source={require("../../../media/icon/user.png")}
-								style={postStyles.icon}
-							/>
-						)}
+						<Avatar 
+						image={post.author.profile?.avatar} 
+						style={postStyles.icon} 
+						id={post.author.profile?.userId!}/>
 						<Text style={postStyles.title}>
 							{post.author?.profile?.pseudonym}
 						</Text>
@@ -72,6 +65,7 @@ export function Post(props: IPostProps) {
 			<View style={postStyles.contentBlock}>
 				<Text style={postStyles.title}>{post.title}</Text>
 				<Text style={postStyles.content}>{post.content}</Text>
+				<Text style={postStyles.content}>{post.tags.map(tag => `#${tag.post_app_tag.name} `)}</Text>
 				{post.links?.length ? (
 					<View style={postStyles.linksBlock}>
 						{post.links.map((linkItem, index) => (
@@ -90,7 +84,7 @@ export function Post(props: IPostProps) {
 						<Image
 							key={idx}
 							source={{
-								uri: `http://192.168.0.146:8000/media/crackedAvatars/${img.image}`,
+								uri: `http://10.0.2.2:8000/media/crackedAvatars/${img.image}.jpg`,
 							}}
 							style={postStyles.image}
 						/>
@@ -99,7 +93,7 @@ export function Post(props: IPostProps) {
 				<View style={postStyles.footer}>
 					<View style={postStyles.footerItem}>
 						<ICONS.Love />
-						<Text>{post._count.loves} Вподобань</Text>
+						<Text>{post._count.hearts} Вподобань</Text>
 					</View>
 					<View style={postStyles.footerItem}>
 						<ICONS.Like />

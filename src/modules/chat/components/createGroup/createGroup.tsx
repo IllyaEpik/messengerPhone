@@ -46,6 +46,7 @@ export function CreateGroupDetails({
 	isEdit,
 	chat,
 }: CreateGroupDetailsProps) {
+	console.log(chat, "321123132132")
 	const [image, setImage] = useState<string>(" ");
 	const [groupName, setGroupName] = useState(chat?.chatName || "");
 	const [participants, setParticipants] = useState<Participant[]>(
@@ -189,6 +190,7 @@ export function CreateGroupDetails({
 								<Avatar
 									image={item.avatar}
 									style={styles.avatar}
+									id={item.id}
 								/>
 								<Text style={styles.participantLabel}>
 									{item.name}

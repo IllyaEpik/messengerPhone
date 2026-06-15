@@ -11,6 +11,11 @@ export interface IChat {
 	isGroup: boolean;
 	time: Date | string;
 	message: string;
+	users: {
+		username: string;
+		id: number;
+	}[];
+	unreadMessages: number
 }
 export interface IChatContactDetailed {
 	id: number;

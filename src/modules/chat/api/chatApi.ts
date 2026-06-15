@@ -134,7 +134,7 @@ export const userApi = baseApi.injectEndpoints({
 						Authorization: `Bearer ${token}`,
 					},
 					body: formData,
-				};
+				}; 3
 			},
 			invalidatesTags: [{ type: "ChatList", id: "LIST" }],
 		}),

@@ -10,7 +10,6 @@ type MessageProps = {
 };
 
 export function Message({ message, isOwn }: MessageProps) {
-	console.log(message.images);
 	const path = `http://10.0.2.2:8000/media/crackedAvatars/`;
 	return (
 		<View
@@ -22,6 +21,8 @@ export function Message({ message, isOwn }: MessageProps) {
 			{!isOwn && (
 				<Avatar
 					style={styles.messageAvatar}
+					size={36}
+					id={message.senderId}
 					//   image={message.avatar}
 				/>
 			)}

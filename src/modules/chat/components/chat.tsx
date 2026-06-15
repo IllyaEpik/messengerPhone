@@ -11,8 +11,6 @@ import {
 } from "react-native";
 import {
 	KeyboardProvider,
-	KeyboardStickyView,
-	useKeyboardContext,
 	KeyboardAvoidingView,
 } from "react-native-keyboard-controller";
 import { Avatar } from "@/shared/components/avatar/avatar";
@@ -62,6 +60,7 @@ export function ChatScreen() {
 		},
 		{ skip: !chatId || !token || !user?.id },
 	);
+	const friendId = chat.data?.users.find(friend => friend.id !==user?.id)
 	const { data } = useGetMessagesQuery(
 		{ chatId: chatId, token: token },
 		{ skip: !token || !chatId },
@@ -76,7 +75,6 @@ export function ChatScreen() {
 		socket.auth = { token: `Bearer ${token}` };
 		socket.connect();
 		socket.emit("chatConnect", { chatId }, (something) => {
-			console.log(something);
 		});
 		socket.on("newMessage", (message: IMessage) => {
 			console.log("New message received:", message);
@@ -166,6 +164,8 @@ export function ChatScreen() {
 							<Avatar
 								style={styles.avatar}
 								image={chat.data?.avatar}
+								id={friendId ? friendId.id : null}
+								size={46}
 							/>
 						)}
 						<View style={styles.headerCenter}>
@@ -199,7 +199,7 @@ export function ChatScreen() {
 								isOwn={item.senderId === user?.id}
 							/>
 						)}
-						contentContainerStyle={styles.chatList}
+						// contentContainerStyle={styles.chatList}
 						inverted={true}
 					/>
 					{/* Input panel with image attach and send button */}

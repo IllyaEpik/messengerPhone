@@ -209,7 +209,7 @@ export function ChatModal({
 									onPress={() => toggleSelect(item.id)}
 								>
 									{/* image={item.avatar}  */}
-									<Avatar style={styles.avatar} />
+									<Avatar style={styles.avatar} id={null}/>
 
 									<Text style={styles.contactLabel}>
 										{item.name}

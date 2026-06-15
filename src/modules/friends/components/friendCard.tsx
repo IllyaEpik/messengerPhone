@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { styles } from "../styles/friendCard.styles";
 import { Props } from "../types/friendCard";
+import { Avatar } from "@/shared/components/avatar/avatar";
 function FriendCard({
 	name,
 	username,
@@ -10,10 +11,12 @@ function FriendCard({
 	friendAvatar,
 	secondAction,
 	firstAction,
+	id
 }: Props) {
 	return (
 		<View style={styles.card}>
-			<Image
+			<Avatar image={friendAvatar} id={id} style={styles.avatar}/>
+			{/* <Image
 				style={styles.avatar}
 				source={
 					friendAvatar
@@ -23,7 +26,7 @@ function FriendCard({
 						: require("../../../media/icon/user.png")
 				}
 				resizeMode="contain"
-			/>
+			/> */}
 			<Text style={styles.name}>{name}</Text>
 			<Text style={styles.username}>{username}</Text>
 

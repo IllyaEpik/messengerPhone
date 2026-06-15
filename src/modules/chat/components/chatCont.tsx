@@ -27,14 +27,15 @@ const tabs = [
 
 export function ContactsScreen() {
 	const { tabId } = useLocalSearchParams<{ tabId?: string }>();
-	const [activeTab, setActiveTab] = useState(tabId || "contacts");
+	const [activeTab, setActiveTab] = useState(tabId || "contacts"); 
 	const [search, setSearch] = useState("");
 	const { user, token } = useAuthContext();
 	const [getChat] = useGetChatMutation();
 	const chats = useGetChatsQuery(
 		{ userId: user?.id!, token: token },
-		{ skip: !user?.id || !token, pollingInterval: 500000 },
+		{ skip: !user?.id || !token, pollingInterval: 500000 }, 
 	);
+	console.log(chats.data?.map((chat) => chat.unreadMessages), 999);
 	// const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
 	const { contacts } = useContactsContext();
 	const activeTabLabel = useMemo(
@@ -106,7 +107,7 @@ export function ContactsScreen() {
 									onPress={() => openChatContact(item.userId)}
 								>
 									{/* image={item.avatar} */}
-									<Avatar style={styles.avatar} />
+									<Avatar style={styles.avatar} id={item.userId}/>
 									<Text style={styles.contactName}>
 										{item.pseudonym || "unknown"}
 									</Text>
@@ -139,18 +140,21 @@ export function ContactsScreen() {
 								<TouchableOpacity
 									style={styles.groupItem}
 									onPress={() => openChat(item.id)}
-								>
-									<Avatar style={styles.avatar} />
+								>   
+									<Avatar style={styles.avatar} id={item.users.find(({id }) => user?.id!==id)?.id!}/>
 									<View style={styles.groupInfo}>
 										<View style={styles.groupHeader}>
 											<Text style={styles.contactName}>
 												{item.chatName}
-											</Text>
+											</Text> 
+											<View style={styles.descriptionBlock}>
 											<Text style={styles.groupTime}>
 												{typeof item.time === "string"
 													? item.time
 													: "00:00"}
 											</Text>
+											{item.unreadMessages > 0 ? <Text style={styles.notification}>{item.unreadMessages}</Text> : null}
+											</View>
 										</View>
 										<Text style={styles.groupMessage}>
 											{item.message}
@@ -189,11 +193,15 @@ export function ContactsScreen() {
 											<Text style={styles.contactName}>
 												{item.chatName}
 											</Text>
+											<View style={styles.descriptionBlock}>
 											<Text style={styles.groupTime}>
 												{typeof item.time === "string"
 													? item.time
 													: "00:00"}
 											</Text>
+
+											{item.unreadMessages > 0 ? <Text style={styles.notification}>{item.unreadMessages}</Text> : null}
+											</View>
 										</View>
 										<Text style={styles.groupMessage}>
 											{item.message}

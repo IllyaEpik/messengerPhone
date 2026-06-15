@@ -81,6 +81,7 @@ export function FriendsSection(props: friendsSectionProps) {
 							<FriendCard
 								key={friend.id}
 								name={friend.pseudonym}
+								id={friend.id}
 								variant={variant}
 								username={friend.user?.username || ""}
 								primaryAction={primaryAction}
