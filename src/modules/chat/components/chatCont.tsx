@@ -18,7 +18,8 @@ import { ICONS } from "@/shared/static/icons";
 import { GroupAvatar } from "./groupAvatar";
 import { Input } from "@/shared/components/Input/Input";
 import { useContactsContext } from "../context/contactsContext";
-import { IChat } from "../api/api.types";
+import { IChat, IMessage } from "../api/api.types";
+import { socket } from "@/shared/api/socket/socket";
 
 const tabs = [
 	{ id: "contacts", label: "Контакти" },
@@ -45,6 +46,24 @@ export function ContactsScreen() {
 	useEffect(() => {
 		if (chatsFromApi) setChats(chatsFromApi);
 	}, [chatsFromApi]);
+	useEffect(() => {
+
+		socket.auth = { token: `Bearer ${token}` };
+		socket.connect();
+		socket.on("updateChat", (message: IMessage) => {
+			console.log("updateChatupdateChatupdateChatupdateChatupdateChatupdateChatupdateChatupdateChat")
+			setChats(prevChats => 
+			prevChats?.map(chat => 
+				chat.id === message.chatId 
+				? { ...chat, unreadMessages: chat.unreadMessages + 1 } 
+				: chat
+			)
+   	 	); 
+		})
+		return () => {
+			socket.off("updateChat")
+		}
+	}, [])
 	const { contacts } = useContactsContext();
 	const activeTabLabel = useMemo(
 		() => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",

@@ -81,7 +81,6 @@ export function ChatScreen() {
 			setMessages((prev) => [message, ...prev]);
 			socket.emit("readMessage", {messageId: message.id})
 		});
-		
 		return () => {
 			socket.emit("leaveChat", { chatId });
 			socket.off("newMessage");
