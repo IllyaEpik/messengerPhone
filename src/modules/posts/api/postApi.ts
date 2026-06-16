@@ -76,7 +76,7 @@ export const postApi = baseApi.injectEndpoints({
 	}),
 	overrideExisting: false,
 });
-
+ 
 export const {
 	useCreatePostMutation,
 	useGetPostsQuery,

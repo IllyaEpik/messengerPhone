@@ -41,12 +41,12 @@ export function ChatOptions(props: IProps) {
 				}
 				contentStyle={styles.menuCard}
 			>
-				<Menu.Item
+				{/* <Menu.Item
 					leadingIcon={ICONS.PublicIcon}
 					onPress={() => {}}
 					title="Медіа"
 					titleStyle={styles.menuText}
-				/>
+				/> */}
 				{isAdmin ? (
 					<Menu.Item
 						leadingIcon={ICONS.Edit}

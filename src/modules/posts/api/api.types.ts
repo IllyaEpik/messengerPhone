@@ -4,7 +4,7 @@ export interface IImage {
 	image: string;
 }
 export interface ITag {
-	post_app_tag: {name: string};
+	tag: {name: string};
 }
 export interface ILink {
 	link: string;

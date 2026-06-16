@@ -42,5 +42,6 @@ export interface ClientEvents {
 }
 export interface ServerEvents {
 	newMessage: (data: IMessage) => void;
+	updateChat: (data: IMessage) => void
 	statusUpdate: (data: UserStatus) => void
 }

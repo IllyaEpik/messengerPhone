@@ -22,7 +22,7 @@ export function Post(props: IPostProps) {
 		const normalized =
 			link.startsWith("http://") || link.startsWith("https://")
 				? link
-				: `https://${link}`;
+				: `https://${link}`; 
 		Linking.canOpenURL(normalized)
 			.then((supported: boolean) => {
 				if (supported) {
@@ -44,7 +44,7 @@ export function Post(props: IPostProps) {
 						<Avatar 
 						image={post.author.profile?.avatar} 
 						style={postStyles.icon} 
-						id={post.author.profile?.userId!}/>
+						id={null}/> 
 						<Text style={postStyles.title}>
 							{post.author?.profile?.pseudonym}
 						</Text>
@@ -57,15 +57,15 @@ export function Post(props: IPostProps) {
 						/>
 					)}
 				</View>
-				<Image
+				{signatureUrl ? <Image
 					source={{ uri: signatureUrl }}
 					style={postStyles.signature}
-				/>
+				/> : null}
 			</View>
 			<View style={postStyles.contentBlock}>
 				<Text style={postStyles.title}>{post.title}</Text>
 				<Text style={postStyles.content}>{post.content}</Text>
-				<Text style={postStyles.content}>{post.tags.map(tag => `#${tag.post_app_tag.name} `)}</Text>
+				<Text style={postStyles.content}>{post.tags.map(tag => `#${tag.tag.name} `)}</Text>
 				{post.links?.length ? (
 					<View style={postStyles.linksBlock}>
 						{post.links.map((linkItem, index) => (

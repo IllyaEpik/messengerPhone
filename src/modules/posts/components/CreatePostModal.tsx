@@ -39,7 +39,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const [wrirtingText, setWritingText] = useState("");
 	const [selectedTags, setSelectedTags] = useState<string[]>(
 		post?.tags
-		?.map((tag) => tag.tag) ?? [],
+		?.map((tag) => tag.tag.name) ?? [],
 	);
 	const inputTag = useRef<TextInput>(null);
 	const tagsList = [

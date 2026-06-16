@@ -2,12 +2,14 @@ import { IUser } from "@/shared/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useGetUserQuery } from "../api/userApi";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { boolean } from "yup";
 
 interface IAuthContext {
 	user: IUser | null;
 	setToken: (token: string) => void;
 	logout: () => void;
 	token: string;
+	isLoading: boolean
 }
 
 interface AuthProviderProps {
@@ -19,6 +21,7 @@ const AuthContext = createContext<IAuthContext>({
 	setToken: () => {},
 	logout: () => {},
 	token: "",
+	isLoading: false
 });
 
 export function useAuthContext() {
@@ -33,7 +36,7 @@ export function AuthProvider(props: AuthProviderProps) {
 	const [token, setToken] = useState<string>("");
 	const [isInitialized, setIsInitialized] = useState<boolean>(false);
 	const [user, setUser] = useState<IUser | null>(null);
-	const { data } = useGetUserQuery(token, {
+	const { data, isLoading } = useGetUserQuery(token, {
 		skip: !token,
 		pollingInterval: 500000,
 	});
@@ -66,7 +69,7 @@ export function AuthProvider(props: AuthProviderProps) {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, setToken, logout, token }}>
+		<AuthContext.Provider value={{ user, setToken, logout, token, isLoading }}>
 			{children}
 		</AuthContext.Provider>
 	);

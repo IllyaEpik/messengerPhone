@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
 	View,
 	Text,
@@ -18,12 +18,17 @@ import { ICONS } from "@/shared/static/icons";
 import { GroupAvatar } from "./groupAvatar";
 import { Input } from "@/shared/components/Input/Input";
 import { useContactsContext } from "../context/contactsContext";
+import { IChat } from "../api/api.types";
 
 const tabs = [
 	{ id: "contacts", label: "Контакти" },
 	{ id: "messages", label: "Повідомлення" },
 	{ id: "groups", label: "Групові чати" },
 ];
+interface IHidden {
+	chatId: number
+	count: number
+}
 
 export function ContactsScreen() {
 	const { tabId } = useLocalSearchParams<{ tabId?: string }>();
@@ -31,12 +36,15 @@ export function ContactsScreen() {
 	const [search, setSearch] = useState("");
 	const { user, token } = useAuthContext();
 	const [getChat] = useGetChatMutation();
-	const chats = useGetChatsQuery(
+	const {data: chatsFromApi} = useGetChatsQuery(
 		{ userId: user?.id!, token: token },
 		{ skip: !user?.id || !token, pollingInterval: 500000 }, 
 	);
-	console.log(chats.data?.map((chat) => chat.unreadMessages), 999);
+	const [chats, setChats] = useState<IChat[]>( chatsFromApi ? chatsFromApi : [])
 	// const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
+	useEffect(() => {
+		if (chatsFromApi) setChats(chatsFromApi);
+	}, [chatsFromApi]);
 	const { contacts } = useContactsContext();
 	const activeTabLabel = useMemo(
 		() => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
@@ -47,6 +55,15 @@ export function ContactsScreen() {
 		router.push({ pathname: "/chat/[id]/chat", params: { id: chat.id } });
 	}
 	function openChat(chatId: number) {
+		const count = chats?.find(chat => chat.id===chatId)?.unreadMessages
+		if (!count) return ""
+		setChats(prevChats => 
+			prevChats?.map(chat => 
+				chat.id === chatId 
+				? { ...chat, unreadMessages: 0 } 
+				: chat
+			)
+   	 	);
 		router.push({
 			pathname: "/chat/[id]/chat",
 			params: { id: chatId, tabId: activeTab },
@@ -123,10 +140,10 @@ export function ContactsScreen() {
 					))}
 
 				{activeTab === "messages" &&
-					(chats.data &&
-					chats.data.filter((chat) => !chat.isGroup).length > 0 ? (
+					(chats &&
+					chats.filter((chat) => !chat.isGroup).length > 0 ? (
 						<FlatList
-							data={chats.data.filter((chat) => !chat.isGroup)}
+							data={chats.filter((chat) => !chat.isGroup)}
 							keyExtractor={(item) => item.id.toString()}
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={styles.list}
@@ -172,10 +189,10 @@ export function ContactsScreen() {
 					))}
 
 				{activeTab === "groups" &&
-					(chats.data &&
-					chats.data.filter((chat) => chat.isGroup).length > 0 ? (
+					(chats &&
+					chats.filter((chat) => chat.isGroup).length > 0 ? (
 						<FlatList
-							data={chats.data.filter((chat) => chat.isGroup)}
+							data={chats.filter((chat) => chat.isGroup)}
 							keyExtractor={(item) => item.id.toString()}
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={styles.list}

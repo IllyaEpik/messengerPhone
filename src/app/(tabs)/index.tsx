@@ -5,11 +5,10 @@ import { ChatIcon } from "@/shared/static/icons/_icons/chat";
 import { View, Text, ScrollView } from "react-native";
 
 export default function Main() {
-	const { user } = useAuthContext();
-	console.log(user);
+	const { user, isLoading } = useAuthContext();
 	return (
 		<>
-			{!user?.profile && <CreateProfileModal />}
+			{(!user?.profile && user) ? <CreateProfileModal /> : null}
 			{/* <ScrollView> */}
 			<PostList isMine={false} />
 			{/* </ScrollView> */}
