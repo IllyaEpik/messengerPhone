@@ -65,7 +65,7 @@ export function ChatScreen() {
 		{ chatId: chatId, token: token },
 		{ skip: !token || !chatId },
 	);
-	const [inputText, setInputText] = useState("");
+	const [inputText, setInputText] = useState(""); 
 	useEffect(() => {
 		if (data) {
 			setMessages(data);
@@ -79,7 +79,9 @@ export function ChatScreen() {
 		socket.on("newMessage", (message: IMessage) => {
 			console.log("New message received:", message);
 			setMessages((prev) => [message, ...prev]);
+			socket.emit("readMessage", {messageId: message.id})
 		});
+		
 		return () => {
 			socket.emit("leaveChat", { chatId });
 			socket.off("newMessage");

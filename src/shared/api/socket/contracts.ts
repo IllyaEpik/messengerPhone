@@ -27,6 +27,9 @@ export type UserStatus = {
 	id: number,
 	status: "online" | "offline"
 }
+interface messageReadPayload {
+	messageId: number
+}
 export type UserCallback = (
 	response:{
 		onlineUserIds?: UserStatus[];
@@ -39,6 +42,7 @@ export interface ClientEvents {
 	chatConnect: (data: JoinChatPayload, ack: JoinChatCallback) => void;
 	leaveChat(data: LeaveChatPayload): void;
 	getUsersOnline: (data: getUsersOnlinePayload, ack: UserCallback) => void;
+	readMessage: (data: messageReadPayload, ack?: () => void) => void
 }
 export interface ServerEvents {
 	newMessage: (data: IMessage) => void;

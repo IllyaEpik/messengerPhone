@@ -65,6 +65,7 @@ export interface IChatContactDetailed {
 // 	senderId: number | null;
 // };
 export interface IMessage {
+	id: number
 	text: string;
 	readers: number;
 	images: string[];

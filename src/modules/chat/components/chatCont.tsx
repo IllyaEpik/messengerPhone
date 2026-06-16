@@ -48,15 +48,16 @@ export function ContactsScreen() {
 	const { contacts } = useContactsContext();
 	const activeTabLabel = useMemo(
 		() => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
-		[activeTab],
+		[activeTab],  
 	);
 	async function openChatContact(friendId: number) {
 		const chat = await getChat({ friendId, token: token! }).unwrap();
 		router.push({ pathname: "/chat/[id]/chat", params: { id: chat.id } });
-	}
+	} 
 	function openChat(chatId: number) {
 		const count = chats?.find(chat => chat.id===chatId)?.unreadMessages
-		if (!count) return ""
+		console.log(count, 1234567890987654321, !count, !0, !1)
+		if (typeof count !== "number") return ""
 		setChats(prevChats => 
 			prevChats?.map(chat => 
 				chat.id === chatId 
