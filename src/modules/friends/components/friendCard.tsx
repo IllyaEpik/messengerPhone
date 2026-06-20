@@ -11,11 +11,11 @@ function FriendCard({
 	friendAvatar,
 	secondAction,
 	firstAction,
-	id
+	id,
 }: Props) {
 	return (
 		<View style={styles.card}>
-			<Avatar image={friendAvatar} id={id} style={styles.avatar}/>
+			<Avatar image={friendAvatar} id={id} style={styles.avatar} />
 			{/* <Image
 				style={styles.avatar}
 				source={

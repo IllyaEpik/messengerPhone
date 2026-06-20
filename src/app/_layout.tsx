@@ -8,6 +8,7 @@ import { AuthProvider } from "@/modules/auth/context/authContext";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useCallback } from "react";
+import { ContactsProvider } from "@/modules/chat/context/contactsContext";
 //   const Tab = createBottomTabNavigator()
 export default function Layout() {
 	const [fontsLoaded, fontError] = useFonts({
@@ -32,35 +33,38 @@ export default function Layout() {
 			<SafeAreaView style={{ flex: 1 }}>
 				<ApiProvider api={baseApi}>
 					<AuthProvider>
-						<Tabs
-							screenOptions={{
-								tabBarActiveTintColor: "#070A1C",
-								headerShown: false,
-								header: () => <Header />,
-								tabBarInactiveTintColor: "#070A1C",
-								tabBarStyle: { display: "none" },
-							}}
-						>
-							<Tabs.Screen
-								name="index"
-								options={{
-									href: null,
+						<ContactsProvider>
+							<Tabs
+								screenOptions={{
+									tabBarActiveTintColor: "#070A1C",
+									headerShown: false,
+									header: () => <Header />,
+									tabBarInactiveTintColor: "#070A1C",
+									tabBarStyle: { display: "none" },
 								}}
-							/>
+							>
+								<Tabs.Screen
+									name="index"
+									options={{
+										href: null,
+									}}
+								/>
 
-							<Tabs.Screen
-								name="(auth)"
-								options={{
-									href: null,
-								}}
-							/>
-							<Tabs.Screen
-								name="(tabs)"
-								options={{
-									href: null,
-								}}
-							/>
-						</Tabs>
+								<Tabs.Screen
+									name="(auth)"
+									options={{
+										href: null,
+									}}
+								/>
+
+								<Tabs.Screen
+									name="(tabs)"
+									options={{
+										href: null,
+									}}
+								/>
+							</Tabs>
+						</ContactsProvider>
 					</AuthProvider>
 				</ApiProvider>
 			</SafeAreaView>

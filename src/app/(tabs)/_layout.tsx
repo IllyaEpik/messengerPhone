@@ -10,8 +10,38 @@ import FooterTab from "@/shared/components/footer/ui/footerTab";
 import { useAuthContext } from "@/modules/auth/context/authContext";
 import { CreateProfileModal } from "@/modules/auth/components/profileModal";
 import { PaperProvider } from "react-native-paper";
+import {
+	ContactsProvider,
+	useContactsContext,
+} from "@/modules/chat/context/contactsContext";
+import { useEffect, useState } from "react";
+import { socket } from "@/shared/api/socket/socket";
+import { IconNotification } from "@/shared/components/iconNotification/notification";
 //   const Tab = createBottomTabNavigator()
 export default function Layout() {
+	const [localUnreadCount, setLocalUnreadCount] = useState(0);
+	const { chats, requests, isLoadingChats } = useContactsContext();
+	const { token } = useAuthContext();
+	useEffect(() => {
+		if (!chats) return;
+		setLocalUnreadCount(
+			chats
+				.map((chat) => chat.unreadMessages)
+				.reduce((messages, prev) => prev + messages, 0),
+		);
+		socket.auth = { token: `Bearer ${token}` };
+		socket.connect();
+		socket.on("updateChat", (message) => {
+			setLocalUnreadCount((prev) => prev + 1);
+		});
+		socket.on("messageRead", (data) => {
+			setLocalUnreadCount((prev) => prev - 1);
+		});
+		return () => {
+			socket.off("updateChat");
+			socket.off("messageRead");
+		};
+	}, [isLoadingChats]);
 	return (
 		<PaperProvider>
 			<Tabs
@@ -56,7 +86,11 @@ export default function Layout() {
 						tabBarIcon: ({ focused }) => (
 							<FooterTab
 								selected={focused}
-								icon={<PeopleIcon />}
+								icon={
+								<IconNotification count={ requests?.length || 0}>
+									<PeopleIcon />
+								</IconNotification>
+								}
 							/>
 						),
 					}}
@@ -67,7 +101,14 @@ export default function Layout() {
 					options={{
 						title: "Чати",
 						tabBarIcon: ({ focused }) => (
-							<FooterTab selected={focused} icon={<ChatIcon />} />
+							<FooterTab
+								selected={focused}
+								icon={
+									<IconNotification count={localUnreadCount}>
+										<ChatIcon />
+									</IconNotification>
+								}
+							/>
 						),
 					}}
 				/>

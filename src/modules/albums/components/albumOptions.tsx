@@ -38,6 +38,12 @@ export function AlbumOptions(props: IProps) {
 				contentStyle={styles.menuCard}
 			>
 				<Menu.Item
+					leadingIcon={ICONS.OptionsIcon}
+					onPress={() => setVisibility(false)}
+					title=""
+					containerStyle={styles.copy}
+				/>
+				<Menu.Item
 					leadingIcon={ICONS.openIcon}
 					onPress={() => {}}
 					title="Цей альбом бачите не тільки ви"

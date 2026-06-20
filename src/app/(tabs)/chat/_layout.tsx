@@ -6,16 +6,14 @@ import { ContactsProvider } from "@/modules/chat/context/contactsContext";
 
 export default function Layout() {
 	return (
-		<ContactsProvider>
-			<Stack
-				screenOptions={{
-					headerShown: true,
-					header: () => <Header isChat isSettingsHidden />,
-				}}
-			>
-				<Stack.Screen name="index"></Stack.Screen>
-				<Stack.Screen name="[id]/chat"></Stack.Screen>
-			</Stack>
-		</ContactsProvider>
+		<Stack
+			screenOptions={{
+				headerShown: true,
+				header: () => <Header isChat isSettingsHidden />,
+			}}
+		>
+			<Stack.Screen name="index"></Stack.Screen>
+			<Stack.Screen name="[id]/chat"></Stack.Screen>
+		</Stack>
 	);
 }

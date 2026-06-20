@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Input } from "@/shared/components/Input/Input";
 import { ImageInput } from "@/shared/components/ImageInput/ImageInput";
 import { useUpdateProfileMutation } from "../api/profileApi";
+import { Avatar } from "@/shared/components/avatar/avatar";
 
 export function ProfileCard() {
 	const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
@@ -17,8 +18,8 @@ export function ProfileCard() {
 	const [url, setUrl] = useState<string>("");
 	if (!rawUser || !rawUser.user) return <Text>"no user"</Text>;
 	const user = rawUser.user;
-	const avatarItem = user.profile?.avatar.split("/").at(-1);
-	const avatarUrl = `http://127.0.0.1:8000/media/${avatarItem}`;
+	const avatarItem = user.profile?.avatar;
+	// const avatarUrl = `http://127.0.0.1:8000/media/${avatarItem}`;
 	const submit = async () => {
 		if (!edit) {
 			setEdit(true);
@@ -53,15 +54,7 @@ export function ProfileCard() {
 			</View>
 
 			{edit && <Text>Оберіть або завантажте фото профілю</Text>}
-			<Image
-				style={styles.icon}
-				source={
-					avatarUrl
-						? { uri: avatarUrl }
-						: require("../../../media/icon/user.png")
-				}
-				resizeMode="contain"
-			/>
+			<Avatar style={styles.icon} image={url ? url : (avatarItem ? avatarItem : "")} id={null} local={!!url}/>
 			{edit && (
 				<View style={styles.inputs}>
 					<ImageInput

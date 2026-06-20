@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Menu, Divider, Portal } from "react-native-paper";
-import { Pressable } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
 import { ICONS } from "@/shared/static/icons";
 import { styles } from "../styles/chatsOptions";
 import { ChatModal } from "./createGroup/selectPeople";
@@ -13,10 +13,11 @@ interface IProps {
 	id: number;
 	chat: IChatContactDetailed;
 	isChat?: boolean;
+	tabId?: string;
 }
 
 export function ChatOptions(props: IProps) {
-	const { isAdmin, id, chat, isChat } = props;
+	const { isAdmin, id, chat, isChat, tabId } = props;
 	const { token } = useAuthContext();
 	const [visible, setVisibility] = useState<boolean>(false);
 	const [editing, setEditing] = useState<boolean>(false);
@@ -27,7 +28,13 @@ export function ChatOptions(props: IProps) {
 			chatId: id,
 		});
 		setVisibility(false);
-		router.push("chat/");
+		// router.push("chat/");
+		router.push({
+			// Путь к целевой странице без динамических сегментов
+			pathname: "/(tabs)/chat",
+			// Параметры, которые вы хотите передать
+			params: { tabId: tabId || "contacts" },
+		});
 	}
 	return (
 		<>
@@ -35,22 +42,25 @@ export function ChatOptions(props: IProps) {
 				visible={visible && !editing}
 				onDismiss={() => setVisibility(false)}
 				anchor={
-					<Pressable onPress={() => setVisibility(true)}>
+					<TouchableOpacity
+						onPress={() => setVisibility(true)}
+						//style={visible ? { opacity: 0, pointerEvents: 'none' } : null}
+					>
 						<ICONS.OptionsIcon />
-					</Pressable>
+					</TouchableOpacity>
 				}
 				contentStyle={styles.menuCard}
 			>
-				{/* <Menu.Item
-					leadingIcon={ICONS.PublicIcon}
-					onPress={() => {}}
-					title="Медіа"
-					titleStyle={styles.menuText}
-				/> */}
+				<Menu.Item
+					leadingIcon={ICONS.OptionsIcon}
+					onPress={() => setVisibility(false)}
+					title=""
+					containerStyle={styles.copy}
+				/>
 				{isAdmin ? (
 					<Menu.Item
 						leadingIcon={ICONS.Edit}
-						onPress={() => setEditing(true)}
+						onPress={() => {setEditing(true); setVisibility(false)}}
 						title="Редагувати групу"
 						titleStyle={styles.menuText}
 					/>
@@ -73,15 +83,15 @@ export function ChatOptions(props: IProps) {
 					/>
 				)}
 			</Menu>
-			<Portal>
-				{/* <CreatePostModal  visible={editing} onClose={() => setEditing(false)} post={post}/> */}
-				<ChatModal
-					visible={editing}
-					onCancel={() => setEditing(false)}
-					isEdit
-					chat={chat}
-				/>
-			</Portal>
+			{/* <Portal> */}
+			{/* <CreatePostModal  visible={editing} onClose={() => setEditing(false)} post={post}/> */}
+			<ChatModal
+				visible={editing}
+				onCancel={() => setEditing(false)}
+				isEdit
+				chat={chat}
+			/>
+			{/* </Portal> */}
 		</>
 	);
 }

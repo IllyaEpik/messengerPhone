@@ -46,8 +46,9 @@ export function ChatModal({
 }: NewGroupScreenProps) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isNext, setNext] = useState(isEdit);
-
-	const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+	const [selectedIds, setSelectedIds] = useState<Set<number>>(
+		new Set(chat?.users?.map((user) => user.id)),
+	);
 	const countOfPeople = selectedIds.size - (isEdit ? 1 : 0);
 	const { token } = useAuthContext();
 	const [contacts, setContacts] = useState<Section[]>([]);
@@ -58,7 +59,7 @@ export function ChatModal({
 	//       requests: 0,
 	//   }
 	// }, {skip: !token, refetchOnReconnect: true});
-	const friends = useContactsContext().contacts;
+	const { contacts: friends } = useContactsContext();
 	useEffect(() => {
 		if (chat) {
 			setSelectedIds(new Set(chat.users.map((user) => user.id)));
@@ -131,7 +132,6 @@ export function ChatModal({
 		const selectedParticipants = allContacts.filter((contact) =>
 			selectedIds.has(contact.id),
 		);
-
 		return (
 			<CreateGroupDetails
 				visible={isNext} // Не забываем про проп visible, если он там есть
@@ -209,7 +209,7 @@ export function ChatModal({
 									onPress={() => toggleSelect(item.id)}
 								>
 									{/* image={item.avatar}  */}
-									<Avatar style={styles.avatar} id={null}/>
+									<Avatar style={styles.avatar} id={null} />
 
 									<Text style={styles.contactLabel}>
 										{item.name}
@@ -244,6 +244,7 @@ export function ChatModal({
 							invisible={false}
 							Buttonstyle={styles.button}
 							onPress={() => onNext(Array.from(selectedIds))}
+							disabled={countOfPeople < 2}
 						/>
 					</View>
 				</View>

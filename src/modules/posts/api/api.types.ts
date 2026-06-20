@@ -1,10 +1,12 @@
 import { IUser } from "@/shared/types/user";
 
 export interface IImage {
-	image: string;
+	compressed_image: string;
+	original_image: string;
+
 }
 export interface ITag {
-	tag: {name: string};
+	tag: { name: string };
 }
 export interface ILink {
 	link: string;
@@ -25,6 +27,9 @@ export interface IPost {
 		views: number;
 		hearts: number;
 	};
+	isLiked: boolean
+	isHearted: boolean
+
 }
 export interface ICreatePost {
 	title: string;

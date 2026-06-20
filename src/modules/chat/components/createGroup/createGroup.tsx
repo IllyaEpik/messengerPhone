@@ -46,12 +46,12 @@ export function CreateGroupDetails({
 	isEdit,
 	chat,
 }: CreateGroupDetailsProps) {
-	console.log(chat, "321123132132")
 	const [image, setImage] = useState<string>(" ");
 	const [groupName, setGroupName] = useState(chat?.chatName || "");
 	const [participants, setParticipants] = useState<Participant[]>(
 		initialParticipants || [],
 	);
+
 	const { token, user } = useAuthContext();
 	const [createChat] = useCreateChatMutation();
 	const [updateChat] = useUpdateChatMutation();
@@ -64,6 +64,7 @@ export function CreateGroupDetails({
 	async function onCreate(groupName: string, participantIds: number[]) {
 		if (isEdit) {
 			if (!chat?.id) return "something went wrong";
+			console.error(image, typeof image);
 			const updatedChat = await updateChat({
 				token,
 				users: participantIds.concat([user?.id!]),
@@ -133,12 +134,20 @@ export function CreateGroupDetails({
           <Text style={styles.groupAvatarText}>NG</Text>
         </View> */}
 						{/* <Avatar style={styles.groupAvatarPlaceholder} image={image} local/> */}
-						<GroupAvatar
-							name={groupName}
-							avatar={image !== " " ? image : undefined}
-							style={styles.groupAvatarPlaceholder}
-							local
-						/>
+						{image === " " && chat?.avatar ? (
+							<GroupAvatar
+								name={groupName}
+								avatar={chat?.avatar}
+								style={styles.groupAvatarPlaceholder}
+							/>
+						) : (
+							<GroupAvatar
+								name={groupName}
+								avatar={image !== " " ? image : undefined}
+								style={styles.groupAvatarPlaceholder}
+								local
+							/>
+						)}
 						{/* Avatar/> */}
 
 						<View style={styles.avatarActionsRow}>

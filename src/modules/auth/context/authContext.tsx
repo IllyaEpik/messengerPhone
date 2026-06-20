@@ -9,7 +9,7 @@ interface IAuthContext {
 	setToken: (token: string) => void;
 	logout: () => void;
 	token: string;
-	isLoading: boolean
+	isLoading: boolean;
 }
 
 interface AuthProviderProps {
@@ -21,7 +21,7 @@ const AuthContext = createContext<IAuthContext>({
 	setToken: () => {},
 	logout: () => {},
 	token: "",
-	isLoading: false
+	isLoading: false,
 });
 
 export function useAuthContext() {
@@ -69,7 +69,9 @@ export function AuthProvider(props: AuthProviderProps) {
 	}
 
 	return (
-		<AuthContext.Provider value={{ user, setToken, logout, token, isLoading }}>
+		<AuthContext.Provider
+			value={{ user, setToken, logout, token, isLoading }}
+		>
 			{children}
 		</AuthContext.Provider>
 	);

@@ -8,7 +8,7 @@ export default function Main() {
 	const { user, isLoading } = useAuthContext();
 	return (
 		<>
-			{(!user?.profile && user) ? <CreateProfileModal /> : null}
+			{!user?.profile && user ? <CreateProfileModal /> : null}
 			{/* <ScrollView> */}
 			<PostList isMine={false} />
 			{/* </ScrollView> */}

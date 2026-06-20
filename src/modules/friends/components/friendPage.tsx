@@ -104,8 +104,8 @@ export function FriendPage() {
 					{/* Profile Image & Name Section */}
 					<View style={styles.profileSection}>
 						{/* <View style={styles.avatarContainer}> */}
-							<Avatar image="avatar.png" id={Number(id)}/>
-							{/* <View style={styles.statusBadge} /> */}
+						<Avatar image={friend?.avatar} id={Number(id)} />
+						{/* <View style={styles.statusBadge} /> */}
 						{/* </View> */}
 
 						<Text style={styles.nameText}>{friend?.pseudonym}</Text>

@@ -2,7 +2,7 @@ import { friendMenuVariant } from "./friendMenu";
 
 export interface Props {
 	name: string;
-	id:number
+	id: number;
 	username: string;
 	primaryAction: string;
 	secondaryAction: string;

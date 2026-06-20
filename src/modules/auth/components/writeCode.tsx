@@ -6,12 +6,16 @@ import { useState } from "react";
 import { RegButton } from "@/shared/components/RegButton/RegBut";
 import { useRegistrationSecondPhaseMutation } from "../api/userApi";
 import { router } from "expo-router";
+import { useAuthContext } from "../context/authContext";
 
 export function WriteCode() {
 	const [code, setCode] = useState("");
 	const [reg] = useRegistrationSecondPhaseMutation();
-	function submitButton(code: number) {
-		reg(code);
+	const { setToken } = useAuthContext();
+	// const { setToken } = useAuthContext();
+	async function submitButton(code: number) {
+		const response = await reg(code);
+		setToken(response?.data?.token || "");
 		router.push({ pathname: "/(tabs)" });
 	}
 	return (

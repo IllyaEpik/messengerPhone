@@ -1,4 +1,4 @@
-import { IMessage } from "@/modules/chat/api/api.types";
+import { IMessage, socketMessage } from "@/modules/chat/api/api.types";
 
 interface SendMessagePayload {
 	text?: string;
@@ -24,28 +24,27 @@ interface getUsersOnlinePayload {
 	userIds: number[];
 }
 export type UserStatus = {
-	id: number,
-	status: "online" | "offline"
-}
+	id: number;
+	status: "online" | "offline";
+};
 interface messageReadPayload {
-	messageId: number
+	messageId: number;
 }
-export type UserCallback = (
-	response:{
-		onlineUserIds?: UserStatus[];
-		status?: "error";
-		message?: string;
-	}
-) => void;
+export type UserCallback = (response: {
+	onlineUserIds?: UserStatus[];
+	status?: "error";
+	message?: string;
+}) => void;
 export interface ClientEvents {
 	sendMessage: (data: SendMessagePayload) => void;
 	chatConnect: (data: JoinChatPayload, ack: JoinChatCallback) => void;
 	leaveChat(data: LeaveChatPayload): void;
 	getUsersOnline: (data: getUsersOnlinePayload, ack: UserCallback) => void;
-	readMessage: (data: messageReadPayload, ack?: () => void) => void
+	readMessage: (data: messageReadPayload, ack?: () => void) => void;
 }
 export interface ServerEvents {
 	newMessage: (data: IMessage) => void;
-	updateChat: (data: IMessage) => void
-	statusUpdate: (data: UserStatus) => void
+	updateChat: (data: socketMessage) => void;
+	statusUpdate: (data: UserStatus) => void;
+	messageRead: (data: object) => void;
 }

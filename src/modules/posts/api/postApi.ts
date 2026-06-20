@@ -73,14 +73,25 @@ export const postApi = baseApi.injectEndpoints({
 				},
 			}),
 		}),
+		action: builder.mutation<void, { id: number; token: string, like?: boolean, love?: boolean }>({
+			query: ({ id, token, like, love }) => ({
+				url: `/posts/act/${id}?like=${String(like) || "false"}&love=${String(love) || "false"}`,
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}),
+		}),
+		
 	}),
 	overrideExisting: false,
 });
- 
+
 export const {
 	useCreatePostMutation,
 	useGetPostsQuery,
 	// useGetMyPostsQuery
 	useEditPostMutation,
 	useDeletePostMutation,
+	useActionMutation
 } = postApi;

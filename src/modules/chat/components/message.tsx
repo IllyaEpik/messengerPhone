@@ -10,7 +10,7 @@ type MessageProps = {
 };
 
 export function Message({ message, isOwn }: MessageProps) {
-	const path = `http://10.0.2.2:8000/media/crackedAvatars/`;
+	const path = `https://res.cloudinary.com/do0hrac1e/image/upload/thumb/`;
 	return (
 		<View
 			style={[
@@ -44,7 +44,7 @@ export function Message({ message, isOwn }: MessageProps) {
 									marginRight: 5,
 									// flex:1
 								}}
-								source={{ uri: path + image }}
+								source={{ uri: path + image + ".jpg"}}
 								resizeMode="contain"
 							/>
 						))}

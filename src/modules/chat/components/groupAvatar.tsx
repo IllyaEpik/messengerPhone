@@ -10,13 +10,16 @@ interface IProps {
 export function GroupAvatar(props: IProps) {
 	const { style, avatar, name, local } = props;
 
-	let path = local
+	let path = local 
 		? avatar
-		: `http://10.0.2.2:8000/media/crackedAvatars/${avatar}`;
+		//  `http://10.0.2.2:8000/media/crackedAvatars/${avatar}`; 
+		: `https://res.cloudinary.com/do0hrac1e/image/upload/thumb/${avatar}.jpg`
+
+	console.log(path)
 	if (avatar === "avatar.png") {
 		path = "";
 	}
-	return (
+	return ( 
 		<>
 			{path ? (
 				<Image

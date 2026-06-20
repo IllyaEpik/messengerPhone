@@ -6,15 +6,16 @@ import { useAuthContext } from "@/modules/auth/context/authContext";
 import { IHeaderProps } from "../types/header";
 import { styles } from "../styles/header";
 import { CreatePostModal } from "../../../../modules/posts/components/CreatePostModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChatModal } from "@/modules/chat/components/createGroup/selectPeople";
+import { socket } from "@/shared/api/socket/socket";
+import { useContactsContext } from "@/modules/chat/context/contactsContext";
 
 export default function Header(props: IHeaderProps) {
 	const { auth, isSettingsHidden, isCreatePostHidden, isChat } = props;
 	const path = usePathname();
 	const { logout } = useAuthContext();
 	const [visible, setVisible] = useState(false);
-
 	return (
 		<View style={[styles.container, auth && styles.authContainer]}>
 			<ICONS.WorldIT></ICONS.WorldIT>

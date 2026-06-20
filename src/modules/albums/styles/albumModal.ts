@@ -71,10 +71,11 @@ export const styles = StyleSheet.create({
 	},
 	main: {
 		paddingVertical: 24,
-		gap: 16,
+		gap: 8,
 	},
 	input: {
 		width: 300,
+		
 	},
 	dropdown: {
 		borderWidth: 1,
@@ -85,7 +86,10 @@ export const styles = StyleSheet.create({
 	},
 	label: {
 		fontFamily: "GTRegular",
-		marginBottom: 6,
+		marginBottom: 0,
 		fontSize: 16,
 	},
+	textM: {
+		marginTop: 50,
+	}
 });

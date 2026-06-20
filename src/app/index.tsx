@@ -2,7 +2,8 @@ import { useAuthContext } from "@/modules/auth/context/authContext";
 import { Redirect } from "expo-router";
 
 export default function Home() {
-	const { user } = useAuthContext();
+	const { user, isLoading } = useAuthContext();
+	if (isLoading) return null;
 	if (!user) {
 		return <Redirect href="/(auth)" />;
 	}

@@ -20,22 +20,23 @@ export function ProfileSettings() {
 		firstName: "",
 		lastName: "",
 		email: "",
-		birthday: "",
+		birthday: ""
 	});
 	const [updateProfile, { isLoading, isError }] = useUpdateProfileMutation();
 
 	const { user, token } = rawUser;
-
+	
 	useEffect(() => {
 		if (!user) return;
-
+		console.log(user, 111111)
 		setForm({
-			firstName: user.profile?.firstName || "",
-			lastName: user.profile?.lastName || "",
+			firstName: user.first_name || "",
+			lastName: user.last_name || "",
 			email: user.email,
-			birthday: user.dateOfBirth
-				? `${user.dateOfBirth.getDate()}.${user.dateOfBirth.getMonth() + 1}.${user.dateOfBirth.getFullYear()}`
-				: "",
+			birthday: ""
+			// birthday: user.dateOfBirth
+			// 	? `${user.dateOfBirth.getDate()}.${user.dateOfBirth.getMonth() + 1}.${user.dateOfBirth.getFullYear()}`
+			// 	: "",
 		});
 	}, [user]);
 

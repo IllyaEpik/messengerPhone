@@ -3,7 +3,7 @@ export interface IUpdateProfile {
 	firstName?: string;
 	token: string;
 	avatar?: string;
-	nickName?: string;
+	pseudonym?: string;
 	username?: string;
 	showNickname?: boolean;
 	showElectronicSignature?: boolean;

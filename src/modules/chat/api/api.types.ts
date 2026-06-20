@@ -15,7 +15,7 @@ export interface IChat {
 		username: string;
 		id: number;
 	}[];
-	unreadMessages: number
+	unreadMessages: number;
 }
 export interface IChatContactDetailed {
 	id: number;
@@ -65,7 +65,7 @@ export interface IChatContactDetailed {
 // 	senderId: number | null;
 // };
 export interface IMessage {
-	id: number
+	id: number;
 	text: string;
 	readers: number;
 	images: string[];
@@ -74,6 +74,9 @@ export interface IMessage {
 	date: string;
 	chatId: number;
 	senderId: number;
+}
+export interface socketMessage {
+	message: IMessage;
 }
 export interface IChatCreate {
 	users: number[];

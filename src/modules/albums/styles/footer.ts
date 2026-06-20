@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	buttonIcon: {
-		padding: 9,
+		padding: 7,
 		backgroundColor: "#FFFFFF",
 		borderRadius: 100,
 		borderColor: "#543C52",

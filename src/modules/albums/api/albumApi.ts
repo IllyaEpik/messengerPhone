@@ -13,8 +13,8 @@ export const albumsApi = baseApi.injectEndpoints({
 					url: "/albums/",
 					method: "POST",
 					body: {
-						topic: body.topic,
-						title: body.title,
+						theme: body.topic,
+						name: body.title,
 						year: body.year,
 					},
 					headers: {
@@ -38,8 +38,8 @@ export const albumsApi = baseApi.injectEndpoints({
 			query: (body) => {
 				const formData = new FormData();
 
-				if (body.topic) formData.append("topic", body.topic);
-				if (body.title) formData.append("title", body.title);
+				if (body.topic) formData.append("theme", body.topic);
+				if (body.title) formData.append("name", body.title);
 				if (body.year) formData.append("year", String(body.year));
 
 				if (body.image) {

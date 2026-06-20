@@ -15,8 +15,8 @@ export function AuthOption(props: AuthProps) {
 	const { authType } = props;
 
 	const { setToken } = useAuthContext();
-	const [login, {isLoading: isLoadingAuth}] = useLoginMutation();
-	const [register, {isLoading: isLoadingReg}] = useRegistrationMutation();
+	const [login, { isLoading: isLoadingAuth }] = useLoginMutation();
+	const [register, { isLoading: isLoadingReg }] = useRegistrationMutation();
 	type formType = RegistrationForm | LoginForm;
 	const methods = useForm<formType>({
 		resolver: yupResolver(
@@ -28,13 +28,12 @@ export function AuthOption(props: AuthProps) {
 	async function onSubmit(data: formType) {
 		if (authType === "login") {
 			const response = await login({ ...data });
-			if (!response.data?.token) return
+			if (!response.data?.token) return;
 			setToken(response.data.token || "");
 			router.push({ pathname: "/(tabs)" });
 			return;
 		} else {
 			const response = await register({ ...data });
-			setToken(response.data?.token || "");
 			router.push({ pathname: "/(auth)/writeCode" });
 		}
 	}

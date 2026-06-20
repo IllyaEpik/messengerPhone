@@ -87,7 +87,7 @@ export function FriendsSection(props: friendsSectionProps) {
 								primaryAction={primaryAction}
 								secondaryAction="Видалити"
 								friendAvatar={friend.avatar}
-								firstAction={() => onConfirm(friend.id)}
+								firstAction={() => onConfirm(friend.userId)}
 								secondAction={() => {
 									setUserId(friend.id);
 									setVisible(true);

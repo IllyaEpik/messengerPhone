@@ -18,77 +18,88 @@ import { ICONS } from "@/shared/static/icons";
 import { GroupAvatar } from "./groupAvatar";
 import { Input } from "@/shared/components/Input/Input";
 import { useContactsContext } from "../context/contactsContext";
-import { IChat, IMessage } from "../api/api.types";
+import { IChat, IMessage, socketMessage } from "../api/api.types";
 import { socket } from "@/shared/api/socket/socket";
+import { IconNotification } from "@/shared/components/iconNotification/notification";
 
 const tabs = [
 	{ id: "contacts", label: "Контакти" },
 	{ id: "messages", label: "Повідомлення" },
 	{ id: "groups", label: "Групові чати" },
 ];
-interface IHidden {
-	chatId: number
-	count: number
-}
 
 export function ContactsScreen() {
 	const { tabId } = useLocalSearchParams<{ tabId?: string }>();
-	const [activeTab, setActiveTab] = useState(tabId || "contacts"); 
+	const [activeTab, setActiveTab] = useState(tabId || "contacts");
 	const [search, setSearch] = useState("");
 	const { user, token } = useAuthContext();
 	const [getChat] = useGetChatMutation();
-	const {data: chatsFromApi} = useGetChatsQuery(
-		{ userId: user?.id!, token: token },
-		{ skip: !user?.id || !token, pollingInterval: 500000 }, 
+	const {
+		contacts,
+		chats: chatsFromApi,
+		isLoadingChats: isLoading,
+	} = useContactsContext();
+	const [chats, setChats] = useState<IChat[]>(
+		chatsFromApi ? chatsFromApi : [],
 	);
-	const [chats, setChats] = useState<IChat[]>( chatsFromApi ? chatsFromApi : [])
 	// const friends = useGetFriendsDataQuery({  token: token, pagination: { recommends: 0, requests: 0 } }, { skip: !user?.id || !token });
 	useEffect(() => {
 		if (chatsFromApi) setChats(chatsFromApi);
-	}, [chatsFromApi]);
+	}, [isLoading]);
 	useEffect(() => {
-
 		socket.auth = { token: `Bearer ${token}` };
 		socket.connect();
-		socket.on("updateChat", (message: IMessage) => {
-			console.log("updateChatupdateChatupdateChatupdateChatupdateChatupdateChatupdateChatupdateChat")
-			setChats(prevChats => 
-			prevChats?.map(chat => 
-				chat.id === message.chatId 
-				? { ...chat, unreadMessages: chat.unreadMessages + 1 } 
-				: chat
-			)
-   	 	); 
-		})
+		socket.on("updateChat", (message: socketMessage) => {
+			setChats((prevChats) =>
+				prevChats?.map((chat) =>
+					chat.id === message.message.chatId
+						? {
+								...chat,
+								unreadMessages: chat.unreadMessages + 1,
+								message: message.message.text,
+							}
+						: chat,
+				),
+			);
+		});
 		return () => {
-			socket.off("updateChat")
-		}
-	}, [])
-	const { contacts } = useContactsContext();
+			socket.off("updateChat");
+		};
+	}, []);
 	const activeTabLabel = useMemo(
 		() => tabs.find((tab) => tab.id === activeTab)?.label ?? "Контакти",
-		[activeTab],  
+		[activeTab],
 	);
 	async function openChatContact(friendId: number) {
 		const chat = await getChat({ friendId, token: token! }).unwrap();
 		router.push({ pathname: "/chat/[id]/chat", params: { id: chat.id } });
-	} 
+	}
 	function openChat(chatId: number) {
-		const count = chats?.find(chat => chat.id===chatId)?.unreadMessages
-		console.log(count, 1234567890987654321, !count, !0, !1)
-		if (typeof count !== "number") return ""
-		setChats(prevChats => 
-			prevChats?.map(chat => 
-				chat.id === chatId 
-				? { ...chat, unreadMessages: 0 } 
-				: chat
-			)
-   	 	);
+		const count = chats?.find((chat) => chat.id === chatId)?.unreadMessages;
+		if (typeof count !== "number") return "";
+		setChats((prevChats) =>
+			prevChats?.map((chat) =>
+				chat.id === chatId ? { ...chat, unreadMessages: 0 } : chat,
+			),
+		);
 		router.push({
 			pathname: "/chat/[id]/chat",
 			params: { id: chatId, tabId: activeTab },
 		});
 	}
+	const filteredChats = useMemo(() => {
+		if (!search) return chats;
+
+		return chats.filter((chat) =>
+			chat.chatName.toLowerCase().includes(search.toLowerCase()),
+		);
+	}, [search, chats]);
+	const groupUnreadMessages = chats
+		.map((chat) => chat.unreadMessages * (chat.isGroup ? 1 : 0))
+		.reduce((chat, prev) => chat + prev, 0);
+	const localUnreadMessages = chats
+		.map((chat) => chat.unreadMessages * (!chat.isGroup ? 1 : 0))
+		.reduce((chat, prev) => chat + prev, 0);
 	return (
 		<>
 			<View style={styles.tabs}>
@@ -104,7 +115,15 @@ export function ContactsScreen() {
 						{tab.id === "contacts" ? (
 							<ICONS.PeopleIcon />
 						) : (
-							<ICONS.ChatIcon />
+							<IconNotification
+								count={
+									tab.id === "groups"
+										? groupUnreadMessages
+										: localUnreadMessages
+								}
+							>
+								<ICONS.ChatIcon />
+							</IconNotification>
 						)}
 						<Text style={styles.tabText}>{tab.label}</Text>
 					</TouchableOpacity>
@@ -115,7 +134,15 @@ export function ContactsScreen() {
 					{activeTab === "contacts" ? (
 						<ICONS.PeopleIcon color={"#81818D"} />
 					) : (
-						<ICONS.ChatIcon color={"#81818D"} />
+						<IconNotification
+							count={
+								activeTab === "groups"
+									? groupUnreadMessages
+									: localUnreadMessages
+							}
+						>
+							<ICONS.ChatIcon color={"#81818D"} />
+						</IconNotification>
 					)}
 					<Text style={styles.title}>{activeTabLabel}</Text>
 				</View>
@@ -134,7 +161,11 @@ export function ContactsScreen() {
 				{activeTab === "contacts" &&
 					(contacts ? (
 						<FlatList
-							data={contacts}
+							data={contacts.filter((contact) =>
+								contact.pseudonym
+									.toLowerCase()
+									.includes(search.toLowerCase()),
+							)}
 							keyExtractor={(item) => item.id.toString()}
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={styles.list}
@@ -144,7 +175,10 @@ export function ContactsScreen() {
 									onPress={() => openChatContact(item.userId)}
 								>
 									{/* image={item.avatar} */}
-									<Avatar style={styles.avatar} id={item.userId}/>
+									<Avatar
+										style={styles.avatar}
+										id={item.userId}
+									/>
 									<Text style={styles.contactName}>
 										{item.pseudonym || "unknown"}
 									</Text>
@@ -160,37 +194,49 @@ export function ContactsScreen() {
 					))}
 
 				{activeTab === "messages" &&
-					(chats &&
-					chats.filter((chat) => !chat.isGroup).length > 0 ? (
+					(filteredChats &&
+					filteredChats.filter((chat) => !chat.isGroup).length > 0 ? (
 						<FlatList
-							data={chats.filter((chat) => !chat.isGroup)}
+							data={filteredChats.filter((chat) => !chat.isGroup)}
 							keyExtractor={(item) => item.id.toString()}
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={styles.list}
 							renderItem={({ item }) => (
-								// <TouchableOpacity style={styles.contactItem} onPress={() => openChat(item.id)}>
-								//   {/* <Image source={{ uri: item.avatar }} style={styles.avatar} /> */}
-								//   {/*  image={item.avatar} */}
-								//   <Avatar style={styles.avatar}/>
-								//   <Text style={styles.contactName}>{item.chatName || "unknown"}</Text>
-								// </TouchableOpacity>
 								<TouchableOpacity
 									style={styles.groupItem}
 									onPress={() => openChat(item.id)}
-								>   
-									<Avatar style={styles.avatar} id={item.users.find(({id }) => user?.id!==id)?.id!}/>
+								>
+									<Avatar
+										style={styles.avatar}
+										id={
+											item.users.find(
+												({ id }) => user?.id !== id,
+											)?.id!
+										}
+									/>
 									<View style={styles.groupInfo}>
 										<View style={styles.groupHeader}>
 											<Text style={styles.contactName}>
 												{item.chatName}
-											</Text> 
-											<View style={styles.descriptionBlock}>
-											<Text style={styles.groupTime}>
-												{typeof item.time === "string"
-													? item.time
-													: "00:00"}
 											</Text>
-											{item.unreadMessages > 0 ? <Text style={styles.notification}>{item.unreadMessages}</Text> : null}
+											<View
+												style={styles.descriptionBlock}
+											>
+												<Text style={styles.groupTime}>
+													{typeof item.time ===
+													"string"
+														? item.time
+														: "00:00"}
+												</Text>
+												{item.unreadMessages > 0 ? (
+													<Text
+														style={
+															styles.notification
+														}
+													>
+														{item.unreadMessages}
+													</Text>
+												) : null}
 											</View>
 										</View>
 										<Text style={styles.groupMessage}>
@@ -209,10 +255,10 @@ export function ContactsScreen() {
 					))}
 
 				{activeTab === "groups" &&
-					(chats &&
-					chats.filter((chat) => chat.isGroup).length > 0 ? (
+					(filteredChats &&
+					filteredChats.filter((chat) => chat.isGroup).length > 0 ? (
 						<FlatList
-							data={chats.filter((chat) => chat.isGroup)}
+							data={filteredChats.filter((chat) => chat.isGroup)}
 							keyExtractor={(item) => item.id.toString()}
 							showsVerticalScrollIndicator={false}
 							contentContainerStyle={styles.list}
@@ -227,22 +273,39 @@ export function ContactsScreen() {
 									/>
 									<View style={styles.groupInfo}>
 										<View style={styles.groupHeader}>
-											<Text style={styles.contactName}>
-												{item.chatName}
-											</Text>
-											<View style={styles.descriptionBlock}>
-											<Text style={styles.groupTime}>
-												{typeof item.time === "string"
-													? item.time
-													: "00:00"}
-											</Text>
+											<View>
+												<Text
+													style={styles.contactName}
+												>
+													{item.chatName}
+												</Text>
+												<Text
+													style={styles.groupMessage}
+												>
+													{item.message}
+												</Text>
+											</View>
+											<View
+												style={styles.descriptionBlock}
+											>
+												<Text style={styles.groupTime}>
+													{typeof item.time ===
+													"string"
+														? item.time
+														: "00:00"}
+												</Text>
 
-											{item.unreadMessages > 0 ? <Text style={styles.notification}>{item.unreadMessages}</Text> : null}
+												{item.unreadMessages > 0 ? (
+													<Text
+														style={
+															styles.notification
+														}
+													>
+														{item.unreadMessages}
+													</Text>
+												) : null}
 											</View>
 										</View>
-										<Text style={styles.groupMessage}>
-											{item.message}
-										</Text>
 									</View>
 								</TouchableOpacity>
 							)}

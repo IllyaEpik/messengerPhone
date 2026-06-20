@@ -38,8 +38,7 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	const [images, setImages] = useState<string[]>([]);
 	const [wrirtingText, setWritingText] = useState("");
 	const [selectedTags, setSelectedTags] = useState<string[]>(
-		post?.tags
-		?.map((tag) => tag.tag.name) ?? [],
+		post?.tags?.map((tag) => tag.tag.name) ?? [],
 	);
 	const inputTag = useRef<TextInput>(null);
 	const tagsList = [
@@ -57,20 +56,20 @@ export function CreatePostModal(props: CreatePostModalProps) {
 	function addImage(image: string) {
 		setImages([...images, image]);
 	}
-	function setIsWritingTag(){
-		inputTag.current?.focus()
+	function setIsWritingTag() {
+		inputTag.current?.focus();
 	}
 	function addTag(tag: string) {
-		setWritingText("")
-		setSelectedTags((prev) => [...prev, tag ])
+		setWritingText("");
+		setSelectedTags((prev) => [...prev, tag]);
 	}
 	function removeTag(tag: string) {
-		setSelectedTags(prev => prev.filter((selectedTag) => selectedTag !== tag))
+		setSelectedTags((prev) =>
+			prev.filter((selectedTag) => selectedTag !== tag),
+		);
 	}
 	function toggleTag(tag: string) {
-		selectedTags.includes(tag) ?
-			removeTag(tag) : addTag(tag)
-
+		selectedTags.includes(tag) ? removeTag(tag) : addTag(tag);
 	}
 	function updateLink(index: number, value: string) {
 		setLinks((prev) =>
@@ -145,7 +144,6 @@ export function CreatePostModal(props: CreatePostModalProps) {
 					<ScrollView
 						contentContainerStyle={createPostModalStyles.scrollView}
 					>
-
 						<View>
 							<Input
 								placeholder="Природа, книга і спокій"
@@ -168,25 +166,34 @@ export function CreatePostModal(props: CreatePostModalProps) {
 							{tagsList.map((tag) => {
 								const isSelected = selectedTags.includes(tag);
 								return (
-									<Tag isSelected={isSelected} tag={tag} onPress={toggleTag} />
+									<Tag
+										isSelected={isSelected}
+										tag={tag}
+										onPress={toggleTag}
+									/>
 								);
 							})}
-							{selectedTags.map(tag  => {
+							{selectedTags.map((tag) => {
 								const isNotInBasic = !tagsList.includes(tag);
-								if (!isNotInBasic) return null
+								if (!isNotInBasic) return null;
 								return (
-									<Tag isSelected={true} tag={tag} onPress={removeTag} />
+									<Tag
+										isSelected={true}
+										tag={tag}
+										onPress={removeTag}
+									/>
 								);
-							})
-								
-							}
-							<TextInput 
-							ref={inputTag} 
-							onBlur={(event) => addTag(wrirtingText)}
-							onChangeText={setWritingText}
-							value={wrirtingText}
+							})}
+							<TextInput
+								ref={inputTag}
+								onBlur={(event) => addTag(wrirtingText)}
+								onChangeText={setWritingText}
+								value={wrirtingText}
 							/>
-							<TouchableOpacity style={createPostModalStyles.plusButton} onPress={() => setIsWritingTag()}>
+							<TouchableOpacity
+								style={createPostModalStyles.plusButton}
+								onPress={() => setIsWritingTag()}
+							>
 								<ICONS.PlusIcon />
 							</TouchableOpacity>
 						</View>

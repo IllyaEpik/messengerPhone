@@ -17,16 +17,23 @@ export interface IDeleteAlbum {
 	token: string;
 }
 export interface Album {
-	title: string;
-	year: number;
-	topic: {
-		name: string;
-	};
-	photos: Photos[];
-	id: number;
+    id: number;
+    is_shown: boolean;
+    created_at: Date;
+    name: string;
+    theme?: string;
+    year?: number;
+    is_default: boolean;
+	albumImage: {
+		id: bigint;
+		image: string;
+		is_shown: boolean;
+		created_at: Date;
+		album_id: bigint;
+	}[];
+	
 }
 export interface Photos {
 	crackedPhoto: string;
 	photo: string;
 }
-wwrerwthrgefd;

@@ -23,9 +23,6 @@ export const styles = StyleSheet.create({
 
 	// }
 	menuCard: {
-		// position: 'absolute',
-		// top: 60, // Adjust based on your "three dots" button position
-		// right: 16,
 		backgroundColor: "#E9E5EE", // The lavender/grey from your image
 		borderRadius: 16,
 		paddingVertical: 8,
@@ -35,6 +32,8 @@ export const styles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 2 },
 		shadowOpacity: 0.1,
 		shadowRadius: 8,
+		marginTop: -52,
+		marginRight: -15,
 	},
 	menuItem: {
 		flexDirection: "row",
@@ -57,5 +56,9 @@ export const styles = StyleSheet.create({
 		backgroundColor: "rgba(0,0,0,0.08)",
 		marginVertical: 4,
 		marginHorizontal: 16,
+	},
+	copy: {
+		justifyContent: "flex-start",
+		flexDirection: "row-reverse",
 	},
 });

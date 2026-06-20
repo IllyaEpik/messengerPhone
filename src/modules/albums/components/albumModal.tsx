@@ -38,9 +38,9 @@ export function AlbumModal(props: albumModalProps) {
 	useEffect(() => {
 		if (album) {
 			setForm({
-				title: album.title,
-				topic: album.topic.name,
-				year: album.year,
+				title: album.name,
+				topic: album.theme || "",
+				year: album.year || new Date().getFullYear(),
 			});
 		}
 	}, []);
@@ -87,7 +87,7 @@ export function AlbumModal(props: albumModalProps) {
 								error=""
 							/>
 						</View>
-						<Text style={styles.label}>Оберіть тему</Text>
+						<Text style={[styles.label, styles.textM]}>Оберіть тему</Text>
 						<Dropdown
 							style={styles.dropdown}
 							data={topics}

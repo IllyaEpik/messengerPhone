@@ -46,6 +46,8 @@ export function ChatScreen() {
 		id: string;
 		tabId?: string;
 	}>();
+	// const [onlineStatus, setOnlineStatus] = useState<string>("")
+	const [online, setOnline] = useState<number>(0)
 	const [images, setImages] = useState<string[]>([]);
 	const activeTab = tabId || "contacts";
 	const chatId = Number(id);
@@ -60,12 +62,13 @@ export function ChatScreen() {
 		},
 		{ skip: !chatId || !token || !user?.id },
 	);
-	const friendId = chat.data?.users.find(friend => friend.id !==user?.id)
+	const friendId = chat.data?.users.find((friend) => friend.id !== user?.id);
+	const onlineUsersIds = chat.data?.users.filter(person => person.id !== user?.id).map(user => user.id)
 	const { data } = useGetMessagesQuery(
 		{ chatId: chatId, token: token },
 		{ skip: !token || !chatId },
 	);
-	const [inputText, setInputText] = useState(""); 
+	const [inputText, setInputText] = useState("");
 	useEffect(() => {
 		if (data) {
 			setMessages(data);
@@ -74,24 +77,39 @@ export function ChatScreen() {
 	useEffect(() => {
 		socket.auth = { token: `Bearer ${token}` };
 		socket.connect();
-		socket.emit("chatConnect", { chatId }, (something) => {
-		});
+		socket.emit("chatConnect", { chatId }, (something) => {});
 		socket.on("newMessage", (message: IMessage) => {
 			console.log("New message received:", message);
 			setMessages((prev) => [message, ...prev]);
-			socket.emit("readMessage", {messageId: message.id})
+			if (message.senderId === user?.id) return;
+			socket.emit("readMessage", { messageId: message.id });
+		});
+
+		socket.emit("getUsersOnline", { userIds: Array.isArray(onlineUsersIds)  ? onlineUsersIds : [] }, (ids) => {
+			const onlineIds = ids.onlineUserIds;
+			if (!onlineIds || onlineIds.length<1) return
+			const onlineMembers = onlineIds.filter(member => member.status === "online")
+			setOnline(onlineMembers.length)
+			// if (chat.data?.isGroup) {
+			// 	setOnline(onlineMembers.length) 
+			// 	// setOnlineStatus(`${onlineMembers.length} в мережі, ${offlineMembers.length} не в мережі`)
+			// }else{
+			// 	// setOnlineStatus(onlineIds[0].status==="online" ? "в мережі" : "не в мережі")
+			// }
+		});
+		socket.on("statusUpdate", (data) => {
+			setOnline(prev => prev + data.status==="online" ? 1 : -1)
 		});
 		return () => {
 			socket.emit("leaveChat", { chatId });
 			socket.off("newMessage");
-			socket.disconnect();
+			socket.off("statusUpdate");
 		};
 	}, []);
 	// Placeholder handlers – replace with your actual send / attach logic
 	async function handleSend() {
-		if (!inputText.trim()) return;
-
-		if (images) {
+		if (!inputText.trim() && (!images || images.length === 0)) return;
+		if (images && images.length !== 0) {
 			const newMessage: ICreateImageMessagePayload = {
 				text: inputText,
 				chatId: chatId,
@@ -124,6 +142,11 @@ export function ChatScreen() {
 			params: { tabId: tabId || activeTab },
 		});
 	}
+	const onlineStatus = chat.data?.isGroup ? 
+	`${online} в мережі, ${chat.data.users.length-online} не в мережі` :
+	(
+		online === 1 ? "в мережі" : "не в мережі"
+	)
 	return (
 		<KeyboardProvider>
 			{/* <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1 }} style={{ flex: 1 }} extraKeyboardSpace={20} bottomOffset={100}> */}
@@ -173,7 +196,7 @@ export function ChatScreen() {
 							<Text style={styles.groupName}>
 								{chat.data?.chatName}
 							</Text>
-							<Text style={styles.memberStatus}>офлайн</Text>
+							<Text style={styles.memberStatus}>{onlineStatus}</Text>
 						</View>
 					</View>
 					<TouchableOpacity style={styles.iconButton}>
@@ -183,6 +206,7 @@ export function ChatScreen() {
 							id={chatId}
 							chat={chat.data!}
 							isChat={!chat.data?.isGroup}
+							tabId={tabId}
 						/>
 					</TouchableOpacity>
 				</View>

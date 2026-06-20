@@ -105,6 +105,7 @@ export const userApi = baseApi.injectEndpoints({
 					Authorization: `Bearer ${payload.token}`,
 				},
 			}),
+			providesTags: (result, error, chatId) => [{ type: "CurrentChat", id: "SINGLE" }]
 			//  providesTags: (result) =>
 			//     result
 			//     ? [{ type: 'ChatList', id: result.id }, { type: 'ChatList', id: 'LIST' }]
@@ -134,9 +135,10 @@ export const userApi = baseApi.injectEndpoints({
 						Authorization: `Bearer ${token}`,
 					},
 					body: formData,
-				}; 3
+				};
+				3;
 			},
-			invalidatesTags: [{ type: "ChatList", id: "LIST" }],
+			invalidatesTags: [{type: "CurrentChat", id:"SINGLE"},{ type: "ChatList", id: "LIST" }],
 		}),
 		sendMessage: builder.mutation<IMessage, ICreateImageMessagePayload>({
 			query: (body) => {

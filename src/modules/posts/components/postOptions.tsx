@@ -37,6 +37,12 @@ export function PostOptions(props: IProps) {
 				contentStyle={styles.menuCard}
 			>
 				<Menu.Item
+					leadingIcon={ICONS.OptionsIcon}
+					onPress={() => setVisibility(false)}
+					title=""
+					containerStyle={styles.copy}
+				/>
+				<Menu.Item
 					leadingIcon={ICONS.Edit}
 					onPress={() => setEditing(true)}
 					title="Редагувати допис"
